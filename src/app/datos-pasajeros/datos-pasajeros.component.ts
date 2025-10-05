@@ -340,12 +340,12 @@ export class DatosPasajerosComponent implements OnInit {
         this.codAgenciaOrigen = getDatosConfiguracion['codAgenciaOrigen'];
         this.idUsuarioSispas = getDatosConfiguracion['idUsuarioSispas'];
 
-        this.taskService.getVerificarCajaAbierta(getDatosConfiguracion['idUsuarioSispas'], getDatosConfiguracion['codAgenciaOrigen']).subscribe(responseVerificarCajaAbierta=> {
-          //console.log(responseVerificarCajaAbierta);
-          if(responseVerificarCajaAbierta['result'] == true){                 // TODO: BIEN!!
-            this.fechaLiquidacion = responseVerificarCajaAbierta['mensaje'];
-          }
-        });
+        // ? ************************************ EXTRAER ESTADO DE CAJA ************************************
+        let getEstadoCaja = JSON.parse(localStorage.getItem('StorageEstadoCaja') || '{}');
+        if(JSON.stringify(getEstadoCaja) != "{}" && getEstadoCaja['result'] == true){
+          this.fechaLiquidacion = getEstadoCaja['mensaje'];
+        }
+        // ? ************************************ EXTRAER ESTADO DE CAJA ************************************
       }
 
       setTimeout(() => {
@@ -1004,6 +1004,7 @@ export class DatosPasajerosComponent implements OnInit {
             }
           }
           $(".loader").fadeOut("slow");
+          
         });
       }else{
         $("#razonSolicitaFactura").val("");
@@ -2331,84 +2332,90 @@ export class DatosPasajerosComponent implements OnInit {
   /************************************************************************************************/    //@elujan ++
 
   pagarPaymentPagoEfectivo(TipForPago: number){
-    if(isPlatformBrowser(this.platformId)){
-      $(".loader").fadeIn("slow");
-      
-      setTimeout(() => {
-        $('#btn_atras').css('display', 'none');
-        $('#muestra_mensaje_1').css('display', 'none');
-        $('#muestra_mensaje_2').css('display', 'none');
-        $('#muestra_pague_aquí_promociones').css('display', 'none');
-        $('#muestra_precio_total').css('display', 'none');
-        $('#muestra_pague_aquí').css('display', 'none');
-        $('#div_cancelar_venta').css('display', 'none');
-      }, 500);
+    // Muestra loader de manera segura
+    $(".loader").fadeIn("slow");
 
-      setTimeout(() => {
-        $(".loader").fadeOut("slow");
-        $("#vista_pagar_imagenes").css("display", "inline");
+    // Oculta los elementos de la vista
+    this.ocultarElementosPago();
 
-        localStorage.setItem("StorageErrorPos", JSON.stringify({}));
-        
-        console.log(this.precio_total_pasajeros_asientos.toFixed());
+    // Limpia posibles errores previos
+    localStorage.setItem("StorageErrorPos", JSON.stringify({}));
 
-        this.taskService.postGenerarPago(this.precio_total_pasajeros_asientos.toFixed()).subscribe(responseGenerarPago=> {
-          //this.responseGenerarPago = responseGenerarPago;
-
-          //* RECIBE RESPUESTA DEL PINPAD
-          console.log(responseGenerarPago);
-          if(responseGenerarPago['batchNumber']){
-            // TODO: CORRECTO
-            
-            var jsonArray = {
-              voucherClient: responseGenerarPago['voucherClient']
-            }
-      
-            const blob = new Blob([JSON.stringify(jsonArray)], { type: 'application/octet-stream' });
-            //saveAs(blob, "4C608A6XX.json");
-
-            setTimeout(() => {
-              saveAs(blob, "4C608A6XX.json");
-              this.crearArrayPagarSispas(TipForPago, String(responseGenerarPago['voucherNumber']));
-              //this.crearArrayPagarSispas(TipForPago, "987654321");
-            }, 1750);
-          }else{
-            // ! INCORRECTO
-
-            if(this.pago_regular_promocion_tarjeta == 2){
-              $('#muestra_pague_aquí_promociones').css('display', 'flex');
-            }
-            
-            $("#vista_pagar_imagenes").css("display", "none");
-
-            $('#btn_atras').css('display', 'inline');
-            $('#muestra_mensaje_1').css('display', 'block');
-            $('#muestra_mensaje_2').css('display', 'flex');
-            $('#muestra_precio_total').css('display', 'flex');
-            $('#muestra_pague_aquí').css('display', 'flex');
-            $('#div_cancelar_venta').css('display', 'flex');
-          }
-        }, error =>{
-          //! SI ES ERROR
-
-          if(this.pago_regular_promocion_tarjeta == 2){
-            $('#muestra_pague_aquí_promociones').css('display', 'flex');
-          }
-
-          $("#vista_pagar_imagenes").css("display", "none");
-
-          $('#btn_atras').css('display', 'inline');
-          $('#muestra_mensaje_1').css('display', 'block');
-          $('#muestra_mensaje_2').css('display', 'flex');
-          $('#muestra_precio_total').css('display', 'flex');
-          $('#muestra_pague_aquí').css('display', 'flex');
-          $('#div_cancelar_venta').css('display', 'flex');
-        }, () =>{
-          
-        });
-      }, 2500);
+    // Validar monto antes de continuar
+    const total = Number(this.precio_total_pasajeros_asientos);
+    if (isNaN(total) || total <= 0) {
+      console.error("Monto inválido:", total);
+      this.mostrarErrorPago();
+      return;
     }
+
+    console.log("Monto total:", total.toFixed());
+
+    // Espera la respuesta real del servidor (sin usar setTimeout)
+    this.taskService.postGenerarPago(total.toFixed()).subscribe({
+      next: (responseGenerarPago) => {
+        console.log("Respuesta del pinpad:", responseGenerarPago);
+
+        if (responseGenerarPago && responseGenerarPago['batchNumber']) {
+          // ✅ Caso correcto
+          $(".loader").fadeOut("slow");
+          $("#vista_pagar_imagenes").css("display", "inline");
+
+          const jsonArray = {
+            voucherClient: responseGenerarPago['voucherClient'] || null
+          };
+
+          const blob = new Blob([JSON.stringify(jsonArray)], {
+            type: 'application/octet-stream'
+          });
+
+          // Espera un breve momento para garantizar que el archivo se genere bien
+          setTimeout(() => {
+            saveAs(blob, "4C608A6XX.json");
+            this.crearArrayPagarSispas(
+              TipForPago,
+              String(responseGenerarPago['voucherNumber'] || '')
+            );
+          }, 800);
+        } else {
+          // ❌ Caso incorrecto o sin datos
+          console.warn("Respuesta sin batchNumber o vacía:", responseGenerarPago);
+          $(".loader").fadeOut("slow");
+          this.mostrarErrorPago();
+        }
+      },
+      error: (err) => {
+        console.error("Error en la llamada a postGenerarPago:", err);
+        $(".loader").fadeOut("slow");
+        this.mostrarErrorPago();
+      }
+    });
   }
+
+  private ocultarElementosPago(): void {
+    $('#btn_atras').hide();
+    $('#muestra_mensaje_1').hide();
+    $('#muestra_mensaje_2').hide();
+    $('#muestra_pague_aquí_promociones').hide();
+    $('#muestra_precio_total').hide();
+    $('#muestra_pague_aquí').hide();
+    $('#div_cancelar_venta').hide();
+  }
+  
+  private mostrarErrorPago(): void {
+    if (this.pago_regular_promocion_tarjeta === 2) {
+      $('#muestra_pague_aquí_promociones').css('display', 'flex');
+    }
+  
+    $("#vista_pagar_imagenes").css("display", "none");
+  
+    $('#btn_atras').css('display', 'inline');
+    $('#muestra_mensaje_1').css('display', 'block');
+    $('#muestra_mensaje_2').css('display', 'flex');
+    $('#muestra_precio_total').css('display', 'flex');
+    $('#muestra_pague_aquí').css('display', 'flex');
+    $('#div_cancelar_venta').css('display', 'flex');
+  }  
 
   simularPago(TipForPago: number){
     if(isPlatformBrowser(this.platformId)){
@@ -3260,30 +3267,6 @@ export class DatosPasajerosComponent implements OnInit {
     }
   }
 
-  siguiente_boleta_factura(){
-    $(".loader").fadeIn("slow");
-    this.nombre_tipo_de_compra = "Tipo de compra: "+this.texto_boleta_factura;
-    this.div_seleccionado = "vista_mostrar_tipo_de_compra2";
-
-    if(this.texto_boleta_factura == "FACTURA"){
-      $("#form_seleccionar_boleta_factura").css("display", "none");
-      $("#form_ingresar_factura").css("display", "inline");
-      $("#btn_buscar_ruc").css("display", "inline");
-      $("#btn_atras").css("display", "inline");
-      $("#btn_siguiente_boleta_factura").css("display", "none");
-      this.copiarDatosFin();
-      $(".loader").fadeOut("slow");
-    }else if(this.texto_boleta_factura == "BOLETA"){
-      $("#vista_mostrar_tipo_de_compra").css("display", "none");
-      $("#btn_buscar_ruc").css("display", "none");
-      $("#vista_mostrar_resumen_compra").css("display", "inline");
-      $("#btn_atras").css("display", "inline");
-      $("#btn_siguiente_boleta_factura").css("display", "none");
-      this.copiarDatosFin();
-      $(".loader").fadeOut("slow");
-    }
-  }
-
   /*seleccionar_boleta_factura(texto: string){
     $(".loader").fadeIn("slow");
     this.nombre_tipo_de_compra = "Tipo de compra: "+texto
@@ -3408,7 +3391,7 @@ export class DatosPasajerosComponent implements OnInit {
       $("#direccionSolicitaFactura").prop("readonly", true);
     }
 
-    $("#btn_atras").css("display", "none");
+    //$("#btn_atras").css("display", "none");
     $(".loader").fadeOut("slow");
   }
 
@@ -3421,81 +3404,6 @@ export class DatosPasajerosComponent implements OnInit {
       $("#fin_num_ruc").html($("#rucSolicitaFactura").val());
       $("#fin_razon_social_ruc").html($("#razonSolicitaFactura").val());
       $("#fin_direccion_ruc").html($("#direccionSolicitaFactura").val());
-    }
-  }
-
-  click_boton_libre(letra_numero: string){
-    if(letra_numero == "borrar"){
-      if($("#"+this.texto_id).val() != ""){
-        $("#"+this.texto_id).val($("#"+this.texto_id).val().substring(0, $("#"+this.texto_id).val().length - 1));
-      }
-    }else if(letra_numero == "espacio"){
-      $("#"+this.texto_id).val($("#"+this.texto_id).val() + " ");
-    }else if(letra_numero == "mayuscula"){
-      if(this.cont_mayuscula == 0){
-        this.cont_mayuscula = 1;
-        $("#fila_alfanumerico_1").addClass("clase_mayuscula");
-        $("#fila_alfanumerico_2").addClass("clase_mayuscula");
-        $("#fila_alfanumerico_3").addClass("clase_mayuscula");
-      }else{
-        this.cont_mayuscula = 0;
-        $("#fila_alfanumerico_1").removeClass("clase_mayuscula");
-        $("#fila_alfanumerico_2").removeClass("clase_mayuscula");
-        $("#fila_alfanumerico_3").removeClass("clase_mayuscula");
-      }
-    }else if(letra_numero == "listo"){
-      $("#teclado_alfanumerico").css("display", "none");
-      this.cont_pasajero_nuevo = 1;
-
-      if(this.div_seleccionado == "vista_mostrar_tipo_de_compra"){
-        $("#teclado_numerico").css("display", "none");
-
-        $('#emailDatosContacto').removeClass("input_incorrecto");
-        $('#numeroDatosContacto').removeClass("input_incorrecto");
-        if($('#emailDatosContacto').val().includes("@") && $('#numeroDatosContacto').val().length >= 9 && this.texto_boleta_factura != ""){
-          $("#btn_siguiente_boleta_factura").css("display", "inline");
-          $("#div_mensaje_alerta_boleta_factura").css("display", "none");
-          $('#emailDatosContacto').addClass("input_correcto");
-          $('#numeroDatosContacto').addClass("input_correcto");
-          this.mensaje_alerta_boleta_factura = "";
-        }else{
-          $("#btn_siguiente_boleta_factura").css("display", "none");
-          $("#div_mensaje_alerta_boleta_factura").css("display", "flex");
-
-          if(this.texto_boleta_factura == ""){
-            this.mensaje_alerta_boleta_factura = "Seleccione una Boleta o Factura.";
-          }else if(!$('#emailDatosContacto').val().includes("@")){
-            this.mensaje_alerta_boleta_factura = "Ingrese un correo válido.";
-            $('#emailDatosContacto').addClass("input_incorrecto");
-          }else if($('#numeroDatosContacto').val().length < 9){
-            this.mensaje_alerta_boleta_factura = "Ingrese un número de teléfono válido.";
-            $('#numeroDatosContacto').addClass("input_incorrecto");
-          }
-        }
-      }
-    }else{
-      if(this.cont_mayuscula == 0){
-        $("#"+this.texto_id).val($("#"+this.texto_id).val() + letra_numero);
-      }else{
-        $("#"+this.texto_id).val($("#"+this.texto_id).val() + letra_numero.toUpperCase());
-      }
-
-      this.cont_mayuscula = 0;
-      $("#fila_alfanumerico_1").removeClass("clase_mayuscula");
-      $("#fila_alfanumerico_2").removeClass("clase_mayuscula");
-      $("#fila_alfanumerico_3").removeClass("clase_mayuscula");
-    }
-
-    // ? MOSTRAR EL TECLADO DE SIGUIENTE AL COLOCAR LA FACTURA
-    if(this.div_seleccionado == "vista_mostrar_tipo_de_compra"){
-      if($("#rucSolicitaFactura").val().length == 11){
-        var val = this.validarRUC($("#rucSolicitaFactura").val());
-        if(val == true && $("#razonSolicitaFactura").val() != "" && $("#direccionSolicitaFactura").val() != ""){
-          $("#btn_continuar_ruc").css("display", "inline");
-        }else{
-          $("#btn_continuar_ruc").css("display", "none");
-        }
-      }
     }
   }
 
@@ -3521,6 +3429,35 @@ export class DatosPasajerosComponent implements OnInit {
     this.activar_teclado_alfanumerico("txtdocumento_"+id, "vista_mostrar_datos_pasajeros", "alfanumerico");
   }
 
+  siguiente_boleta_factura(){
+    $(".loader").fadeIn("slow");
+    this.nombre_tipo_de_compra = "Tipo de compra: "+this.texto_boleta_factura;
+
+    if(this.div_seleccionado == "vista_mostrar_tipo_de_compra"){
+      if(this.texto_boleta_factura == "FACTURA"){
+        $("#form_seleccionar_boleta_factura").css("display", "none");
+        $("#form_ingresar_factura").css("display", "inline");
+        $("#btn_buscar_ruc").css("display", "inline");
+        $("#btn_atras").css("display", "inline");
+        $("#btn_siguiente_boleta_factura").css("display", "none");
+        this.copiarDatosFin();
+        this.div_seleccionado = "form_mostrar_datos_factura";
+        $(".loader").fadeOut("slow");
+      }else if(this.texto_boleta_factura == "BOLETA"){
+        $("#vista_mostrar_tipo_de_compra").css("display", "none");
+        $("#btn_buscar_ruc").css("display", "none");
+        $("#vista_mostrar_resumen_compra").css("display", "inline");
+        $("#btn_atras").css("display", "inline");
+        $("#btn_siguiente_boleta_factura").css("display", "none");
+        this.copiarDatosFin();
+        $(".loader").fadeOut("slow");
+      }
+    }
+    //else if(this.div_seleccionado == "form_mostrar_datos_factura"){
+      
+    //}
+  }
+
   ocultar_teclados(){
     if(this.div_seleccionado == "vista_mostrar_datos_pasajeros"){
       if(this.id_anterior != ""){
@@ -3535,21 +3472,11 @@ export class DatosPasajerosComponent implements OnInit {
       $('#emailDatosContacto').removeClass("input_incorrecto");
       $('#numeroDatosContacto').removeClass("input_incorrecto");
 
-      $("#btn_editar_ruc").css("display", "inline");
-
       if($('#emailDatosContacto').val().includes("@") && $('#numeroDatosContacto').val().length >= 9 && this.texto_boleta_factura != ""){
         $("#btn_siguiente_boleta_factura").css("display", "inline");
         $("#div_mensaje_alerta_boleta_factura").css("display", "none");
         $('#emailDatosContacto').addClass("input_correcto");
-        $('#numeroDatosContacto').addClass("input_correcto");
-
-        /*if($('#rucSolicitaFactura').val() != "" && $('#razonSolicitaFactura').val() != "" && $('#direccionSolicitaFactura').val() != ""){
-          $("#btn_siguiente_boleta_factura").css("display", "none");
-        }*/
-
-        if(this.texto_boleta_factura == "FACTURA" && this.validarRUC($("#rucSolicitaFactura").val()) == true && $('#razonSolicitaFactura').val() == "" && $('#direccionSolicitaFactura').val() == ""){
-          $("#btn_siguiente_boleta_factura").css("display", "none");
-        }
+        $('#numeroDatosContacto').addClass("input_correcto");        
       }else{
         $("#btn_siguiente_boleta_factura").css("display", "none");
         $("#div_mensaje_alerta_boleta_factura").css("display", "flex");
@@ -3564,6 +3491,67 @@ export class DatosPasajerosComponent implements OnInit {
           $('#numeroDatosContacto').addClass("input_incorrecto");
         }
       }
+    }else if(this.div_seleccionado == "form_mostrar_datos_factura"){
+      $("#teclado_alfanumerico").css("display", "none");
+      $("#teclado_numerico").css("display", "none");
+      
+      $("#btn_editar_ruc").css("display", "inline");
+      if(this.texto_boleta_factura == "FACTURA" && this.validarRUC($("#rucSolicitaFactura").val()) == true && $('#razonSolicitaFactura').val() != "" && $('#direccionSolicitaFactura').val() != ""){
+        $("#btn_continuar_ruc").css("display", "inline");
+      }else{
+        $("#btn_continuar_ruc").css("display", "none");
+      }
+    }
+  }
+
+  click_boton_libre(letra_numero: string){
+    if(letra_numero == "borrar"){
+      if($("#"+this.texto_id).val() != ""){
+        $("#"+this.texto_id).val($("#"+this.texto_id).val().substring(0, $("#"+this.texto_id).val().length - 1));
+      }
+    }else if(letra_numero == "espacio"){
+      $("#"+this.texto_id).val($("#"+this.texto_id).val() + " ");
+    }else if(letra_numero == "mayuscula"){
+      if(this.cont_mayuscula == 0){
+        this.cont_mayuscula = 1;
+        $("#fila_alfanumerico_1").addClass("clase_mayuscula");
+        $("#fila_alfanumerico_2").addClass("clase_mayuscula");
+        $("#fila_alfanumerico_3").addClass("clase_mayuscula");
+      }else{
+        this.cont_mayuscula = 0;
+        $("#fila_alfanumerico_1").removeClass("clase_mayuscula");
+        $("#fila_alfanumerico_2").removeClass("clase_mayuscula");
+        $("#fila_alfanumerico_3").removeClass("clase_mayuscula");
+      }
+    }else if(letra_numero == "listo"){
+      $("#teclado_alfanumerico").css("display", "none");
+      $("#teclado_numerico").css("display", "none");
+
+      this.cont_pasajero_nuevo = 1;
+
+      if(this.div_seleccionado == "vista_mostrar_tipo_de_compra"){
+        $("#teclado_numerico").css("display", "none");
+        $("#btn_siguiente_boleta_factura").css("display", "inline");
+      }else if(this.div_seleccionado == "form_mostrar_datos_factura"){
+        $("#btn_editar_ruc").css("display", "inline");
+        if(this.texto_boleta_factura == "FACTURA" && this.validarRUC($("#rucSolicitaFactura").val()) == true && $('#razonSolicitaFactura').val() != "" && $('#direccionSolicitaFactura').val() != ""){
+          $("#btn_continuar_ruc").css("display", "inline");
+        }else{
+          $("#btn_continuar_ruc").css("display", "none");
+        }
+      }
+    }else{
+      if(this.cont_mayuscula == 0){
+        $("#"+this.texto_id).val($("#"+this.texto_id).val() + letra_numero);
+      }else{
+        $("#"+this.texto_id).val($("#"+this.texto_id).val() + letra_numero.toUpperCase());
+      }
+
+      this.cont_mayuscula = 0;
+      $("#fila_alfanumerico_1").removeClass("clase_mayuscula");
+      $("#fila_alfanumerico_2").removeClass("clase_mayuscula");
+      $("#fila_alfanumerico_3").removeClass("clase_mayuscula");
+
     }
   }
 
@@ -3572,7 +3560,7 @@ export class DatosPasajerosComponent implements OnInit {
       this.texto_id = id;
       this.div_seleccionado = div;
 
-      if(div == "vista_mostrar_tipo_de_compra"){
+      if(div == "vista_mostrar_tipo_de_compra" || div == "form_mostrar_datos_factura"){
         $("#btn_editar_ruc").css("display", "none");
         $("#div_mensaje_alerta_boleta_factura").css("display", "none");
         $("#teclado_numerico").css("display", "flex");
@@ -3583,6 +3571,7 @@ export class DatosPasajerosComponent implements OnInit {
         });
 
         $("#btn_siguiente_boleta_factura").css("display", "none");
+        $("#teclado_alfanumerico").css("display", "none");
       }
     }, 250);
   }
@@ -3609,7 +3598,8 @@ export class DatosPasajerosComponent implements OnInit {
         $('#fecha_nacimiento_'+this.id_anterior).prop("readonly", false);
 
         this.cont_pasajero_nuevo = 0;
-      }else if(div == "vista_mostrar_tipo_de_compra"){
+        $("#teclado_numerico").css("display", "none");
+      }else if(div == "vista_mostrar_tipo_de_compra" || div == "form_mostrar_datos_factura"){
         $("#btn_editar_ruc").css("display", "none");
         $("#div_mensaje_alerta_boleta_factura").css("display", "none");
         $("#teclado_alfanumerico").css("display", "flex");
@@ -3620,6 +3610,7 @@ export class DatosPasajerosComponent implements OnInit {
         });
 
         $("#btn_siguiente_boleta_factura").css("display", "none");
+        $("#teclado_numerico").css("display", "none");
       }
     }, 250);
   }

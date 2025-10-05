@@ -42,7 +42,6 @@ export class ItinerarioComponent implements OnInit {
   nombre_ciudad_destino: string = "";
   fecha_ida: string = "";
 
-  fechaLiquidacion: string = "";
   tituloMensajeAlerta: string = "";
   textoMensajeAlerta: string = "";
 
@@ -114,16 +113,6 @@ export class ItinerarioComponent implements OnInit {
           this.fecha_ida = this.convert_format_fecha_guion_a_barra(getDatosItinerario['nombre_fecha_ida']);
         }
 
-        // // ? ************************************ LIQUIDACION ************************************
-        // let getDatosConfiguracion = JSON.parse(localStorage.getItem('StorageDatosConfiguracion') || '{}');
-        // if(JSON.stringify(getDatosConfiguracion)!="{}"){
-        //   this.taskService.getVerificarCajaAbierta(getDatosConfiguracion['idUsuarioSispas'], getDatosConfiguracion['codAgenciaOrigen']).subscribe(responseVerificarCajaAbierta=> {
-        //     if(responseVerificarCajaAbierta['result'] == true){                 // TODO: BIEN!!
-        //       this.fechaLiquidacion = responseVerificarCajaAbierta['mensaje'];
-        //     }
-        //   });
-        // }
-
         this.nombre_fecha_hoy = this.convert_nom_fecha(this.date_actual);
         this.hora_actual = this.getHoraActual();
 
@@ -131,13 +120,14 @@ export class ItinerarioComponent implements OnInit {
 
         this.direccion_embarque = getDatosItinerario['listaIdaDisponibles'][0]['direccionEmbarque'];
         this.direccion_desembarque = getDatosItinerario['listaIdaDisponibles'][0]['direccionDesembarque'];
+
+        $(".loader").fadeOut("slow");
       });
     }
   }
 
   select_servicio(idCard: any, datos: any){
     if(isPlatformBrowser(this.platformId)){
-      //console.log(datos);
       this.quitar_classes_card();
       
       $("#"+idCard).toggleClass("card_seleccionado");
@@ -146,7 +136,6 @@ export class ItinerarioComponent implements OnInit {
         $("#btn_siguiente").css("transform", "scale(1.08)");
       }
       
-      //console.log(datos);
       this.itinerario_seleccionado = datos;
 
       if(this.itinerario_seleccionado.length != 0){
@@ -158,19 +147,6 @@ export class ItinerarioComponent implements OnInit {
       setTimeout(() => {
         $("#btn_siguiente").css("transform", "scale(1)");
       }, 400);
-
-      //$(".loader").fadeIn("slow");
-
-      //if(this.fechaLiquidacion != ""){
-      //  setTimeout(() => {
-      //    $(".loader").fadeOut("slow");
-          //this.siguiente();                 //@elujan 20250225
-      //  },1500);
-      // }else{
-      //   $(".loader").fadeOut("slow");
-      //   //MENSAJE DE ALERTA DE LIQUIDACION
-      //   this.notificacion_mensajes_alerta("Error", "Debe tener una liquidación abierta.");
-      // }
     }
   }
 
@@ -225,6 +201,8 @@ export class ItinerarioComponent implements OnInit {
     if(this.itinerario_seleccionado == ""){
       this.notificacion_mensajes("Warning", "Debe seleccionar un Itinerario para poder continuar.");
     }else{
+      $(".loader").fadeIn("slow");
+
       var dat = {
         "nombre_ciudad_origen": this.StorageDatosItinerario['nombre_ciudad_origen'],
         "nombre_ciudad_destino": this.StorageDatosItinerario['nombre_ciudad_destino'],

@@ -145,10 +145,13 @@
       <div class="modal-content">
         <div class="modal-body row" style="padding: 0rem !important;">
             <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
-                <font style="color: #4E4D50; font-weight: bold; font-size: 22px;">{{tituloMensajeAlerta}}</font><br>
-                <font style="color: #a0a0a0; font-weight: bold; font-size: 17px;">{{textoMensajeAlerta}}</font>
+                <span style="color: #4E4D50; font-weight: bold; font-size: 22px;">{{tituloMensajeAlerta}}</span><br>
+                <span style="color: #a0a0a0; font-weight: bold; font-size: 17px;">{{textoMensajeAlerta}}</span><br><br>
+                <div>
+                    <button style="background-color: #ff6719; border: 1px solid #fb5500; color: white; padding: 3px;"><i class="fad fa-sync fa-spin"></i>&nbsp; Recargar Página</button>
+                </div>
             </div>
-            <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 43px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+            <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 64px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px; padding-top: 5%;">
                 <i class="fad fa-times" (click)="ocultar_modal('modal_mensajealerta')" style="cursor: pointer;"></i>
             </div>
         </div>
@@ -161,7 +164,7 @@
       <div class="modal-content">
         <div class="modal-body row" style="padding: 0rem !important;">
             <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
-                <font style="color: #4E4D50; font-weight: bold; font-size: 22px; margin-bottom: 5px;">Contraseña</font><br>
+                <span style="color: #4E4D50; font-weight: bold; font-size: 22px; margin-bottom: 5px;">Contraseña</span><br>
                 <input id="password_login_autoservicio" type="password" value="" class="form-control" placeholder="Contraseña" (click)="activar_teclado_alfanumerico_password('password_login_autoservicio', 1)">
             </div>
             <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 47px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">

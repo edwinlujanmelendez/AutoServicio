@@ -14,7 +14,7 @@ declare var $:any;
 })
 export class InicioComponent implements OnInit {
 
-  fechaLiquidacion: string = "";
+  fechaLiquidacion: boolean = false;
   tituloMensajeAlerta: string = "";
   textoMensajeAlerta: string = "";
 
@@ -35,26 +35,26 @@ export class InicioComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    $(".loader").fadeOut("slow");
-    $(".loader2").fadeOut("slow");
     localStorage.setItem("StorageDatosItinerario", JSON.stringify({}));
     //this.getSesionConfiguracion = JSON.parse(localStorage.getItem('StorageSesionConfiguracion') || '{}');
     this.verificarSesionConfiguracion();
     
     // ? ************************************ LIQUIDACION ************************************
     let getDatosConfiguracion = JSON.parse(localStorage.getItem('StorageDatosConfiguracion') || '{}');
-    //console.log(getDatosConfiguracion);
     if(JSON.stringify(getDatosConfiguracion)!="{}"){
-      this.taskService.getVerificarCajaAbierta(getDatosConfiguracion['idUsuarioSispas'], getDatosConfiguracion['codAgenciaOrigen']).subscribe(responseVerificarCajaAbierta=> {
-        if(responseVerificarCajaAbierta['result'] == true){                 // TODO: BIEN!!
-          this.fechaLiquidacion = responseVerificarCajaAbierta['mensaje'];
-        }
-      });
+      this.verificarCajaAbiertaConReintentos(getDatosConfiguracion['idUsuarioSispas'], getDatosConfiguracion['codAgenciaOrigen']);
     }
 
     this.elem = document.documentElement;
 
     this.appComponent.clearInterval();
+  }
+
+  ngAfterViewInit(){
+    setTimeout(() => {
+      $(".loader").fadeOut("slow");
+      $(".loader2").fadeOut("slow");
+    }, 2000);
   }
 
   verificarSesionConfiguracion(){
@@ -73,7 +73,7 @@ export class InicioComponent implements OnInit {
 
   ir_seleccion(){
     $(".loader").fadeIn("slow");
-    if(this.fechaLiquidacion != ""){
+    if(this.fechaLiquidacion == true){
       this.router.navigate(['seleccion']);
     }else{
       //MENSAJE DE ALERTA DE LIQUIDACION
@@ -297,5 +297,54 @@ export class InicioComponent implements OnInit {
       $(".loader2").fadeOut("slow");
       $('#password_salir_pantalla').addClass("input_login_error");
     }
+  }
+
+  verificarCajaAbiertaConReintentos(idUsuarioSispas: any, codAgenciaOrigen: any, intento: number = 1, maxIntentos: number = 10, intervaloMs: number = 3000){
+    this.taskService.getVerificarCajaAbierta(idUsuarioSispas, codAgenciaOrigen).subscribe(
+      responseVerificarCajaAbierta => {
+        // Guardar solo result y mensaje en localStorage
+        const resultadoCaja = {
+          result: responseVerificarCajaAbierta['result'],
+          mensaje: responseVerificarCajaAbierta['mensaje'] || ''
+        };
+        localStorage.setItem('StorageEstadoCaja', JSON.stringify(resultadoCaja));
+
+        if(responseVerificarCajaAbierta['result'] == true){
+          // TODO: BIEN!! Caja abierta
+          this.fechaLiquidacion = responseVerificarCajaAbierta['result'];
+          console.log('Caja verificada exitosamente en el intento:', intento);
+        } else {
+          // Caja cerrada o error, reintentar si no hemos alcanzado el máximo
+          if(intento < maxIntentos){
+            console.log(`Intento ${intento} fallido. Reintentando en ${intervaloMs/1000} segundos...`);
+            setTimeout(() => {
+              this.verificarCajaAbiertaConReintentos(idUsuarioSispas, codAgenciaOrigen, intento + 1, maxIntentos, intervaloMs);
+            }, intervaloMs);
+          } else {
+            console.log('Máximo de intentos alcanzado. No se pudo verificar la caja.');
+            this.notificacion_mensajes_alerta("Error", "Debe tener una liquidación abierta.");
+          }
+        }
+      },
+      error => {
+        // Guardar error en localStorage también
+        const resultadoCaja = {
+          result: false,
+          mensaje: 'Error de conexión'
+        };
+        localStorage.setItem('StorageEstadoCaja', JSON.stringify(resultadoCaja));
+
+        // Error en la petición, reintentar si no hemos alcanzado el máximo
+        if(intento < maxIntentos){
+          console.log(`Error en intento ${intento}. Reintentando en ${intervaloMs/1000} segundos...`);
+          setTimeout(() => {
+            this.verificarCajaAbiertaConReintentos(idUsuarioSispas, codAgenciaOrigen, intento + 1, maxIntentos, intervaloMs);
+          }, intervaloMs);
+        } else {
+          console.log('Máximo de intentos alcanzado. Error al verificar la caja.');
+          this.notificacion_mensajes_alerta("Error", "Error de conexión.");
+        }
+      }
+    );
   }
 }

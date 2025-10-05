@@ -36,7 +36,6 @@ export class SeleccionComponent implements OnInit {
 
   val_verificar_seleccion: number = 0;
 
-  fechaLiquidacion: string = "";
   tituloMensajeAlerta: string = "";
   textoMensajeAlerta: string = "";
 
@@ -157,16 +156,6 @@ export class SeleccionComponent implements OnInit {
     $('#calendario2').on('changeDate', function(){
       that.nombre_fecha_vuelta = $('#calendario2').datepicker('getFormattedDate');
     });
-
-    // ? ************************************ LIQUIDACION ************************************
-    let getDatosConfiguracion = JSON.parse(localStorage.getItem('StorageDatosConfiguracion') || '{}');
-    if(JSON.stringify(getDatosConfiguracion)!="{}"){
-      this.taskService.getVerificarCajaAbierta(getDatosConfiguracion['idUsuarioSispas'], getDatosConfiguracion['codAgenciaOrigen']).subscribe(responseVerificarCajaAbierta=> {
-        if(responseVerificarCajaAbierta['result'] == true){                 // TODO: BIEN!!
-          this.fechaLiquidacion = responseVerificarCajaAbierta['mensaje'];
-        }
-      });
-    }
 
     this.nombre_fecha_hoy = this.convert_nom_fecha(this.date_actual);
     this.hora_actual = this.getHoraActual();
@@ -525,242 +514,167 @@ export class SeleccionComponent implements OnInit {
   }
 
   buscar_viajes(){
-    if(this.fechaLiquidacion != ""){
-      if(this.val_verificar_seleccion == 1){
-        $(".loader").fadeIn("slow");
-        
-        this.quitar_classes();
-        if(this.nombre_fecha_vuelta == ""){ this.nombre_fecha_vuelta=""; this.ida_vuelta = 1; }else{ this.ida_vuelta=2; }
-
-        var ida_vuelta_iguales = this.verificarMismoDiaPorRuta(this.codLocalidadIda, this.codLocalidadDestino);
-
-        //console.log(this.codLocalidadIda);
-        //console.log(this.codLocalidadDestino);
-
-        let StorageDatosConfiguracion = JSON.parse(localStorage.getItem('StorageDatosConfiguracion') || '{}');
-        //console.log(StorageDatosConfiguracion['codLocalidadOrigen']);
-
-        //if(StorageDatosConfiguracion['codLocalidadOrigen'] == this.codLocalidadIda){
-          // TODO: EL ORIGEN DE CONFIGURACION ES IGUAL AL ORIGEN DE BUSQUEDA
-
-          this.taskService.getItinerario(this.codLocalidadIda, this.codLocalidadDestino, this.convert_format_fecha_guion(this.nombre_fecha_ida), this.convert_format_fecha_guion(this.nombre_fecha_vuelta), ida_vuelta_iguales, 0).subscribe(responseItinerario => {
-            //console.log(responseItinerario);
-            this.listaIdaDisponibles = [];
-            this.listaVueltaDisponibles = [];
-            var cont_bien = 0;
-  
-            if(responseItinerario['listaIdaDisponibles'] != null){
-
-              for(var ab=0; ab<responseItinerario['listaIdaDisponibles'].length; ab++){
-                responseItinerario['listaIdaDisponibles'][ab]['duracionViaje'] = this.duracion_viaje_valor(responseItinerario['listaIdaDisponibles'][ab]['horaEmbarque'], responseItinerario['listaIdaDisponibles'][ab]['horaDesembarque']);
-              }
-
-              this.listaIdaDisponibles = responseItinerario['listaIdaDisponibles'];
-              cont_bien = 1;
-              
-              /******************************** VUELTA ********************************/
-              if(this.ida_vuelta == 2 && responseItinerario['listaVueltaDisponibles'] != null){
-                var newListaVueltaDisponibles = [{}];
-                var nombre_filtro = "";
-                if(this.nombre_ciudad_origen == "LIMA - TOMAS VALLE"){
-                  nombre_filtro = "Tomas Valle";
-                }else if(this.nombre_ciudad_origen == "LIMA - NICOLAS ARRIOLA"){
-                  nombre_filtro = "Nicolas Arriola";
-                }
-
-                for(var a=0; a<responseItinerario['listaVueltaDisponibles'].length; a++){
-                  var direccionDesembarque = String(responseItinerario['listaVueltaDisponibles'][a]['direccionDesembarque']);
-                  direccionDesembarque = direccionDesembarque.replace("á", "a");
-                  direccionDesembarque = direccionDesembarque.replace("é", "e");
-                  direccionDesembarque = direccionDesembarque.replace("í", "i");
-                  direccionDesembarque = direccionDesembarque.replace("ó", "o");
-                  direccionDesembarque = direccionDesembarque.replace("ú", "u");
-
-                  if(direccionDesembarque.includes(nombre_filtro)){
-                    newListaVueltaDisponibles.push(responseItinerario['listaVueltaDisponibles'][a]);
-                  }
-                }
-
-                newListaVueltaDisponibles.shift();
-                
-                if(newListaVueltaDisponibles.toString() != ""){
-                  for(var ab=0; ab<newListaVueltaDisponibles.length; ab++){
-                    newListaVueltaDisponibles[ab]['duracionViaje'] = this.duracion_viaje_valor(newListaVueltaDisponibles[ab]['horaEmbarque'], newListaVueltaDisponibles[ab]['horaDesembarque']);
-                  }
-  
-                  this.listaVueltaDisponibles = newListaVueltaDisponibles;
-                  cont_bien = 1;
-                }else{
-                  this.mostrar_modal("modal_not_tickets_vuelta");
-                  cont_bien = 0;
-                }
-              }else if(this.ida_vuelta == 2 && responseItinerario['listaVueltaDisponibles'] == null){
-                this.mostrar_modal("modal_not_tickets_vuelta");
-                cont_bien = 0;
-              }
-              /******************************** VUELTA ********************************/
-              
-              if(cont_bien == 1){
-                var newListaIdaDisponibles = [{}];
-                var nombre_filtro_origen = "";
-                var nombre_filtro_destino = "";
-
-                if(this.nombre_ciudad_origen.trim() == "LIMA - TOMAS VALLE"){
-                  nombre_filtro_origen = "Tomas Valle";
-                }else if(this.nombre_ciudad_origen.trim() == "LIMA - NICOLAS ARRIOLA"){
-                  nombre_filtro_origen = "Nicolas Arriola";
-                }else if(this.nombre_ciudad_destino.trim() == "LIMA - TOMAS VALLE"){
-                  nombre_filtro_destino = "Tomas Valle";
-                }else if(this.nombre_ciudad_destino.trim() == "LIMA - NICOLAS ARRIOLA"){
-                  nombre_filtro_destino = "Nicolas Arriola";
-                }
-                
-                if(nombre_filtro_origen != ""){
-                  for(var a=0; a<this.listaIdaDisponibles.length; a++){
-                    var direccion_embarque = String(this.listaIdaDisponibles[a]['direccionEmbarque']);
-                    direccion_embarque = direccion_embarque.replace("á", "a");
-                    direccion_embarque = direccion_embarque.replace("é", "e");
-                    direccion_embarque = direccion_embarque.replace("í", "i");
-                    direccion_embarque = direccion_embarque.replace("ó", "o");
-                    direccion_embarque = direccion_embarque.replace("ú", "u");
+    if(this.val_verificar_seleccion == 1){
+      $(".loader").fadeIn("slow");
       
-                    if(direccion_embarque.includes(nombre_filtro_origen)){
-                      newListaIdaDisponibles.push(this.listaIdaDisponibles[a]);
-                    }
-                  }
-                }
+      this.quitar_classes();
+      if(this.nombre_fecha_vuelta == ""){ this.nombre_fecha_vuelta=""; this.ida_vuelta = 1; }else{ this.ida_vuelta=2; }
 
-                if(nombre_filtro_destino != ""){
-                  for(var a=0; a<this.listaIdaDisponibles.length; a++){
-                    var direccion_desembarque = String(this.listaIdaDisponibles[a]['direccionDesembarque']);
-  
-                    direccion_desembarque = direccion_desembarque.replace("á", "a");
-                    direccion_desembarque = direccion_desembarque.replace("é", "e");
-                    direccion_desembarque = direccion_desembarque.replace("í", "i");
-                    direccion_desembarque = direccion_desembarque.replace("ó", "o");
-                    direccion_desembarque = direccion_desembarque.replace("ú", "u");
-    
-                    if(direccion_desembarque.includes(nombre_filtro_destino)){
-                      newListaIdaDisponibles.push(this.listaIdaDisponibles[a]);
-                    }
-                  }
-                }
-  
-                newListaIdaDisponibles.shift();
-                this.listaIdaDisponibles = newListaIdaDisponibles;
+      var ida_vuelta_iguales = this.verificarMismoDiaPorRuta(this.codLocalidadIda, this.codLocalidadDestino);
 
-                //console.log(newListaIdaDisponibles);
-  
-                if(newListaIdaDisponibles.length != 0){
-                  var datosItinerario = {
-                    "nombre_ciudad_origen": this.nombre_ciudad_origen,
-                    "nombre_ciudad_destino": this.nombre_ciudad_destino,
-                    "codLocalidadIda": this.codLocalidadIda,
-                    "codLocalidadDestino": this.codLocalidadDestino,
-                    "nombre_fecha_ida": this.convert_format_fecha_guion(this.nombre_fecha_ida),
-                    "nombre_fecha_vuelta": this.convert_format_fecha_guion(this.nombre_fecha_vuelta),
-                    "listaIdaDisponibles": newListaIdaDisponibles,
-                    "listaVueltaDisponibles": this.listaVueltaDisponibles,
-                    "ida_vuelta": this.ida_vuelta
-                  }
-              
-                  localStorage.setItem("StorageDatosItinerario", JSON.stringify(datosItinerario));
-              
-                  if(this.nombre_fecha_vuelta == ""){this.nombre_fecha_vuelta="";};
-              
-                  this.ir_itinerario();
-                }else{
-                  this.mostrar_modal("modal_not_tickets_ida");
-  
-                  if(this.nombre_fecha_vuelta == ""){this.nombre_fecha_vuelta="";};
-                }
-              }
-            }else{
-              this.mostrar_modal("modal_not_tickets_ida");
+      //console.log(this.codLocalidadIda);
+      //console.log(this.codLocalidadDestino);
+
+      let StorageDatosConfiguracion = JSON.parse(localStorage.getItem('StorageDatosConfiguracion') || '{}');
+      //console.log(StorageDatosConfiguracion['codLocalidadOrigen']);
+
+      //if(StorageDatosConfiguracion['codLocalidadOrigen'] == this.codLocalidadIda){
+        // TODO: EL ORIGEN DE CONFIGURACION ES IGUAL AL ORIGEN DE BUSQUEDA
+
+        this.taskService.getItinerario(this.codLocalidadIda, this.codLocalidadDestino, this.convert_format_fecha_guion(this.nombre_fecha_ida), this.convert_format_fecha_guion(this.nombre_fecha_vuelta), ida_vuelta_iguales, 0).subscribe(responseItinerario => {
+          //console.log(responseItinerario);
+          this.listaIdaDisponibles = [];
+          this.listaVueltaDisponibles = [];
+          var cont_bien = 0;
+
+          if(responseItinerario['listaIdaDisponibles'] != null){
+
+            for(var ab=0; ab<responseItinerario['listaIdaDisponibles'].length; ab++){
+              responseItinerario['listaIdaDisponibles'][ab]['duracionViaje'] = this.duracion_viaje_valor(responseItinerario['listaIdaDisponibles'][ab]['horaEmbarque'], responseItinerario['listaIdaDisponibles'][ab]['horaDesembarque']);
             }
-  
-            $(".loader").fadeOut("slow");
-          }, error =>{
-            // ERROR
-          },() =>{
-            $(".loader").fadeOut("slow");
-          });
-        /*}else{
-          // TODO: EL ORIGEN DE CONFIGURACION ES DIFERENTE AL ORIGEN DE BUSQUEDA
 
-          this.taskService.getItinerario(this.codLocalidadIda, this.codLocalidadDestino, this.convert_format_fecha_guion(this.nombre_fecha_ida), this.convert_format_fecha_guion(this.nombre_fecha_vuelta), ida_vuelta_iguales, 0).subscribe(responseItinerario => {
-            //console.log(responseItinerario);
-
-            this.listaIdaDisponibles = [];
-            this.listaVueltaDisponibles = [];
-            var cont_bien = 0;
-  
-            if(responseItinerario['listaIdaDisponibles'] != null){
-              for(var ab=0; ab<responseItinerario['listaIdaDisponibles'].length; ab++){
-                responseItinerario['listaIdaDisponibles'][ab]['duracionViaje'] = this.duracion_viaje_valor(responseItinerario['listaIdaDisponibles'][ab]['horaEmbarque'], responseItinerario['listaIdaDisponibles'][ab]['horaDesembarque']);
+            this.listaIdaDisponibles = responseItinerario['listaIdaDisponibles'];
+            cont_bien = 1;
+            
+            /******************************** VUELTA ********************************/
+            if(this.ida_vuelta == 2 && responseItinerario['listaVueltaDisponibles'] != null){
+              var newListaVueltaDisponibles = [{}];
+              var nombre_filtro = "";
+              if(this.nombre_ciudad_origen == "LIMA - TOMAS VALLE"){
+                nombre_filtro = "Tomas Valle";
+              }else if(this.nombre_ciudad_origen == "LIMA - NICOLAS ARRIOLA"){
+                nombre_filtro = "Nicolas Arriola";
               }
 
-              this.listaIdaDisponibles = responseItinerario['listaIdaDisponibles'];
-              cont_bien = 1;
+              for(var a=0; a<responseItinerario['listaVueltaDisponibles'].length; a++){
+                var direccionDesembarque = String(responseItinerario['listaVueltaDisponibles'][a]['direccionDesembarque']);
+                direccionDesembarque = direccionDesembarque.replace("á", "a");
+                direccionDesembarque = direccionDesembarque.replace("é", "e");
+                direccionDesembarque = direccionDesembarque.replace("í", "i");
+                direccionDesembarque = direccionDesembarque.replace("ó", "o");
+                direccionDesembarque = direccionDesembarque.replace("ú", "u");
+
+                if(direccionDesembarque.includes(nombre_filtro)){
+                  newListaVueltaDisponibles.push(responseItinerario['listaVueltaDisponibles'][a]);
+                }
+              }
+
+              newListaVueltaDisponibles.shift();
               
-              if(this.ida_vuelta == 2 && responseItinerario['listaVueltaDisponibles'] != null){
-                for(var ab=0; ab<responseItinerario['listaVueltaDisponibles'].length; ab++){
-                  responseItinerario['listaVueltaDisponibles'][ab]['duracionViaje'] = this.duracion_viaje_valor(responseItinerario['listaVueltaDisponibles'][ab]['horaEmbarque'], responseItinerario['listaVueltaDisponibles'][ab]['horaDesembarque']);
+              if(newListaVueltaDisponibles.toString() != ""){
+                for(var ab=0; ab<newListaVueltaDisponibles.length; ab++){
+                  newListaVueltaDisponibles[ab]['duracionViaje'] = this.duracion_viaje_valor(newListaVueltaDisponibles[ab]['horaEmbarque'], newListaVueltaDisponibles[ab]['horaDesembarque']);
                 }
 
-                this.listaVueltaDisponibles = responseItinerario['listaVueltaDisponibles'];
+                this.listaVueltaDisponibles = newListaVueltaDisponibles;
                 cont_bien = 1;
-              }else if(this.ida_vuelta == 2 && responseItinerario['listaVueltaDisponibles'] == null){
+              }else{
                 this.mostrar_modal("modal_not_tickets_vuelta");
                 cont_bien = 0;
               }
-  
-              if(cont_bien == 1){  
-                if(this.listaIdaDisponibles.length != 0){
-                  var datosItinerario = {
-                    "nombre_ciudad_origen": this.nombre_ciudad_origen,
-                    "nombre_ciudad_destino": this.nombre_ciudad_destino,
-                    "codLocalidadIda": this.codLocalidadIda,
-                    "codLocalidadDestino": this.codLocalidadDestino,
-                    "nombre_fecha_ida": this.convert_format_fecha_guion(this.nombre_fecha_ida),
-                    "nombre_fecha_vuelta": this.convert_format_fecha_guion(this.nombre_fecha_vuelta),
-                    "listaIdaDisponibles": this.listaIdaDisponibles,
-                    "listaVueltaDisponibles": this.listaVueltaDisponibles,
-                    "ida_vuelta": this.ida_vuelta
-                  }
-              
-                  localStorage.setItem("StorageDatosItinerario", JSON.stringify(datosItinerario));
-              
-                  if(this.nombre_fecha_vuelta == ""){this.nombre_fecha_vuelta="";};
-              
-                  this.mostrar_modal("modal_mensajeContinuar");
+            }else if(this.ida_vuelta == 2 && responseItinerario['listaVueltaDisponibles'] == null){
+              this.mostrar_modal("modal_not_tickets_vuelta");
+              cont_bien = 0;
+            }
+            /******************************** VUELTA ********************************/
+            
+            if(cont_bien == 1){
+              var newListaIdaDisponibles = [{}];
+              var nombre_filtro_origen = "";
+              var nombre_filtro_destino = "";
 
-                  //this.ir_itinerario();
-                }else{
-                  this.mostrar_modal("modal_not_tickets_ida");
-  
-                  if(this.nombre_fecha_vuelta == ""){this.nombre_fecha_vuelta="";};
+              if(this.nombre_ciudad_origen.trim() == "LIMA - TOMAS VALLE"){
+                nombre_filtro_origen = "Tomas Valle";
+              }else if(this.nombre_ciudad_origen.trim() == "LIMA - NICOLAS ARRIOLA"){
+                nombre_filtro_origen = "Nicolas Arriola";
+              }else if(this.nombre_ciudad_destino.trim() == "LIMA - TOMAS VALLE"){
+                nombre_filtro_destino = "Tomas Valle";
+              }else if(this.nombre_ciudad_destino.trim() == "LIMA - NICOLAS ARRIOLA"){
+                nombre_filtro_destino = "Nicolas Arriola";
+              }
+              
+              if(nombre_filtro_origen != ""){
+                for(var a=0; a<this.listaIdaDisponibles.length; a++){
+                  var direccion_embarque = String(this.listaIdaDisponibles[a]['direccionEmbarque']);
+                  direccion_embarque = direccion_embarque.replace("á", "a");
+                  direccion_embarque = direccion_embarque.replace("é", "e");
+                  direccion_embarque = direccion_embarque.replace("í", "i");
+                  direccion_embarque = direccion_embarque.replace("ó", "o");
+                  direccion_embarque = direccion_embarque.replace("ú", "u");
+    
+                  if(direccion_embarque.includes(nombre_filtro_origen)){
+                    newListaIdaDisponibles.push(this.listaIdaDisponibles[a]);
+                  }
                 }
               }
-            }else{
-              this.mostrar_modal("modal_not_tickets_ida");
-            }
+
+              if(nombre_filtro_destino != ""){
+                for(var a=0; a<this.listaIdaDisponibles.length; a++){
+                  var direccion_desembarque = String(this.listaIdaDisponibles[a]['direccionDesembarque']);
+
+                  direccion_desembarque = direccion_desembarque.replace("á", "a");
+                  direccion_desembarque = direccion_desembarque.replace("é", "e");
+                  direccion_desembarque = direccion_desembarque.replace("í", "i");
+                  direccion_desembarque = direccion_desembarque.replace("ó", "o");
+                  direccion_desembarque = direccion_desembarque.replace("ú", "u");
   
-            $(".loader").fadeOut("slow");
-          }, error =>{
-            // ERROR
-          },() =>{
-            $(".loader").fadeOut("slow");
-          });
-        }*/
-        
-        
-      }else{
-        this.mostrar_modal("modal_not_continuar");
-      }
+                  if(direccion_desembarque.includes(nombre_filtro_destino)){
+                    newListaIdaDisponibles.push(this.listaIdaDisponibles[a]);
+                  }
+                }
+              }
+
+              newListaIdaDisponibles.shift();
+              this.listaIdaDisponibles = newListaIdaDisponibles;
+
+              //console.log(newListaIdaDisponibles);
+
+              if(newListaIdaDisponibles.length != 0){
+                var datosItinerario = {
+                  "nombre_ciudad_origen": this.nombre_ciudad_origen,
+                  "nombre_ciudad_destino": this.nombre_ciudad_destino,
+                  "codLocalidadIda": this.codLocalidadIda,
+                  "codLocalidadDestino": this.codLocalidadDestino,
+                  "nombre_fecha_ida": this.convert_format_fecha_guion(this.nombre_fecha_ida),
+                  "nombre_fecha_vuelta": this.convert_format_fecha_guion(this.nombre_fecha_vuelta),
+                  "listaIdaDisponibles": newListaIdaDisponibles,
+                  "listaVueltaDisponibles": this.listaVueltaDisponibles,
+                  "ida_vuelta": this.ida_vuelta
+                }
+            
+                localStorage.setItem("StorageDatosItinerario", JSON.stringify(datosItinerario));
+            
+                if(this.nombre_fecha_vuelta == ""){this.nombre_fecha_vuelta="";};
+            
+                this.ir_itinerario();
+              }else{
+                this.mostrar_modal("modal_not_tickets_ida");
+
+                if(this.nombre_fecha_vuelta == ""){this.nombre_fecha_vuelta="";};
+              }
+            }
+          }else{
+            this.mostrar_modal("modal_not_tickets_ida");
+          }
+
+          $(".loader").fadeOut("slow");
+        }, error =>{
+          // ERROR
+        },() =>{
+          $(".loader").fadeOut("slow");
+        });
     }else{
-      //MENSAJE DE ALERTA DE LIQUIDACION
-      this.notificacion_mensajes_alerta("Error", "Debe tener una liquidación abierta.");
+      this.mostrar_modal("modal_not_continuar");
     }
   }
 

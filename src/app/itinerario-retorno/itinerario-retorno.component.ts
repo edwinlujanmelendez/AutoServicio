@@ -43,7 +43,6 @@ export class ItinerarioRetornoComponent implements OnInit {
   nombre_ciudad_destino: string = "";
   fecha_ida: string = "";
 
-  fechaLiquidacion: string = "";
   tituloMensajeAlerta: string = "";
   textoMensajeAlerta: string = "";
 
@@ -194,16 +193,6 @@ export class ItinerarioRetornoComponent implements OnInit {
         this.hora_actual = this.getHoraActual();
 
         setInterval(() => { this.hora_actual = this.getHoraActual(); }, 500);
-
-        // // ? ************************************ LIQUIDACION ************************************
-        // let getDatosConfiguracion = JSON.parse(localStorage.getItem('StorageDatosConfiguracion') || '{}');
-        // if(JSON.stringify(getDatosConfiguracion)!="{}"){
-        //   this.taskService.getVerificarCajaAbierta(getDatosConfiguracion['idUsuarioSispas'], getDatosConfiguracion['codAgenciaOrigen']).subscribe(responseVerificarCajaAbierta=> {
-        //     if(responseVerificarCajaAbierta['result'] == true){                 // TODO: BIEN!!
-        //       this.fechaLiquidacion = responseVerificarCajaAbierta['mensaje'];
-        //     }
-        //   });
-        // }
       });
     }
   }
@@ -225,19 +214,6 @@ export class ItinerarioRetornoComponent implements OnInit {
       setTimeout(() => {
         $("#btn_siguiente").css("transform", "scale(1)");
       }, 400);
-
-      //$(".loader").fadeIn("slow");
-
-      //if(this.fechaLiquidacion != ""){
-      //  setTimeout(() => {
-      //    $(".loader").fadeOut("slow");
-          //this.siguiente();                   //@elujan 20250227
-      //  },1500);
-      // }else{
-      //   $(".loader").fadeOut("slow");
-      //   //MENSAJE DE ALERTA DE LIQUIDACION
-      //   this.notificacion_mensajes_alerta("Error", "Debe tener una liquidación abierta.");
-      // }
     }
   }
 

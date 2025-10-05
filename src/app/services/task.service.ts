@@ -28,12 +28,13 @@ export class TaskService {
   constructor(private http: HttpClient, private authService: AuthService) { }
 
   // TODO: ************************************ PINPAD ************************************ //
-  postGenerarPago(monto: string){
-    return this.http.post<any[]>(this.url_api_pinpad+"pcl/sale", 
-    { amount : monto,
+  postGenerarPago(monto: string) {
+    const body = {
+      amount: monto,
       installments: "00"
-    });
-  }
+    };
+    return this.http.post<any>(`${this.url_api_pinpad}pcl/sale`, body);
+  }  
 
   getInit(){
     return this.http.get<any[]>(this.url_api_pinpad+"pcl/init");

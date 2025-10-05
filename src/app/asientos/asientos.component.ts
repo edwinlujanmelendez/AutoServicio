@@ -68,7 +68,6 @@ export class AsientosComponent implements OnInit {
   tiempoBloqueoAsiento: number = 0;
   cant_max_asientos: number = 0;
 
-  fechaLiquidacion: string = "";
   tituloMensajeAlerta: string = "";
   textoMensajeAlerta: string = "";
 
@@ -132,13 +131,6 @@ export class AsientosComponent implements OnInit {
       let getDatosConfiguracion = JSON.parse(localStorage.getItem('StorageDatosConfiguracion') || '{}');
       if(JSON.stringify(getDatosConfiguracion)!="{}"){
         this.cant_max_asientos = Number(getDatosConfiguracion['cantidad_asientos_select']);
-
-        // // ? ************************************ LIQUIDACION ************************************
-        // this.taskService.getVerificarCajaAbierta(getDatosConfiguracion['idUsuarioSispas'], getDatosConfiguracion['codAgenciaOrigen']).subscribe(responseVerificarCajaAbierta=> {
-        //   if(responseVerificarCajaAbierta['result'] == true){                 // TODO: BIEN!!
-        //     this.fechaLiquidacion = responseVerificarCajaAbierta['mensaje'];
-        //   }
-        // });
       }
 
       setTimeout(() => {
@@ -730,110 +722,82 @@ export class AsientosComponent implements OnInit {
   }
 
   siguiente(){
-    //if(this.fechaLiquidacion != ""){
-      $(".loader").fadeIn("slow");
+    $(".loader").fadeIn("slow");
 
-      if(this.precio_ida_total == 0){
-        $(".loader").fadeOut("slow");
-        this.notificacion_mensajes("Warning", "Debe seleccionar un Asiento para poder continuar.");
-      }else{
-        if(this.ida_vuelta == 1){
-          var dat = {
-            "nombre_ciudad_origen": this.StorageDatosDetalleItinerarioIda['nombre_ciudad_origen'],
-            "nombre_ciudad_destino": this.StorageDatosDetalleItinerarioIda['nombre_ciudad_destino'],
-            "fechaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['fechaEmbarqueIda'],
-            "fechaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['fechaDesembarqueIda'],
-            "horaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['horaEmbarqueIda'],
-            "horaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['horaDesembarqueIda'],
-            "agenciaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['agenciaEmbarqueIda'],
-            "agenciaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['agenciaDesembarqueIda'],
-            "direccionEmbarqueIda": this.StorageDatosDetalleItinerarioIda['direccionEmbarqueIda'],
-            "direccionDesembarqueIda": this.StorageDatosDetalleItinerarioIda['direccionDesembarqueIda'],
-            "idAgenciaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['idAgenciaEmbarqueIda'],
-            "idAgenciaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['idAgenciaDesembarqueIda'],
-            "idServicioIda": this.StorageDatosDetalleItinerarioIda['idServicioIda'],
-            "servicioIda": this.StorageDatosDetalleItinerarioIda['servicioIda'],
-            "idItinerarioIda": this.StorageDatosDetalleItinerarioIda['idItinerarioIda'],
-            "idRutaIda": this.StorageDatosDetalleItinerarioIda['idRutaIda'],
-            "fechaEmbarqueVuelta": "",
-            "fechaDesembarqueVuelta": "",
-            "horaEmbarqueVuelta": "",
-            "horaDesembarqueVuelta": "",
-            "agenciaEmbarqueVuelta": "",
-            "agenciaDesembarqueVuelta": "",
-            "direccionEmbarqueVuelta": "",
-            "direccionDesembarqueVuelta": "",
-            "idAgenciaEmbarqueVuelta": "",
-            "idAgenciaDesembarqueVuelta": "",
-            "idServicioVuelta": "",
-            "servicioVuelta": "",
-            "idItinerarioVuelta": "",
-            "idRutaVuelta": "",
-            "numAsientosIda": this.num_asientos_ida,
-            "numAsientosIdaP1": this.num_asientos_ida_p1,
-            "numAsientosIdaP2": this.num_asientos_ida_p2,
-            "estructuraBusIda": this.estructura_bus_ida,
-            "numAsientosVuelta": "",
-            "numAsientosVueltaP1": "",
-            "numAsientosVueltaP2": "",
-            "estructuraBusVuelta": [],
-            "listaIdaDisponibles": this.StorageDatosDetalleItinerarioIda['listaIdaDisponibles'],
-            "listaVueltaDisponibles": this.StorageDatosDetalleItinerarioIda['listaVueltaDisponibles'],
-            "ida_vuelta": this.StorageDatosDetalleItinerarioIda['ida_vuelta'],
-            "precioAsientosIda": this.precio_asientos_ida,
-            "precioAsientosVuelta": [],
-            "precioTotalIda": this.precio_ida_total,
-            "precioTotalVuelta": 0,
-            "precioTotal": this.precio_ida_total
-          };
-          
-          //console.log(dat);
+    if(this.precio_ida_total == 0){
+      $(".loader").fadeOut("slow");
+      this.notificacion_mensajes("Warning", "Debe seleccionar un Asiento para poder continuar.");
+    }else{
+      if(this.ida_vuelta == 1){
+        var dat = {
+          "nombre_ciudad_origen": this.StorageDatosDetalleItinerarioIda['nombre_ciudad_origen'],
+          "nombre_ciudad_destino": this.StorageDatosDetalleItinerarioIda['nombre_ciudad_destino'],
+          "fechaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['fechaEmbarqueIda'],
+          "fechaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['fechaDesembarqueIda'],
+          "horaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['horaEmbarqueIda'],
+          "horaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['horaDesembarqueIda'],
+          "agenciaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['agenciaEmbarqueIda'],
+          "agenciaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['agenciaDesembarqueIda'],
+          "direccionEmbarqueIda": this.StorageDatosDetalleItinerarioIda['direccionEmbarqueIda'],
+          "direccionDesembarqueIda": this.StorageDatosDetalleItinerarioIda['direccionDesembarqueIda'],
+          "idAgenciaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['idAgenciaEmbarqueIda'],
+          "idAgenciaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['idAgenciaDesembarqueIda'],
+          "idServicioIda": this.StorageDatosDetalleItinerarioIda['idServicioIda'],
+          "servicioIda": this.StorageDatosDetalleItinerarioIda['servicioIda'],
+          "idItinerarioIda": this.StorageDatosDetalleItinerarioIda['idItinerarioIda'],
+          "idRutaIda": this.StorageDatosDetalleItinerarioIda['idRutaIda'],
+          "fechaEmbarqueVuelta": "",
+          "fechaDesembarqueVuelta": "",
+          "horaEmbarqueVuelta": "",
+          "horaDesembarqueVuelta": "",
+          "agenciaEmbarqueVuelta": "",
+          "agenciaDesembarqueVuelta": "",
+          "direccionEmbarqueVuelta": "",
+          "direccionDesembarqueVuelta": "",
+          "idAgenciaEmbarqueVuelta": "",
+          "idAgenciaDesembarqueVuelta": "",
+          "idServicioVuelta": "",
+          "servicioVuelta": "",
+          "idItinerarioVuelta": "",
+          "idRutaVuelta": "",
+          "numAsientosIda": this.num_asientos_ida,
+          "numAsientosIdaP1": this.num_asientos_ida_p1,
+          "numAsientosIdaP2": this.num_asientos_ida_p2,
+          "estructuraBusIda": this.estructura_bus_ida,
+          "numAsientosVuelta": "",
+          "numAsientosVueltaP1": "",
+          "numAsientosVueltaP2": "",
+          "estructuraBusVuelta": [],
+          "listaIdaDisponibles": this.StorageDatosDetalleItinerarioIda['listaIdaDisponibles'],
+          "listaVueltaDisponibles": this.StorageDatosDetalleItinerarioIda['listaVueltaDisponibles'],
+          "ida_vuelta": this.StorageDatosDetalleItinerarioIda['ida_vuelta'],
+          "precioAsientosIda": this.precio_asientos_ida,
+          "precioAsientosVuelta": [],
+          "precioTotalIda": this.precio_ida_total,
+          "precioTotalVuelta": 0,
+          "precioTotal": this.precio_ida_total
+        };
+        
+        //console.log(dat);
 
-          //localStorage.setItem("StorageDatosPasajeros", JSON.stringify(dat));
-          //this.ir_datos_pasajeros();
+        //localStorage.setItem("StorageDatosPasajeros", JSON.stringify(dat));
+        //this.ir_datos_pasajeros();
 
-          if(dat.numAsientosIda.includes(",")){
-            var part_asi = dat.numAsientosIda.split(",");
-    
-            for(var a=0; a<part_asi.length; a++){
-              var part_asi2 = String(part_asi[a]).split("-");
-              let list_asientos: any = [];
-              let list_pisos: any = [];
-
-              list_asientos.push(Number(part_asi2[0]));
-              list_pisos.push(Number(part_asi2[1])); 
-            
-              var part_fecha = dat.fechaEmbarqueIda.split("-");
-              var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
-
-              this.taskService.postBloquearAsiento(Number(dat.idRutaIda), Number(dat.idItinerarioIda), fecha_partida, list_asientos, dat.horaEmbarqueIda, list_pisos, this.tiempoBloqueoAsiento, Number(dat.precioAsientosIda[a]), this.ipLocal).subscribe(response => {
-                if(response['result'] == true){
-                  //dat[0].promocionIda = 0;
-                  //dat[0].promocionVuelta = 0;
-                  localStorage.setItem("StorageDatosPasajeros", JSON.stringify(dat));
-                  this.ir_datos_pasajeros();
-                }else{
-                  let getDatosDetalleItinerarioIda = JSON.parse(localStorage.getItem('StorageDatosDetalleItinerarioIda') || '{}');
-                  this.getDatosEstructuraBus(getDatosDetalleItinerarioIda);
-                  this.cont_asientos = 0;
-                  this.asientos_seleccionados = [];
-                  this.calcular_pasajeros();
-                  this.mostrar_modal("modal_asientos_ocupados");
-                }
-              });
-            }
-          }else if(dat.numAsientosIda!="" && !dat.numAsientosIda.includes(",")){
-            var part_asi = dat.numAsientosIda.split("-");
-            var part_fecha = dat.fechaEmbarqueIda.split("-");
-            var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
-    
+        if(dat.numAsientosIda.includes(",")){
+          var part_asi = dat.numAsientosIda.split(",");
+  
+          for(var a=0; a<part_asi.length; a++){
+            var part_asi2 = String(part_asi[a]).split("-");
             let list_asientos: any = [];
             let list_pisos: any = [];
-    
-            list_asientos.push(Number(part_asi[0]));
-            list_pisos.push(Number(part_asi[1])); 
-    
-            this.taskService.postBloquearAsiento(Number(dat.idRutaIda), Number(dat.idItinerarioIda), fecha_partida, list_asientos, dat.horaEmbarqueIda, list_pisos, this.tiempoBloqueoAsiento, Number(dat.precioAsientosIda), this.ipLocal).subscribe(response => {
+
+            list_asientos.push(Number(part_asi2[0]));
+            list_pisos.push(Number(part_asi2[1])); 
+          
+            var part_fecha = dat.fechaEmbarqueIda.split("-");
+            var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
+
+            this.taskService.postBloquearAsiento(Number(dat.idRutaIda), Number(dat.idItinerarioIda), fecha_partida, list_asientos, dat.horaEmbarqueIda, list_pisos, this.tiempoBloqueoAsiento, Number(dat.precioAsientosIda[a]), this.ipLocal).subscribe(response => {
               if(response['result'] == true){
                 //dat[0].promocionIda = 0;
                 //dat[0].promocionVuelta = 0;
@@ -849,102 +813,102 @@ export class AsientosComponent implements OnInit {
               }
             });
           }
-        }else if(this.ida_vuelta == 2){
-          var dat = {
-            "nombre_ciudad_origen": this.StorageDatosDetalleItinerarioIda['nombre_ciudad_origen'],
-            "nombre_ciudad_destino": this.StorageDatosDetalleItinerarioIda['nombre_ciudad_destino'],
-            "fechaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['fechaEmbarqueIda'],
-            "fechaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['fechaDesembarqueIda'],
-            "horaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['horaEmbarqueIda'],
-            "horaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['horaDesembarqueIda'],
-            "agenciaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['agenciaEmbarqueIda'],
-            "agenciaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['agenciaDesembarqueIda'],
-            "direccionEmbarqueIda": this.StorageDatosDetalleItinerarioIda['direccionEmbarqueIda'],
-            "direccionDesembarqueIda": this.StorageDatosDetalleItinerarioIda['direccionDesembarqueIda'],
-            "idAgenciaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['idAgenciaEmbarqueIda'],
-            "idAgenciaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['idAgenciaDesembarqueIda'],
-            "idServicioIda": this.StorageDatosDetalleItinerarioIda['idServicioIda'],
-            "servicioIda": this.StorageDatosDetalleItinerarioIda['servicioIda'],
-            "idItinerarioIda": this.StorageDatosDetalleItinerarioIda['idItinerarioIda'],
-            "idRutaIda": this.StorageDatosDetalleItinerarioIda['idRutaIda'],
-            "fechaEmbarqueVuelta": String(this.StorageDatosDetalleItinerarioIda['fechaEmbarqueVuelta']),
-            "fechaDesembarqueVuelta": "",
-            "horaEmbarqueVuelta": "",
-            "horaDesembarqueVuelta": "",
-            "agenciaEmbarqueVuelta": "",
-            "agenciaDesembarqueVuelta": "",
-            "direccionEmbarqueVuelta": "",
-            "direccionDesembarqueVuelta": "",
-            "idAgenciaEmbarqueVuelta": "",
-            "idAgenciaDesembarqueVuelta": "",
-            "idServicioVuelta": "",
-            "servicioVuelta": "",
-            "idItinerarioVuelta": "",
-            "idRutaVuelta": "",
-            "numAsientosIda": this.num_asientos_ida,
-            "numAsientosIdaP1": this.num_asientos_ida_p1,
-            "numAsientosIdaP2": this.num_asientos_ida_p2,
-            "estructuraBusIda": this.estructura_bus_ida,
-            "numAsientosVuelta": "",
-            "numAsientosVueltaP1": "",
-            "numAsientosVueltaP2": "",
-            "estructuraBusVuelta": [],
-            "listaIdaDisponibles": this.StorageDatosDetalleItinerarioIda['listaIdaDisponibles'],
-            "listaVueltaDisponibles": this.StorageDatosDetalleItinerarioIda['listaVueltaDisponibles'],
-            "ida_vuelta": this.StorageDatosDetalleItinerarioIda['ida_vuelta'],
-            "precioAsientosIda": this.precio_asientos_ida,
-            "precioAsientosVuelta": [],
-            "precioTotalIda": this.precio_ida_total,
-            "precioTotalVuelta": 0,
-            "precioTotal": this.precio_ida_total
-          };
-    
-          //localStorage.setItem("StorageDatosAsientos", JSON.stringify(dat));
-          //this.ir_itinerario_retorno();
-
-          if(dat.numAsientosIda.includes(",")){
-            var part_asi = dat.numAsientosIda.split(",");
-            
-            for(var a=0; a<part_asi.length; a++){
-              var part_asi2 = String(part_asi[a]).split("-");
-              
-              let list_asientos: any = [];
-              let list_pisos: any = [];
-
-              list_asientos.push(Number(part_asi2[0]));
-              list_pisos.push(Number(part_asi2[1])); 
-            
-              var part_fecha = dat.fechaEmbarqueIda.split("-");
-              var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
-
-              this.taskService.postBloquearAsiento(Number(dat.idRutaIda), Number(dat.idItinerarioIda), fecha_partida, list_asientos, dat.horaEmbarqueIda, list_pisos, this.tiempoBloqueoAsiento, Number(dat.precioAsientosIda[a]), this.ipLocal).subscribe(response => {
-                if(response['result'] == true){
-                  //dat[0].promocionIda = 0;
-                  //dat[0].promocionVuelta = 0;
-                  localStorage.setItem("StorageDatosAsientos", JSON.stringify(dat));
-                  this.ir_itinerario_retorno();
-                }else{
-                  let getDatosDetalleItinerarioIda = JSON.parse(localStorage.getItem('StorageDatosDetalleItinerarioIda') || '{}');
-                  this.getDatosEstructuraBus(getDatosDetalleItinerarioIda);
-                  this.cont_asientos = 0;
-                  this.asientos_seleccionados = [];
-                  this.calcular_pasajeros();
-                  this.mostrar_modal("modal_asientos_ocupados");
-                }
-              });
+        }else if(dat.numAsientosIda!="" && !dat.numAsientosIda.includes(",")){
+          var part_asi = dat.numAsientosIda.split("-");
+          var part_fecha = dat.fechaEmbarqueIda.split("-");
+          var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
+  
+          let list_asientos: any = [];
+          let list_pisos: any = [];
+  
+          list_asientos.push(Number(part_asi[0]));
+          list_pisos.push(Number(part_asi[1])); 
+  
+          this.taskService.postBloquearAsiento(Number(dat.idRutaIda), Number(dat.idItinerarioIda), fecha_partida, list_asientos, dat.horaEmbarqueIda, list_pisos, this.tiempoBloqueoAsiento, Number(dat.precioAsientosIda), this.ipLocal).subscribe(response => {
+            if(response['result'] == true){
+              //dat[0].promocionIda = 0;
+              //dat[0].promocionVuelta = 0;
+              localStorage.setItem("StorageDatosPasajeros", JSON.stringify(dat));
+              this.ir_datos_pasajeros();
+            }else{
+              let getDatosDetalleItinerarioIda = JSON.parse(localStorage.getItem('StorageDatosDetalleItinerarioIda') || '{}');
+              this.getDatosEstructuraBus(getDatosDetalleItinerarioIda);
+              this.cont_asientos = 0;
+              this.asientos_seleccionados = [];
+              this.calcular_pasajeros();
+              this.mostrar_modal("modal_asientos_ocupados");
             }
-          }else if(dat.numAsientosIda!="" && !dat.numAsientosIda.includes(",")){
-            var part_asi = dat.numAsientosIda.split("-");
-            var part_fecha = dat.fechaEmbarqueIda.split("-");
-            var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
-    
+          });
+        }
+      }else if(this.ida_vuelta == 2){
+        var dat = {
+          "nombre_ciudad_origen": this.StorageDatosDetalleItinerarioIda['nombre_ciudad_origen'],
+          "nombre_ciudad_destino": this.StorageDatosDetalleItinerarioIda['nombre_ciudad_destino'],
+          "fechaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['fechaEmbarqueIda'],
+          "fechaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['fechaDesembarqueIda'],
+          "horaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['horaEmbarqueIda'],
+          "horaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['horaDesembarqueIda'],
+          "agenciaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['agenciaEmbarqueIda'],
+          "agenciaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['agenciaDesembarqueIda'],
+          "direccionEmbarqueIda": this.StorageDatosDetalleItinerarioIda['direccionEmbarqueIda'],
+          "direccionDesembarqueIda": this.StorageDatosDetalleItinerarioIda['direccionDesembarqueIda'],
+          "idAgenciaEmbarqueIda": this.StorageDatosDetalleItinerarioIda['idAgenciaEmbarqueIda'],
+          "idAgenciaDesembarqueIda": this.StorageDatosDetalleItinerarioIda['idAgenciaDesembarqueIda'],
+          "idServicioIda": this.StorageDatosDetalleItinerarioIda['idServicioIda'],
+          "servicioIda": this.StorageDatosDetalleItinerarioIda['servicioIda'],
+          "idItinerarioIda": this.StorageDatosDetalleItinerarioIda['idItinerarioIda'],
+          "idRutaIda": this.StorageDatosDetalleItinerarioIda['idRutaIda'],
+          "fechaEmbarqueVuelta": String(this.StorageDatosDetalleItinerarioIda['fechaEmbarqueVuelta']),
+          "fechaDesembarqueVuelta": "",
+          "horaEmbarqueVuelta": "",
+          "horaDesembarqueVuelta": "",
+          "agenciaEmbarqueVuelta": "",
+          "agenciaDesembarqueVuelta": "",
+          "direccionEmbarqueVuelta": "",
+          "direccionDesembarqueVuelta": "",
+          "idAgenciaEmbarqueVuelta": "",
+          "idAgenciaDesembarqueVuelta": "",
+          "idServicioVuelta": "",
+          "servicioVuelta": "",
+          "idItinerarioVuelta": "",
+          "idRutaVuelta": "",
+          "numAsientosIda": this.num_asientos_ida,
+          "numAsientosIdaP1": this.num_asientos_ida_p1,
+          "numAsientosIdaP2": this.num_asientos_ida_p2,
+          "estructuraBusIda": this.estructura_bus_ida,
+          "numAsientosVuelta": "",
+          "numAsientosVueltaP1": "",
+          "numAsientosVueltaP2": "",
+          "estructuraBusVuelta": [],
+          "listaIdaDisponibles": this.StorageDatosDetalleItinerarioIda['listaIdaDisponibles'],
+          "listaVueltaDisponibles": this.StorageDatosDetalleItinerarioIda['listaVueltaDisponibles'],
+          "ida_vuelta": this.StorageDatosDetalleItinerarioIda['ida_vuelta'],
+          "precioAsientosIda": this.precio_asientos_ida,
+          "precioAsientosVuelta": [],
+          "precioTotalIda": this.precio_ida_total,
+          "precioTotalVuelta": 0,
+          "precioTotal": this.precio_ida_total
+        };
+  
+        //localStorage.setItem("StorageDatosAsientos", JSON.stringify(dat));
+        //this.ir_itinerario_retorno();
+
+        if(dat.numAsientosIda.includes(",")){
+          var part_asi = dat.numAsientosIda.split(",");
+          
+          for(var a=0; a<part_asi.length; a++){
+            var part_asi2 = String(part_asi[a]).split("-");
+            
             let list_asientos: any = [];
             let list_pisos: any = [];
-    
-            list_asientos.push(Number(part_asi[0]));
-            list_pisos.push(Number(part_asi[1])); 
-    
-            this.taskService.postBloquearAsiento(Number(dat.idRutaIda), Number(dat.idItinerarioIda), fecha_partida, list_asientos, dat.horaEmbarqueIda, list_pisos, this.tiempoBloqueoAsiento, Number(dat.precioAsientosIda), this.ipLocal).subscribe(response => {
+
+            list_asientos.push(Number(part_asi2[0]));
+            list_pisos.push(Number(part_asi2[1])); 
+          
+            var part_fecha = dat.fechaEmbarqueIda.split("-");
+            var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
+
+            this.taskService.postBloquearAsiento(Number(dat.idRutaIda), Number(dat.idItinerarioIda), fecha_partida, list_asientos, dat.horaEmbarqueIda, list_pisos, this.tiempoBloqueoAsiento, Number(dat.precioAsientosIda[a]), this.ipLocal).subscribe(response => {
               if(response['result'] == true){
                 //dat[0].promocionIda = 0;
                 //dat[0].promocionVuelta = 0;
@@ -960,14 +924,37 @@ export class AsientosComponent implements OnInit {
               }
             });
           }
+        }else if(dat.numAsientosIda!="" && !dat.numAsientosIda.includes(",")){
+          var part_asi = dat.numAsientosIda.split("-");
+          var part_fecha = dat.fechaEmbarqueIda.split("-");
+          var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
+  
+          let list_asientos: any = [];
+          let list_pisos: any = [];
+  
+          list_asientos.push(Number(part_asi[0]));
+          list_pisos.push(Number(part_asi[1])); 
+  
+          this.taskService.postBloquearAsiento(Number(dat.idRutaIda), Number(dat.idItinerarioIda), fecha_partida, list_asientos, dat.horaEmbarqueIda, list_pisos, this.tiempoBloqueoAsiento, Number(dat.precioAsientosIda), this.ipLocal).subscribe(response => {
+            if(response['result'] == true){
+              //dat[0].promocionIda = 0;
+              //dat[0].promocionVuelta = 0;
+              localStorage.setItem("StorageDatosAsientos", JSON.stringify(dat));
+              this.ir_itinerario_retorno();
+            }else{
+              let getDatosDetalleItinerarioIda = JSON.parse(localStorage.getItem('StorageDatosDetalleItinerarioIda') || '{}');
+              this.getDatosEstructuraBus(getDatosDetalleItinerarioIda);
+              this.cont_asientos = 0;
+              this.asientos_seleccionados = [];
+              this.calcular_pasajeros();
+              this.mostrar_modal("modal_asientos_ocupados");
+            }
+          });
         }
-
-        $(".loader").fadeOut("slow");
       }
-    //}else{
-    //  //MENSAJE DE ALERTA DE LIQUIDACION
-    //  this.notificacion_mensajes_alerta("Error", "Debe tener una liquidación abierta.");
-    //}
+
+      $(".loader").fadeOut("slow");
+    }
   }
 
   notificacion_mensajes_alerta(titulo: string, mensaje: string){
