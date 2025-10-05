@@ -1,0 +1,280 @@
+<div style="height: auto;">
+    <div style="margin-top: 4%; margin-left: 5%;">
+        <div id="titulo" style="font-size: 35px; color: #ffffff; display: flex; align-items: center; position: absolute; top: 7.4%; width: 91%;">
+            <!--<div class="numberCircle">4</div> &nbsp; {{sub_titulo}}
+            &nbsp;&nbsp;-->
+            <!--<div *ngIf="ida_vuelta == 2" style="font-size: 24px;">
+                <span style="border: 1px solid white; border-radius: 18px; padding: 4px 15px 4px 15px; font-style: italic; color: white;">Ida</span> &nbsp;
+                <span style="border: 1px solid white; border-radius: 18px; padding: 4px 15px 4px 15px; font-style: italic; color: #434343; background-color: white;">Vuelta</span>
+            </div>
+            <div style="font-size: 28px; display: flex; align-items: center;">
+                &nbsp;&nbsp;
+                <font *ngIf="nombre_ciudad_destino.indexOf('LIMA') > -1">LIMA</font>
+                <font *ngIf="nombre_ciudad_destino.indexOf('LIMA') <= -1">{{nombre_ciudad_destino}}</font>
+                &nbsp; <i class="fal fa-long-arrow-right icon_flecha" style="font-size: 31px; color: white;"></i> &nbsp; 
+                <font *ngIf="nombre_ciudad_origen.indexOf('LIMA') > -1">LIMA</font>
+                <font *ngIf="nombre_ciudad_origen.indexOf('LIMA') <= -1">{{nombre_ciudad_origen}}</font>
+            </div>-->
+            <div *ngIf="ida_vuelta == 2" style="width: 100%; display: contents;">
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">1</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">2</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">3</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">4</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px;">5</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px;">6</div> &nbsp;
+            </div>
+        </div>
+        <br><br><br><br><br><br><br><br><br>
+        <div id="fecha_hora" style="font-size: 35px; color: #ffffff; display: flex; align-items: center; position: relative;">
+            <!--{{nombre_fecha_hoy}}  -  {{hora_actual}}-->
+            <!--<div style="float: left;">
+                {{nombre_ciudad_destino}} &nbsp; <i class="fal fa-long-arrow-right icon_flecha" style="font-size: 31px; color: white;"></i> &nbsp; 
+                {{nombre_ciudad_origen}} &nbsp; 
+            </div>
+            <div style="float: right; margin-right: 4.8%;">
+                <i class="fad fa-calendar-check"></i> {{fecha_ida}}
+            </div>-->
+            <div style="float: left; text-transform: uppercase;">
+                SELECCIONA TU ITINERARIO &nbsp;(RETORNO)
+                <!--Fecha de Viaje: &nbsp; <i class="fad fa-calendar-check"></i> {{fecha_ida}} &nbsp;(RETORNO)-->
+            </div>
+        </div>
+
+        <br><br>
+
+        <div id="caja_listado_itinerarios" style="width: 95%; padding-bottom: 2%; border-radius: 30px; background-color: #ffffff; box-shadow: 2px 10px 18px -4px rgba(0, 0, 0, 0.50);">
+            <!--<div *ngIf="ida_vuelta == 2" style="display: flex; justify-content: center; align-items: center; color: #878787; font-size: 12px; background-color: #e3e3e3; padding: 1%; border-top-left-radius: 30px; border-top-right-radius: 30px;">
+                <div class="numberCircle2Texto" style="margin-left: 0px;"><div class="numberCircle2">1</div> &nbsp; <font>Selecciona la ciudad y fecha de viaje</font></div>
+                <div class="numberCircle2Texto"><div class="numberCircle2">2</div> &nbsp; <font>Selecciona el horario y servicio de Ida</font></div>
+                <div class="numberCircle2Texto"><div class="numberCircle2">3</div> &nbsp; <font>Selecciona tu asiento de Ida</font></div>
+                <div class="numberCircle2TextoSeleccionado"><div class="numberCircle2Seleccionado">4</div> &nbsp; <font>Selecciona el horario y servicio de Vuelta</font></div>
+                <div class="numberCircle2Texto"><div class="numberCircle2">5</div> &nbsp; <font>Selecciona tu asiento de Vuelta</font></div>
+                <div class="numberCircle2Texto"><div class="numberCircle2">6</div> &nbsp; <font>Llena tus datos</font></div>
+            </div>-->
+            <div id="columna_1" class="column" style="width: 100%; height: 1390px; overflow-y: auto; overflow-x: hidden; padding-right: 20px; padding-left: 15px;">
+                <div class="row">
+                    <div class="col-12" style="text-align: center; padding-top: 2%; padding-bottom: 1%; font-size: 26px; font-weight: bold;">
+                        FECHA DE VIAJE: &nbsp; <i class="fad fa-calendar-check"></i> {{fecha_ida}}
+                    </div>
+                    <div id="select_filtros" class="col-12" style="padding-bottom: 20px; text-align: center; font-size: 40px; font-family: -apple-system, BlinkMacSystemFont, Roboto, sans-serif;">
+                        <!--<em>Filtro de búsqueda:</em> &nbsp;-->
+                        <span id="mas_1" class="btn-principal" (click)="select_filter(1)"><i class="fa fa-dollar-sign"></i> Más barato</span>&nbsp;
+                        <span id="mas_2" class="btn-principal" (click)="select_filter(2)"><i class="fa fa-bolt"></i> Más rápido</span>&nbsp;
+                        <span id="mas_3" class="btn-principal" (click)="select_filter(3)"><i class="fa fa-sun"></i> Más temprano</span>&nbsp;
+                        <span id="mas_4" class="btn-principal" (click)="select_filter(4)"><i class="fa fa-moon"></i> Más tarde</span>&nbsp;
+                    </div>
+                    <!--<div *ngFor="let dat of datos" class="col-12" style="margin-bottom: 12px;">
+                        <div id="card_{{dat.iditinerario}}_{{dat.idAgeEmbarque}}_{{dat.idAgeDesembarque}}" class="card card-itinerario" style="cursor: pointer;" *ngIf="dat.precioMinimo != 0" (click)="select_servicio('card_'+dat.iditinerario+'_'+dat.idAgeEmbarque+'_'+dat.idAgeDesembarque, dat)">
+                            <div class="row g-0">
+                                <div class="col-9">
+                                    <div class="row">
+                                        <div class="col-12 div_servicio">
+                                            <div style="margin-top: 2%;">
+                                                <div class="servicio">Servicio</div>
+                                                <div class="dat_servicio">{{dat.servicio}}</div>
+                                                <div class="linea_servicio"></div>
+                                            </div>
+                                            <div class="col-12 col-lg-12">
+                                                <div class="row" style="margin-top: 10px;">
+                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                        <span class="dat_salida_embar">Embarque</span>  
+                                                        <span class="dat_hora_embar">{{dat.horaEmbarque}} h</span>
+                                                    </div>
+                                                    <div class="col-2" style="text-align: center;">
+                                                        <i class="fal fa-long-arrow-right icon_flecha"></i>
+                                                    </div>
+                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                        <span class="dat_llegada_desem">Desembarque</span>  
+                                                        <span class="dat_hora_desem">{{dat.horaDesembarque}} h</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 margin_embarque_desembarque" [ngClass]="{'margin_embarque_desembarque2': dat.promocionFlag == 90}">
+                                            <div class="col-12" style="padding-right: 11px;">
+                                                <div class="row">
+                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                        <span class="dat_salida_embar_detall">{{dat.direccionEmbarque}}</span>
+                                                    </div>
+                                                    <div class="col-2" style="text-align: center;">&nbsp;</div>
+                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                        <span class="dat_llegada_desem_detall">{{dat.direccionDesembarque}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 div_footer" style="padding-bottom: 3px; padding-top: 6px;">
+                                            <div class="linea_servicio" style="width: 100%; margin-right: 0%;"></div>
+                                            <div>
+                                                <div class="icon_detalle"><i class="fad fa-bus-alt"></i>&nbsp;<font *ngIf="dat.nropisos == 1">{{dat.nropisos}} Piso</font> <font *ngIf="dat.nropisos == 2">{{dat.nropisos}} Pisos</font></div>
+                                                <div class="icon_detalle"><i class="fad fa-clock"></i>&nbsp;{{duracion_viaje_detalle(dat.fechaEmbarque, dat.horaEmbarque, dat.fechaDesembarque, dat.horaDesembarque)}}</div>
+                                                <div class="icon_detalle"><i class="fad fa-dot-circle"></i>&nbsp;{{dat.nroescala}} Escalas</div>
+                                                <div class="icon_detalle icon_detalle_asientos">
+                                                    <img src="./assets/img/iconos/seat.png" alt="" class="img-fluid image_detalle"/>&nbsp;
+                                                    <font *ngIf="dat.servAsiento1 != ''">{{dat.servAsiento1}}</font>
+                                                    <font *ngIf="dat.nropisos == 2">|{{dat.servAsiento2}}</font>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 casilla_precio" style="display: flex; justify-content: center; align-items: center; color: #4d4d4d;">
+                                    <div class="row" style="width: 115%;">
+                                        <div class="col-4 casilla_precio_c1">
+                                            <div class="desde">desde </div>
+                                            <font class="casilla_precio_num_1">S/</font>
+                                        </div>
+                                        <div class="col-8 casilla_precio_c2">
+                                            <font class="casilla_precio_num_2">{{dat.precioMinimo}}</font><font *ngIf="verificar_punto(dat.precioMinimo) == 2" class="casilla_precio_num_1">.00</font><br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div *ngFor="let dat of datos" class="col-12" style="margin-bottom: 20px;">
+                        <div id="card_{{dat.iditinerario}}_{{dat.idAgeEmbarque}}_{{dat.idAgeDesembarque}}" class="card card-itinerario" style="cursor: pointer;" *ngIf="dat.precioMinimo != 0" (click)="select_servicio('card_'+dat.iditinerario+'_'+dat.idAgeEmbarque+'_'+dat.idAgeDesembarque, dat)">
+                            <div class="row g-0">
+                                <div class="col-9">
+                                    <div class="row">
+                                        <div class="col-12 div_servicio">
+                                            <div style="margin-top: 2%;">
+                                                <!--<div class="servicio" style="font-style: normal; color: black; margin-bottom: 5px;"><font *ngIf="dat.servAsiento1 != ''">{{dat.servAsiento1}}</font> <font *ngIf="dat.nropisos == 2"> / {{dat.servAsiento2}}</font></div>
+                                                <div class="dat_servicio">{{dat.servicio}}</div>-->
+                                                <div class="dat_servicio">{{dat.servicio}} &nbsp;&nbsp;&nbsp; <font class="servicio"><font *ngIf="dat.servAsiento1 != ''">{{dat.servAsiento1}}</font> <font *ngIf="dat.nropisos == 2"> / {{dat.servAsiento2}}</font></font></div>
+                                                <div class="linea_servicio" style="width: 76%; margin-right: 0%;"></div>
+                                            </div>
+                                            <div class="col-12 col-lg-12">
+                                                <div class="row" style="margin-top: 20px; margin-bottom: 20px;">
+                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                        <span class="dat_salida_embar" style="font-style: normal; color: #ff6a1d; font-size: 22px; font-weight: bold;">{{nombre_ciudad_destino}}</span>  
+                                                        <span class="dat_hora_embar" style="color: black; margin-top: 3px; font-size: 22px;">{{dat.horaEmbarque}} h</span>
+                                                    </div>
+                                                    <div class="col-2" style="text-align: center;">
+                                                        <i class="fal fa-long-arrow-right icon_flecha" style="font-size: 63px;"></i>
+                                                    </div>
+                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                        <span class="dat_llegada_desem" style="font-style: normal; color: #ff6a1d; font-size: 22px; font-weight: bold;">{{nombre_ciudad_origen}}</span>  
+                                                        <span class="dat_hora_desem" style="color: black; margin-top: 3px; font-size: 22px;">{{dat.horaDesembarque}} h</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--<div class="col-12 margin_embarque_desembarque" [ngClass]="{'margin_embarque_desembarque2': dat.promocionFlag == 90}" style="margin-top: 0px !important; margin-bottom: 10px;">
+                                            <div class="col-12" style="padding-right: 11px;">
+                                                <div class="row">
+                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                        <span class="dat_salida_embar_detall" style="color: black;">{{dat.direccionEmbarque}}</span>
+                                                    </div>
+                                                    <div class="col-2" style="text-align: center;">&nbsp;</div>
+                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                        <span class="dat_llegada_desem_detall" style="color: black;">{{dat.direccionDesembarque}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>-->
+                                        <div class="linea_servicio" style="width: 97%; margin-left: 1.5%;"></div>
+                                        <div class="col-12 div_footer" style="padding-bottom: 6px; padding-top: 6px; display: flex; justify-content: center; align-items: center;">
+                                            <div>
+                                                <div class="icon_detalle"><i class="fad fa-bus-alt"></i>&nbsp;Bus de <font *ngIf="dat.nropisos == 1">{{dat.nropisos}} Piso</font> <font *ngIf="dat.nropisos == 2">{{dat.nropisos}} Pisos</font></div>
+                                                <div class="icon_detalle"><i class="fad fa-clock"></i>&nbsp;{{duracion_viaje_detalle(dat.fechaEmbarque, dat.horaEmbarque, dat.fechaDesembarque, dat.horaDesembarque)}} h de viaje</div>
+                                                <div class="icon_detalle"><i class="fad fa-dot-circle"></i>&nbsp;{{dat.nroescala}} Escalas</div>
+                                                <!--<div class="icon_detalle icon_detalle_asientos">
+                                                    <img src="./assets/img/iconos/seat.png" alt="" class="img-fluid image_detalle"/>&nbsp;
+                                                    <font *ngIf="dat.servAsiento1 != ''">{{dat.servAsiento1}}</font>
+                                                    <font *ngIf="dat.nropisos == 2">|{{dat.servAsiento2}}</font>
+                                                </div>-->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 casilla_precio" style="display: flex; justify-content: center; align-items: center; color: #4d4d4d;">
+                                    <div class="row" style="width: 115%;">
+                                        <div class="col-4 casilla_precio_c1">
+                                            <div class="desde" style="font-size: 15px;">desde </div>
+                                            <font class="casilla_precio_num_1" style="font-size: 15px;">S/</font>
+                                        </div>
+                                        <div class="col-8 casilla_precio_c2">
+                                            <font class="casilla_precio_num_2" style="font-size: 60px;">{{dat.precioMinimo}}</font><font *ngIf="verificar_punto(dat.precioMinimo) == 2" class="casilla_precio_num_1" style="font-size: 15px;">.00</font><br>
+                                        </div>
+                                        <div class="col-12" style="text-align: center; font-size: 16.5px; font-weight: bold;">
+                                            {{dat.nroAsientosDisponible}} asientos disponibles
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div style="width: 90.3%; background-color: white; position: absolute; top: 80.6%; left: 5%; padding-top: 2%; padding-bottom: 11.9%; border-bottom-right-radius: 30px; border-bottom-left-radius: 30px; margin-bottom: 10%;">
+        <div class="row">
+            <div class="col-6" style="display: flex; justify-content: center; align-items: center; color: #ff6719; font-size: 22px; text-decoration: underline;">
+                EMBARQUE
+            </div>
+            <div class="col-6" style="display: flex; justify-content: center; align-items: center; color: #ff6719; font-size: 22px; text-decoration: underline;">
+                DESEMBARQUE
+            </div>
+            
+            <div class="col-6" style="display: flex; justify-content: center; align-items: center; text-align: center; font-size: 20px; padding-top: 1%; padding-left: 24px; padding-right: 24px;">
+                {{direccion_embarque}}
+            </div>
+            <div class="col-6" style="display: flex; justify-content: center; align-items: center; text-align: center; font-size: 20px; padding-top: 1%; padding-left: 24px; padding-right: 24px;">
+                {{direccion_desembarque}}
+            </div>
+        </div>
+    </div>-->
+
+    <div id="dato_superior_derecho" style="color: #ffffff; position: absolute; top: 2.2%; left: 4%; text-align: center;">
+        <img src="../../assets/img/LOGOTIPO BUS A COLOR RGB-01.png" style="height: 2.6em; width: 9em;" (click)="toggleFullscreen()"><br>
+        <font style="font-style: italic; font-size: 16px;">Moviendo al Perú</font>
+    </div>
+
+    <div id="btn_atras" class="btn btn-lg btn-danger" style="color: #ffffff; position: absolute; top: 87%; left: 9%; width: 30%;" (click)="atras()">
+        <div>ATRÁS</div>
+        <i class="fad fa-chevron-circle-left icon_input_seleccion_init" style="color: white;"></i>
+    </div>
+    <div id="btn_siguiente" class="btn btn-lg btn-success" style="color: white; position: absolute; top: 87%; right: 9%; width: 30%; padding-left: 0%;" (click)="siguiente()">
+        <div>SIGUIENTE</div>
+        <i class="fad fa-chevron-circle-right icon_input_seleccion_end" style="color: white;"></i>
+    </div>
+
+    <div id="dato_inferior_izquierda" style="color: #ffffff; position: absolute; bottom: 2%; left: 4%; display: flex; align-items: center; font-size: 19px;">
+        <i class="fab fa-facebook-f" style="margin-right: 1px;"></i>&nbsp;
+        <i class="fab fa-instagram" style="margin-right: 1px;"></i>&nbsp;
+        <img src="../../assets/img/iconos/tiktok.png" style="width: 2.2%; filter: invert(100%) sepia(0%) saturate(1000%) hue-rotate(329deg) brightness(200%) contrast(98%);">&nbsp;&nbsp;
+        <font>&#64;movilbus.pe</font>
+    </div>
+    <div id="dato_inferior_derecho" style="color: #ffffff; position: absolute; bottom: 2%; right: 4%; font-size: 19px;">
+        www.movilbus.pe
+    </div>
+
+    <!-- color: #ffffff; position: absolute; top: 95.5%; left: 37%; width: 27%; -->
+
+    <div id="btn_boton_home" class="btn btn-lg" (click)="ir_al_home()">
+        <div>IR AL INICIO</div>
+        <i class="fad fa-home-lg-alt icon_input_seleccion_init" style="color: #ff6719; left: 16px; bottom: 19px;"></i>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_mensajealerta" tabindex="-1" role="dialog" aria-labelledby="modal_mensajealertaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body row" style="padding: 0rem !important;">
+            <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                <font style="color: #4E4D50; font-weight: bold; font-size: 22px;">{{tituloMensajeAlerta}}</font><br>
+                <font style="color: #a0a0a0; font-weight: bold; font-size: 17px;">{{textoMensajeAlerta}}</font>
+            </div>
+            <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 43px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <i class="fad fa-times" (click)="ocultar_modal('modal_mensajealerta')" style="cursor: pointer;"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>

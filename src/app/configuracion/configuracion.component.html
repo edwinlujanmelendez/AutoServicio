@@ -1,0 +1,534 @@
+<div style="height: auto;">
+    <div style="margin-top: 4%; margin-left: 5%;">
+        <div id="titulo" style="font-size: 35px; color: #ffffff; display: flex; justify-content: left; align-items: center;">
+            <i class="fad fa-cog"></i> &nbsp; {{sub_titulo}}
+        </div>
+        <br><br>
+
+        <div style="width: 95%; padding-bottom: 2%; border-radius: 30px; background-color: #ffffff; box-shadow: 2px 10px 18px -4px rgba(0, 0, 0, 0.50);" (click)="ocultar_teclados()">
+            
+            <!------------------------------------------------ CONFIGURACIÓN BÁSICA ------------------------------------------------>
+            <div id="div_vista_configuracion" style="display: none; justify-content: center; align-items: center; padding-top: 18px;">
+                <div id="columna_1" class="column" style="float: left; width: 80%; height: 1590px;">
+                    <br><br>
+                    <form>
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <div id="agencia_origen" class="input_seleccion" (click)="seleccionar_input('agencia_origen')">
+                                    <div>{{agencia_origen}}</div>
+                                    <i id="ciudad_origen" class="fal fa-map-marker-alt icon_input_seleccion_end"></i>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div id="usuario_sispas" class="input_seleccion" (click)="seleccionar_input('usuario_sispas')">
+                                    <div>{{usuario_sispas}}</div>
+                                    <i id="ciudad_destino" class="fal fa-user icon_input_seleccion_end"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <div id="cantidad_asientos_select" class="input_seleccion" (click)="seleccionar_input('cantidad_asientos_select')">
+                                        <div>CANTIDAD ASIENTOS: {{cantidad_asientos_select}}</div>
+                                        <i id="fecha_ida" class="fal fa-chair-office icon_input_seleccion_end"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="btn btn-lg btn_conf btn_guardar_informacion" (click)="guardar_informacion()">
+                                    <div style="font-size: 21px; color: #ffffff;">GUARDAR</div>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <div class="form-group">
+                                    <div class="btn btn-lg btn_conf btn-secondary" (click)="regresar_configuracion_basica()">
+                                        <i class="fad fa-chevron-circle-left icon_input_seleccion_init" style="color: white; left: 24px;"></i>
+                                        <div style="font-size: 21px; color: #ffffff; margin-left: 20px;">CONFIGURACIÓN DEL POS</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                    </form>
+                    <br><br><br>
+                    <div id="div_agencia_origen" class="columna_overflow" style="display: none; position: relative; overflow: auto; height: 1048px;">
+                        <div *ngFor="let dat of ltLocalidadOrigen; first as i; last as ii" (click)="seleccionar_agencia_origen(dat.id, dat.denominacion)" class="input_seleccion2" [ngClass]="{'border_radius_top': i == true, 'border_radius_bottom': ii == true}">{{dat.denominacion}}</div>
+                    </div>
+                    <div id="div_usuario_sispas" style="display: none;">
+                        <br><br><br><br><br><br><br><br>
+                        <div class="form-group">
+                            <label for="select_usuario_sispas" style="margin-bottom: 10px; color: #616060; font-size: 18px;">USUARIO SISPAS</label>
+                            <select id="select_usuario_sispas" class="form-select form-select-lg mb-3" style="background-color: #e4e4e4; color: #616060;">
+                                <option *ngFor="let ltUsu of ltUsuariosSispas">{{ltUsu}}</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="password_usuario_sispas" style="margin-bottom: 10px; color: #616060; font-size: 18px;">CONTRASEÑA</label>
+                            <input type="password" class="form-control form-control-lg" id="password_usuario_sispas" placeholder="Contraseña" (click)="activar_teclado_alfanumerico_password('password_usuario_sispas')">
+                        </div>
+                        <br>
+                        <button type="button" class="btn btn-lg btn-light" style="border: 1px solid #ccc;" (click)="verificar_usuario()">Verificar</button>&nbsp;&nbsp;
+                        <i id="icon_cargando" class="fad fa-spinner-third fa-spin" style="font-size: 30px; color: #198754; display: none;"></i>&nbsp;&nbsp;
+                        <i id="icon_correcto" class="fad fa-check-circle" style="font-size: 30px; color: #198754; display: none;"></i>&nbsp;&nbsp;
+                        <i id="icon_error" class="fad fa-times-circle" style="font-size: 30px; color: #a61919; display: none;"></i>
+                    </div>
+                    <div id="div_cantidad_asientos_select" style="display: none;">
+                        <br><br><br><br><br><br><br><br>
+                        <div class="form-group">
+                            <label for="cantidad_asientos_maximo" style="margin-bottom: 10px; color: #616060; font-size: 18px;">CANTIDAD ASIENTOS SELECCIONADOS</label>
+                            <input type="number" class="form-control form-control-lg" id="cantidad_asientos_maximo" (click)="activar_teclado_numerico_asientos('cantidad_asientos_maximo')">
+                        </div>
+                    </div>
+
+                    <!--<form>
+                        <div class="form-group">
+                            <div id="agencia_origen" class="input_seleccion" (click)="seleccionar_input('agencia_origen')">
+                                <div>{{agencia_origen}}</div>
+                                <i id="ciudad_origen" class="fal fa-map-marker-alt icon_input_seleccion_end"></i>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div id="usuario_sispas" class="input_seleccion" (click)="seleccionar_input('usuario_sispas')">
+                                <div>{{usuario_sispas}}</div>
+                                <i id="ciudad_destino" class="fal fa-user icon_input_seleccion_end"></i>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div id="cantidad_asientos_select" class="input_seleccion" (click)="seleccionar_input('cantidad_asientos_select')">
+                                <div>CANTIDAD ASIENTOS: {{cantidad_asientos_select}}</div>
+                                <i id="fecha_ida" class="fal fa-chair-office icon_input_seleccion_end"></i>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div class="btn btn-lg btn_conf btn_guardar_informacion" (click)="guardar_informacion()">
+                                <div style="font-size: 21px; color: #ffffff;">GUARDAR</div>
+                            </div>
+                        </div>
+                        <br><br><br><br>
+                        <div class="form-group">
+                            <div class="btn btn-lg btn_conf btn-secondary" (click)="regresar_configuracion_basica()">
+                                <i class="fad fa-chevron-circle-left icon_input_seleccion_init" style="color: white;"></i>
+                                <div style="font-size: 21px; color: #ffffff;">CONFIGURACIÓN DEL POS</div>
+                            </div>
+                        </div>
+                    </form>-->
+                </div>
+                <!--<div id="columna_2" class="column" style="width: 40%; height: 1590px; padding-left: 7%; padding-top: 1%; position: relative; overflow: auto;">
+                    <div id="div_agencia_origen" style="display: none;">
+                        <div *ngFor="let dat of ltLocalidadOrigen; first as i; last as ii" (click)="seleccionar_agencia_origen(dat.id, dat.denominacion)" class="input_seleccion2" [ngClass]="{'border_radius_top': i == true, 'border_radius_bottom': ii == true}">{{dat.denominacion}}</div>
+                    </div>
+                    <div id="div_usuario_sispas" style="display: none;">
+                        <br><br><br><br><br><br><br><br>
+                        <div class="form-group">
+                            <label for="select_usuario_sispas" style="margin-bottom: 10px; color: #616060; font-size: 18px;">USUARIO SISPAS</label>
+                            <select id="select_usuario_sispas" class="form-select form-select-lg mb-3" style="background-color: #e4e4e4; color: #616060;">
+                                <option *ngFor="let ltUsu of ltUsuariosSispas">{{ltUsu}}</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="password_usuario_sispas" style="margin-bottom: 10px; color: #616060; font-size: 18px;">CONTRASEÑA</label>
+                            <input type="password" class="form-control form-control-lg" id="password_usuario_sispas" placeholder="Contraseña">
+                        </div>
+                        <br>
+                        <button type="button" class="btn btn-lg btn-light" style="border: 1px solid #ccc;" (click)="verificar_usuario()">Verificar</button>&nbsp;&nbsp;
+                        <i id="icon_cargando" class="fad fa-spinner-third fa-spin" style="font-size: 30px; color: #198754; display: none;"></i>&nbsp;&nbsp;
+                        <i id="icon_correcto" class="fad fa-check-circle" style="font-size: 30px; color: #198754; display: none;"></i>&nbsp;&nbsp;
+                        <i id="icon_error" class="fad fa-times-circle" style="font-size: 30px; color: #a61919; display: none;"></i>
+                    </div>
+                    <div id="div_cantidad_asientos_select" style="display: none;">
+                        <br><br><br><br><br><br><br><br>
+                        <div class="form-group">
+                            <label for="cantidad_asientos_maximo" style="margin-bottom: 10px; color: #616060; font-size: 18px;">CANTIDAD ASIENTOS SELECCIONADOS</label>
+                            <input type="number" class="form-control form-control-lg" id="cantidad_asientos_maximo" [(ngModel)]="cantidad_asientos_select">
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <!------------------------------------------------ CONFIGURACIÓN BÁSICA ------------------------------------------------>
+
+            <!------------------------------------------------ CONFIGURACIÓN AVANZADA ------------------------------------------------>
+            <div id="div_vista_configuracion_avanzada" style="display: flex; justify-content: center; align-items: center; padding-top: 18px;">
+                <div id="columna_1" class="column" style="float: left; width: 80%; height: 1590px;">
+                    <br><br>
+                    <form>
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <div id="btn_pos_init" class="btn btn-lg btn-light btn_conf btn_pos_init" (click)="btn_pos_init()">
+                                    <div style="font-size: 21px; color: #1d1d1d;">INICIALIZAR POS <font style="color: #2987bf;">(init)</font></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div id="btn_pos_cierre" class="btn btn-lg btn-light btn_conf btn_pos_cierre" (click)="btn_pos_cierre()">
+                                    <div style="font-size: 21px; color: #1d1d1d;">CERRAR CAJA POS <font style="color: #2987bf;">(batch)</font></div>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="row form-group">
+                            <div class="col-6">
+                                <div id="btn_pos_echo" class="btn btn-lg btn-light btn_conf btn_pos_echo" (click)="btn_pos_echo()">
+                                    <div style="font-size: 21px; color: #1d1d1d;">PROBAR CONEXIÓN CON EL POS <font style="color: #2987bf;">(echo)</font></div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div id="btn_configuracion_avanzada" class="btn btn-lg btn-warning btn_conf" (click)="btn_configuracion_avanzada()">
+                                    <div style="font-size: 21px; margin-left: -44px;">CONFIGURACIÓN DEL SISTEMA</div>
+                                    <i class="fad fa-cogs icon_input_seleccion_end" style="color: black; right: 26px;"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <!--<div class="form-group">
+                            <div id="btn_informacion_caja" class="btn btn-lg btn-secondary btn_conf" (click)="btn_informacion_caja()">
+                                <div style="font-size: 21px;">INFORMACIÓN CAJA</div>
+                                <i class="fad fa-info-circle icon_input_seleccion_end" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div id="btn_pos_init" class="btn btn-lg btn-light btn_conf btn_pos_init" (click)="btn_pos_init()">
+                                <div style="font-size: 21px; color: #1d1d1d;">INICIALIZAR POS <font style="color: #2987bf;">(init)</font></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div id="btn_pos_echo" class="btn btn-lg btn-light btn_conf btn_pos_echo" (click)="btn_pos_echo()">
+                                <div style="font-size: 21px; color: #1d1d1d;">PROBAR CONEXIÓN CON EL POS <font style="color: #2987bf;">(echo)</font></div>
+                            </div>
+                        </div>-->
+                        <!--<br>
+                        <div class="form-group">
+                            <div id="btn_pos_cierre" class="btn btn-lg btn-light btn_conf btn_pos_cierre" (click)="btn_pos_cierre()">
+                                <div style="font-size: 21px;">ANULAR ÚLTIMA VENTA <font style="color: #2987bf;">(void)</font></div>
+                            </div>
+                        </div>-->
+                        
+                        <!--<br>
+                        <div class="form-group">
+                            <div id="btn_pos_cierre" class="btn btn-lg btn-light btn_conf btn_pos_cierre" (click)="btn_pos_cierre()">
+                                <div style="font-size: 21px; color: #1d1d1d;">CERRAR CAJA POS <font style="color: #2987bf;">(batch)</font></div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div id="btn_pos_cierre" class="btn btn-lg btn-light btn_conf btn_pos_cierre" (click)="btn_informacion_pc()">
+                                <div style="font-size: 21px; color: #1d1d1d;">EDITAR INFORMACIÓN DE LA PC</div>
+                                <i class="far fa-desktop icon_input_seleccion_end" style="color: #6a6a6a;"></i>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div id="btn_probar_impresora" class="btn btn-lg btn-success btn_conf btn_probar_impresora" (click)="btn_probar_impresora()">
+                                <div style="font-size: 21px;">PROBAR CONEXIÓN CON LA IMPRESORA</div>
+                                <i class="far fa-print icon_input_seleccion_end" style="color: white;"></i>
+                            </div>
+                        </div>
+                        <br>
+                        <br><br>
+                        <div class="form-group">
+                            <div id="btn_configuracion_avanzada" class="btn btn-lg btn-warning btn_conf" (click)="btn_configuracion_avanzada()">
+                                <div style="font-size: 21px;">CONFIGURACIÓN DEL SISTEMA</div>
+                                <i class="fad fa-cogs icon_input_seleccion_end" style="color: black;"></i>
+                            </div>
+                        </div>-->
+                    </form>
+                    <br><br><br>
+                    <!--<div id="div_informacion_caja" style="display: none;">
+                        <br><br><br><br><br><br>
+                        <div style="display: flex;">
+                            <div style="text-align: right; padding-right: 3%;"><img src="../../assets/img/anydesk.jpg" style="width: 40%;"></div>
+                            <div>
+                                <p style="font-size: 24px; color: #4f4f4f;">AnyDesk: <font style="color: rgb(53, 53, 53);">{{nroAnydesk}}</font></p>
+                                <p style="font-size: 24px; color: #4f4f4f;">Contraseña: <font style="color: rgb(53, 53, 53);">{{passwordAnydesk}}</font></p>
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                        <div style="text-align: center;">
+                            <p style="font-size: 23px; color: #4f4f4f;">Nombre de la PC: <font style="color: rgb(53, 53, 53);">{{nombrePc}}</font></p>
+                            <p style="font-size: 21px; color: #4f4f4f;">IPv4: <font style="color: rgb(53, 53, 53);">{{ipv4}}</font></p>
+                            <p style="font-size: 21px; color: #4f4f4f;">Sistema Operativo: <font style="color: rgb(53, 53, 53);">{{sistemaOperativo}}</font></p>
+                            <p style="font-size: 21px; color: #4f4f4f;">Usuario Administrador: <font style="color: rgb(53, 53, 53);">{{usuarioAdministrador}}</font></p>
+                        </div>
+                    </div>-->
+                    <div id="div_pos_init" style="display: none;">
+                        <br><br><br><br><br><br>
+                        <div class="form-group">
+                            <input type="text" id="txt_api_pos_init" class="form-control form-control-lg" style="text-align: center;" readonly>
+                            <br>
+                            <textarea id="textarea_api_pos_init" class="form-control form-control-lg" rows="11" placeholder="Respuesta Niubiz" style="resize: none; font-size: 18px;" readonly></textarea>
+                        </div>
+                    </div>
+                    <div id="div_pos_echo" style="display: none;">
+                        <br><br><br><br><br><br>
+                        <div class="form-group">
+                            <input type="text" id="txt_api_pos_echo" class="form-control form-control-lg" style="text-align: center;" placeholder="http://localhost:8080/pcl/echo" readonly>
+                            <br>
+                            <textarea id="textarea_api_pos_echo" class="form-control form-control-lg" rows="11" placeholder="Respuesta Niubiz" style="resize: none; font-size: 18px;" readonly></textarea>
+                        </div>
+                    </div>
+                    <div id="div_pos_cierre" style="display: inline;">
+                        <br><br><br><br><br><br>
+                        <div class="form-group">
+                            <input type="text" id="txt_api_pos_cierre" class="form-control form-control-lg" style="text-align: center;" placeholder="http://localhost:8080/pcl/batch" readonly>
+                            <br>
+                            <textarea id="textarea_api_pos_cierre" class="form-control form-control-lg" rows="11" placeholder="Respuesta Niubiz" style="resize: none; font-size: 18px;" readonly></textarea>
+                        </div>
+                        <br>
+                        <div id="div_button_json_cerrar_caja" style="text-align: center; display: none;">
+                            <button class="btn btn-success" style="font-size: 17px;" (click)="reimprimir_json_cerrar_caja()">REIMPRIMIR VOUCHER CIERRE DE CAJA </button>
+                        </div>
+                    </div>
+                    <!--<div id="div_informacion_pc" style="display: none;">
+                        <br><br>
+                        <div class="form-group">
+                            <label for="nro_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">ANYDESK</label>
+                            <input type="text" class="form-control form-control-lg" id="nro_anydesk" style="margin-bottom: 11px;" [(ngModel)]="nroAnydesk"  value="{{nroAnydesk}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">CONTRASEÑA ANYDESK</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" style="margin-bottom: 11px;" [(ngModel)]="passwordAnydesk" value="{{passwordAnydesk}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">NOMBRE DE LA PC</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" style="margin-bottom: 11px;" [(ngModel)]="nombrePc" value="{{nombrePc}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">IPv4</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" style="margin-bottom: 11px;" [(ngModel)]="ipv4" value="{{ipv4}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">SISTEMA OPERATIVO</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" style="margin-bottom: 11px;" [(ngModel)]="sistemaOperativo" value="{{sistemaOperativo}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">USUARIO ADMINISTRADOR</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" [(ngModel)]="usuarioAdministrador" value="{{usuarioAdministrador}}">
+                        </div>
+                    </div>-->
+                </div> 
+                <!--<div id="columna_2" class="column" style="width: 40%; height: 1590px; padding-left: 7%; padding-top: 1%; position: relative; overflow: auto; display: none;">
+                    <div id="div_informacion_caja" style="display: none;">
+                        <br><br><br><br><br><br>
+                        <div style="display: flex;">
+                            <div style="text-align: right; padding-right: 3%;"><img src="../../assets/img/anydesk.jpg" style="width: 40%;"></div>
+                            <div>
+                                <p style="font-size: 24px; color: #4f4f4f;">AnyDesk: <font style="color: rgb(53, 53, 53);">{{nroAnydesk}}</font></p>
+                                <p style="font-size: 24px; color: #4f4f4f;">Contraseña: <font style="color: rgb(53, 53, 53);">{{passwordAnydesk}}</font></p>
+                            </div>
+                        </div>
+                        <br>
+                        <hr>
+                        <br>
+                        <div style="text-align: center;">
+                            <p style="font-size: 23px; color: #4f4f4f;">Nombre de la PC: <font style="color: rgb(53, 53, 53);">{{nombrePc}}</font></p>
+                            <p style="font-size: 21px; color: #4f4f4f;">IPv4: <font style="color: rgb(53, 53, 53);">{{ipv4}}</font></p>
+                            <p style="font-size: 21px; color: #4f4f4f;">Sistema Operativo: <font style="color: rgb(53, 53, 53);">{{sistemaOperativo}}</font></p>
+                            <p style="font-size: 21px; color: #4f4f4f;">Usuario Administrador: <font style="color: rgb(53, 53, 53);">{{usuarioAdministrador}}</font></p>
+                        </div>
+                    </div>
+                    <div id="div_pos_init" style="display: none;">
+                        <br><br><br><br><br><br>
+                        <div class="form-group">
+                            <input type="text" id="txt_api_pos_init" class="form-control form-control-lg" style="text-align: center;" readonly>
+                            <br>
+                            <textarea id="textarea_api_pos_init" class="form-control form-control-lg" rows="11" placeholder="Respuesta Niubiz" style="resize: none; font-size: 18px;" readonly></textarea>
+                        </div>
+                    </div>
+                    <div id="div_pos_echo" style="display: none;">
+                        <br><br><br><br><br><br>
+                        <div class="form-group">
+                            <input type="text" id="txt_api_pos_echo" class="form-control form-control-lg" style="text-align: center;" placeholder="http://localhost:8080/pcl/echo" readonly>
+                            <br>
+                            <textarea id="textarea_api_pos_echo" class="form-control form-control-lg" rows="11" placeholder="Respuesta Niubiz" style="resize: none; font-size: 18px;" readonly></textarea>
+                        </div>
+                    </div>
+                    <div id="div_pos_cierre" style="display: none;">
+                        <br><br><br><br><br><br>
+                        <div class="form-group">
+                            <input type="text" id="txt_api_pos_cierre" class="form-control form-control-lg" style="text-align: center;" placeholder="http://localhost:8080/pcl/batch" readonly>
+                            <br>
+                            <textarea id="textarea_api_pos_cierre" class="form-control form-control-lg" rows="11" placeholder="Respuesta Niubiz" style="resize: none; font-size: 18px;" readonly></textarea>
+                        </div>
+                    </div>
+                    <div id="div_informacion_pc" style="display: none;">
+                        <br><br>
+                        <div class="form-group">
+                            <label for="nro_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">ANYDESK</label>
+                            <input type="text" class="form-control form-control-lg" id="nro_anydesk" style="margin-bottom: 11px;" [(ngModel)]="nroAnydesk"  value="{{nroAnydesk}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">CONTRASEÑA ANYDESK</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" style="margin-bottom: 11px;" [(ngModel)]="passwordAnydesk" value="{{passwordAnydesk}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">NOMBRE DE LA PC</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" style="margin-bottom: 11px;" [(ngModel)]="nombrePc" value="{{nombrePc}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">IPv4</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" style="margin-bottom: 11px;" [(ngModel)]="ipv4" value="{{ipv4}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">SISTEMA OPERATIVO</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" style="margin-bottom: 11px;" [(ngModel)]="sistemaOperativo" value="{{sistemaOperativo}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="password_anydesk" style="margin-bottom: 3px; color: #616060; font-size: 18px;">USUARIO ADMINISTRADOR</label>
+                            <input type="text" class="form-control form-control-lg" id="password_anydesk" [(ngModel)]="usuarioAdministrador" value="{{usuarioAdministrador}}">
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <!------------------------------------------------ CONFIGURACIÓN AVANZADA ------------------------------------------------>
+
+        </div>
+    </div>
+
+    <div id="teclado_numerico" class="form-group" style="display: none;">
+        <div id="botones_numericos">
+            <br>
+            <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico" (click)="click_boton('1')">1</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico" (click)="click_boton('2')">2</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico" (click)="click_boton('3')">3</div>
+            </div>
+            <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico" (click)="click_boton('4')">4</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico" (click)="click_boton('5')">5</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico" (click)="click_boton('6')">6</div>
+            </div>
+            <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico" (click)="click_boton('7')">7</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico" (click)="click_boton('8')">8</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico" (click)="click_boton('9')">9</div>
+            </div>
+            <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                <div class="clase_button_numerico_vacio"></div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico" (click)="click_boton('0')">0</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico" (click)="click_boton('borrar')"><i class="fad fa-backspace"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="teclado_alfanumerico" class="form-group" style="display: none;">
+        <div id="botones_numericos" style="width: 170%; margin-left: -35%;">
+            <br>
+            <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton('0')">0</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('1')">1</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('2')">2</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('3')">3</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('4')">4</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('5')">5</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('6')">6</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('7')">7</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('8')">8</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('9')">9</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('borrar')" style="width: 11%;"><i class="fad fa-backspace"></i></div>
+            </div>
+            <div id="fila_alfanumerico_1" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton('q')">q</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('w')">w</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('e')">e</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('r')">r</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('t')">t</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('y')">y</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('u')">u</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('i')">i</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('o')">o</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('p')">p</div>
+            </div>
+            <div id="fila_alfanumerico_2" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton('a')">a</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('s')">s</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('d')">d</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('f')">f</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('g')">g</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('h')">h</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('j')">j</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('k')">k</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('l')">l</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('ñ')">ñ</div>
+            </div>
+            <div id="fila_alfanumerico_3" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton('mayuscula')"><i class="fad fa-font-case"></i></div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('z')">z</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('x')">x</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('c')">c</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('v')">v</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('b')">b</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('n')">n</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('m')">m</div>
+            </div>
+            <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                <div class="clase_button_numerico2" (click)="click_boton('|')">|</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('/')">/</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('@')">@</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('-')">-</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('.')">.</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('$')">$</div>&nbsp;&nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div id="dato_superior_derecho" style="color: #ffffff; position: absolute; top: 2.5%; right: 3%; text-align: center;">
+        <img src="../../assets/img/LOGOTIPO BUS A COLOR RGB-01.png" style="height: 2.6em; width: 9em;"><br>
+        <font style="font-style: italic; font-size: 16px;">Moviendo al Perú</font>
+    </div>
+
+    <div id="dato_inferior_izquierda" style="color: #ffffff; position: absolute; bottom: 2%; left: 4%; display: flex; align-items: center; font-size: 19px;">
+        <i class="fab fa-facebook-f" style="margin-right: 1px;"></i>&nbsp;
+        <i class="fab fa-instagram" style="margin-right: 1px;"></i>&nbsp;
+        <img src="../../assets/img/iconos/tiktok.png" style="width: 2.2%; filter: invert(100%) sepia(0%) saturate(1000%) hue-rotate(329deg) brightness(200%) contrast(98%);">&nbsp;&nbsp;
+        <font>&#64;movilbus.pe</font>
+    </div>
+    <div id="dato_inferior_derecho" style="color: #ffffff; position: absolute; bottom: 2%; right: 4%; font-size: 19px;">
+        www.movilbus.pe
+    </div>
+
+    <div class="modal fade" id="modal_cajaAbierta" tabindex="-1" role="dialog" aria-labelledby="modal_cajaAbiertaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body row" style="padding: 0rem !important;">
+                <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                    <font style="color: #4E4D50; font-weight: bold; font-size: 19px;">Caja Abierta</font><br>
+                    <font style="color: #a0a0a0; font-weight: bold; font-size: 13px;">Este usuario tiene la Caja Abierta, se tiene que cerrar la Caja desde Sispas y para poder cerrar por este medio.</font>
+                </div>
+                <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 43px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                    <i class="fad fa-times" (click)="ocultar_modal('modal_cajaAbierta')" style="cursor: pointer;"></i>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_preguntaCaja" tabindex="-1" role="dialog" aria-labelledby="modal_preguntaCajaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body row" style="padding: 0rem !important;">
+                <div class="col-12" style="text-align: center; background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                    <font style="color: #4E4D50; font-weight: bold; font-size: 24px;">CERRAR CAJA</font><br>
+                    <font style="color: #a0a0a0; font-weight: bold; font-size: 17px;">¿Usted está seguro de querer cerrar la caja?</font>
+
+                    <br><br>
+                    <button class="btn btn-danger" style="font-size: 17px;" (click)="cerrar_caja()">CERRAR CAJA</button> &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-secondary" style="font-size: 17px;" (click)="ocultar_modal('modal_preguntaCaja')">CANCELAR</button>
+                    <br><br>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

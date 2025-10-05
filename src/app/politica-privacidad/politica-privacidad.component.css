@@ -1,0 +1,24 @@
+.format_p{
+    width: 45%; 
+    text-align: justify; 
+    margin: 0 auto;
+}
+h3{
+    color: #ff6719;
+}
+
+.cab1{
+    background-color: white;      /*#E6E6E6*/
+    /*border-top: #bfbfbf 2px solid;*/
+    padding-top: 7px;
+    padding-bottom: 3px;
+}
+
+
+@media only screen and (max-width: 500px) {
+    .format_p{
+        width: 100%; 
+        text-align: justify; 
+        margin: 0 auto;
+    }
+}

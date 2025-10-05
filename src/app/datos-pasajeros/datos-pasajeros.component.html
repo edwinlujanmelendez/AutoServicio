@@ -1,0 +1,1115 @@
+<div style="height: auto;">
+    <div style="margin-top: 4%; margin-left: 5%;">
+        <div id="titulo" style="font-size: 35px; color: #ffffff; display: flex; justify-content: left; align-items: center; position: absolute; top: 7.4%; width: 91%;">
+            <!--<div class="numberCircle">{{numeroPagina}}</div> &nbsp; {{sub_titulo}}-->
+            <div *ngIf="ida_vuelta == 1" style="width: 100%; display: contents;">
+                <div class="numberCircle" style="width: 23%; height: 15%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">1</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 23%; height: 15%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">2</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 23%; height: 15%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">3</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 23%; height: 15%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">4</div> &nbsp;
+            </div>
+            <div *ngIf="ida_vuelta == 2" style="width: 100%; display: contents;">
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">1</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">2</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">3</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">4</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">5</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">6</div> &nbsp;
+            </div>
+        </div>
+        <br><br><br><br><br><br><br><br><br>
+        <div id="fecha_hora" style="font-size: 35px; color: #ffffff; display: flex; align-items: center; position: relative;">
+            <!--{{nombre_fecha_hoy}}  -  {{hora_actual}}-->
+            <div style="float: left; text-transform: uppercase;">
+                {{nombre_ciudad_origen}} &nbsp; <i class="fal fa-long-arrow-right icon_flecha" style="font-size: 31px; color: white;"></i> &nbsp; 
+                {{nombre_ciudad_destino}} &nbsp; 
+                <font *ngIf="ida_vuelta == 1">(Solo Ida)</font>
+                <font *ngIf="ida_vuelta == 2">(Ida y Vuelta)</font>
+            </div>
+        </div>
+
+        <br><br>
+        
+        <div id="caja_datos_pasajeros" style="width: 95%; border-radius: 30px; background-color: #ffffff; box-shadow: 2px 10px 18px -4px rgba(0, 0, 0, 0.50);" (click)="ocultar_teclados()">
+            <div id="columna_1" style="display: flex; justify-content: center; height: 1412px; overflow-y: auto; overflow-x: hidden;">
+
+                <div id="vista_ingresar_datos_pasajeros" class="column" style="width: 70%; padding-top: 70px; display: inline;">
+                    <br>
+                    <form>
+                        <div class="form-group" style="text-align: center; margin-bottom: 60px; font-size: 35px; font-weight: bold;">
+                            <div class="row">
+                                <div class="col-12">
+                                    Documento del pasajero N° {{cont_posicion_pasajero}}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 10px; font-size: 21px; font-weight: bold;">
+                            <div class="row">
+                                <div id="chk_dni" class="col-6 document_select" style="padding: 10px; text-align: center;" (click)="cambiar_radiobutton('dni')">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label datos_pasajero" for="dni">DNI</label>
+                                    </div>
+                                </div>
+                                <div id="chk_carnet_extranjeria" class="col-6" style="padding: 10px; text-align: center;" (click)="cambiar_radiobutton('carnet_extranjeria')">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label datos_pasajero" for="carnet_extranjeria">CARNET EXTRANJERIA</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="font-size: 21px; font-weight: bold;">
+                            <div class="row">
+                                <div id="chk_pasaporte" class="col-6" style="padding: 10px; text-align: center;" (click)="cambiar_radiobutton('pasaporte')">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label datos_pasajero" for="pasaporte">PASAPORTE</label>
+                                    </div>
+                                </div>
+                                <div id="chk_cedula_identidad" class="col-6" style="padding: 10px; text-align: center;" (click)="cambiar_radiobutton('cedula_identidad')">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label datos_pasajero" for="cedula_identidad">CEDULA IDENTIDAD</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="form-group" style="display: flex; justify-content: center; align-items: center;">
+                            <div id="numero_texto_documento" class="input_seleccion">
+                                <div style="padding-left: 11%; font-size: 31px;">{{numero_documento}}</div>
+                                <i class="fad fa-id-card icon_input_seleccion_init" style="bottom: 24px;"></i>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div *ngIf="tipo_entrada_teclado == 'NUMERICO'" class="form-group">
+                            <div id="botones_numericos">
+                                <br>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico3" (click)="click_boton('1')">1</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('2')">2</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('3')">3</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico3" (click)="click_boton('4')">4</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('5')">5</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('6')">6</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico3" (click)="click_boton('7')">7</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('8')">8</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('9')">9</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="clase_button_numerico_vacio3"></div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('0')">0</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('borrar')"><i class="fad fa-backspace"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="tipo_entrada_teclado == 'ALFANUMERICO'" class="form-group">
+                            <div id="botones_numericos" style="width: 170%; margin-left: -35%;">
+                                <br>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('0')">0</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('1')">1</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('2')">2</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('3')">3</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('4')">4</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('5')">5</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('6')">6</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('7')">7</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('8')">8</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('9')">9</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('borrar')" style="width: 11%;"><i class="fad fa-backspace"></i></div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('Q')">Q</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('W')">W</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('E')">E</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('R')">R</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('T')">T</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('Y')">Y</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('U')">U</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('I')">I</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('O')">O</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('P')">P</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('A')">A</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('S')">S</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('D')">D</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('F')">F</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('G')">G</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('H')">H</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('J')">J</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('K')">K</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('L')">L</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('Ñ')">Ñ</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('Z')">Z</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('X')">X</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('C')">C</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('V')">V</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('B')">B</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('N')">N</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('M')">M</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('|')">|</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('/')">/</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('-')">-</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('_')">_</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('.')">.</div>&nbsp;&nbsp;&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="texto_mensaje_alerta != ''" id="mensaje_no_hay_boletos" class="form-group text-center" style="font-weight: bold; font-size: 22px; color: red;">
+                            <br><br>
+                            <p>{{texto_mensaje_alerta}}</p>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="vista_mostrar_datos_pasajeros" class="column" style="width: 85%; padding-top: 70px; display: none;">
+                    <br>
+                    <form *ngFor="let pasajero_asiento of pasajero_asientos; index as i;" id="view_datos_pasajero_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" style="display: none;">
+                        <div class="form-group" style="text-align: center; margin-bottom: 60px; font-size: 35px; font-weight: bold;">
+                            <div class="row">
+                                <div class="col-12">
+                                    Datos del pasajero N° {{cont_posicion_pasajero}} 
+
+                                    <input id="asiento_ida_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" type="hidden" value="{{pasajero_asiento.asiento_ida}}">
+                                    <input id="asiento_vuelta_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" type="hidden" value="{{pasajero_asiento.asiento_vuelta}}">
+                                    <input id="relacion_edad_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" type="hidden" value="Adulto">
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size: 25px; text-align: right;">Tipo</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-7">
+                                <input id="asiento_ida_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" type="hidden" value="{{pasajero_asiento.asiento_ida}}">
+                                <input id="asiento_vuelta_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" type="hidden" value="{{pasajero_asiento.asiento_vuelta}}">
+                                <input id="relacion_edad_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="form-control form-control-lg" type="text" value="Adulto" readonly>
+                            </div>
+                        </div>-->
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size: 25px; text-align: right;">Tipo de Documento</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-7">
+                                <!--<input id="selectTipDoc_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="form-control form-control-lg" type="hidden" readonly>
+                                <input id="nombreTipDoc_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="form-control form-control-lg" type="text" readonly>-->
+
+                                <!--(change)="changeSelect($event)"-->
+                                <select class="custom-select form-select form-select datos_pasajero" style="font-size: 1.25rem;" id="selectTipDoc_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" disabled>
+                                    <option *ngFor="let tip_doc of tipos_documentos" value="{{tip_doc.idTipDoc}}" [selected]="tip_doc.idTipDoc == id_tipo_documento">{{tip_doc.nombre}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size: 25px; text-align: right;">Documento</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-7">
+                                <input id="txtdocumento_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="form-control form-control-lg" type="text" (click)="activar_teclado_alfanumerico('txtdocumento_'+pasajero_asiento.asiento_ida+'_'+pasajero_asiento.asiento_vuelta, 'vista_mostrar_datos_pasajeros', 'alfanumerico')" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size: 25px; text-align: right;">Nombres</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-7">
+                                <input type="hidden" id="txtidpasajero_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}">
+                                <input type="hidden" id="txtflagws_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}">
+                                <input type="text" id="txtnombres_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="form-control form-control-lg" type="text" (click)="activar_teclado_alfanumerico('txtnombres_'+pasajero_asiento.asiento_ida+'_'+pasajero_asiento.asiento_vuelta, 'vista_mostrar_datos_pasajeros', 'alfanumerico')" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size: 25px; text-align: right;">Apellidos</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-7">
+                                <input id="txtapellidos_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="form-control form-control-lg" type="text" (click)="activar_teclado_alfanumerico('txtapellidos_'+pasajero_asiento.asiento_ida+'_'+pasajero_asiento.asiento_vuelta, 'vista_mostrar_datos_pasajeros', 'alfanumerico')" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size: 25px; text-align: right;">Fecha de Nacimiento</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-7">
+                                <input type="hidden" id="edad_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="form-control" maxlength="3" placeholder="Edad" readonly>
+                                <input type="date" id="fecha_nacimiento_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" value="{{date_hoy}}" min="1900-01-01" max="{{date_hoy}}" class="form-control form-control-lg" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-4 col-form-label" style="font-size: 25px; text-align: right;">Sexo</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-7" style="display: flex; justify-content: center; align-items: center; font-size: 20px;">
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label datos_pasajero" for="inlineRadio_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}_1">FEMENINO</label>
+                                    <input class="form-check-input" type="radio" name="inlineRadio_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" id="inlineRadio_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}_1" value="option1">
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <label class="form-check-label datos_pasajero" for="inlineRadio_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}_2">MASCULINO</label>
+                                    <input class="form-check-input" type="radio" name="inlineRadio_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" id="inlineRadio_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}_2" value="option2">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-sm-12">
+                                <br><br><br>
+                            </div>
+                        </div>
+                        <div id="div_mensaje_pasajero_nuevo" class="mb-3 row" style="display: none;">
+                            <div class="col-sm-12" style="text-align: center; font-size: 27px; font-weight: bold;">
+                                Llene los datos del pasajero
+                            </div>
+                        </div>
+                        <div *ngIf="cont_pasajero_nuevo == 1" class="mb-3 row">
+                            <div class="col-sm-12" style="text-align: center; font-size: 27px; font-weight: bold;">
+                                ¿Los datos son correctos?
+                            </div>
+                        </div>
+                        <br *ngIf="cont_pasajero_nuevo == 1"><br *ngIf="cont_pasajero_nuevo == 1">
+                        <div *ngIf="cont_pasajero_nuevo == 1" class="mb-3 row">
+                            <div class="col-sm-6" style="text-align: center;">
+                                <button id="btn_editar_pasajero" class="btn btn-warning" style="width: 63%; height: 130%; font-size: 22px;" (click)="editar_pasajero(pasajero_asiento.asiento_ida+'_'+pasajero_asiento.asiento_vuelta)">
+                                    NO, EDITAR DATOS
+                                </button>
+                            </div>
+                            <div class="col-sm-6" style="text-align: center;">
+                                <button class="btn btn-success" style="width: 63%; height: 130%; font-size: 22px;" (click)="continuar_pasajero()">
+                                    SI, CONTINUAR
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="vista_mostrar_tipo_de_compra" class="column" style="width: 85%; padding-top: 70px; display: none;">
+                    <br>
+                    <form id="form_seleccionar_boleta_factura">
+                        <div class="form-group" style="text-align: center; margin-bottom: 60px; font-size: 35px; font-weight: bold;">
+                            <div class="row">
+                                <div class="col-12">
+                                    SELECCIONE EL TIPO DE COMPROBANTE
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div_boleta" class="mb-3 row">
+                            <div class="col-sm-12" style="display: flex; align-items: center; justify-content: center;">
+                                <div id="btn_btn_boleto" class="btn btn-lg btn-secondary btn_boton_boleto_factura" (click)="select_prev_boleta_factura('BOLETA')">
+                                    <div>BOLETA</div>
+                                    <i class="fad fa-ticket icon_input_seleccion_init" style="color: white; bottom: 27px; font-size: 37px;"></i>
+                                </div>
+                                <i id="icon_btn_boleto" class="fad fa-check-circle" style="font-size: 37px; color: #198754; margin-left: 2%; display: none;" (click)="select_prev_boleta_factura('BOLETA')"></i>
+                                <i id="icon_btn_boleto_no_select" class="fas fa-circle" style="font-size: 37px; color: #ccc; margin-left: 2%; display: inline;" (click)="select_prev_boleta_factura('BOLETA')"></i>
+                            </div>
+                        </div>
+                        <div id="div_factura" class="mb-3 row">
+                            <div class="col-sm-12" style="display: flex; align-items: center; justify-content: center;">
+                                <div id="btn_btn_factura" class="btn btn-lg btn-secondary btn_boton_boleto_factura" (click)="select_prev_boleta_factura('FACTURA')">
+                                    <div>FACTURA</div>
+                                    <i class="fad fa-file-invoice icon_input_seleccion_init" style="color: white; bottom: 27px; font-size: 37px;"></i>
+                                </div>
+                                <i id="icon_btn_factura" class="fad fa-check-circle" style="font-size: 37px; color: #198754; margin-left: 2%; display: none;" (click)="select_prev_boleta_factura('FACTURA')"></i>
+                                <i id="icon_btn_factura_no_select" class="fas fa-circle" style="font-size: 37px; color: #ccc; margin-left: 2%; display: inline;" (click)="select_prev_boleta_factura('FACTURA')"></i>
+                            </div>
+                        </div>
+                        <div class="form-group"><br><br><br></div>
+                        <div class="form-group" style="text-align: center; margin-bottom: 60px; font-size: 35px; font-weight: bold;">
+                            <div class="row">
+                                <div class="col-12">
+                                    Correo y Número de Teléfono del Pasajero
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div_email_contacto" class="mb-3 row" style="display: flex; align-items: center; justify-content: center; position: relative; left: 5%;">
+                            <div class="col-sm-10">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" style="font-size: 40px; color: #4f4f4f; background-color: #e4e4e4; border: 1px solid #e1e1e1;"><i class="fad fa-envelope"></i></span>
+                                    <input id="emailDatosContacto" placeholder="CORREO ELECTRÓNICO" type="text" class="input_seleccion" style="border: 1px solid #e4e4e4; padding: 16px 10px; font-size: 27px;" (click)="activar_teclado_alfanumerico('emailDatosContacto', 'vista_mostrar_tipo_de_compra', 'correo')" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div_numero_contacto" class="mb-3 row" style="display: flex; align-items: center; justify-content: center; position: relative; left: 5%;">
+                            <div class="col-sm-10">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" style="font-size: 47.4px; color: #4f4f4f; background-color: #e4e4e4; border: 1px solid #e1e1e1;"><i class="fad fa-phone-square"></i></span>
+                                    <input id="numeroDatosContacto" placeholder="NÚMERO CELULAR" type="number" class="input_seleccion" style="border: 1px solid #e4e4e4; padding: 16px 10px; font-size: 27px;" (click)="activar_teclado_numerico('numeroDatosContacto', 'vista_mostrar_tipo_de_compra')" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="div_mensaje_alerta_boleta_factura" class="mb-3 row" style="display: flex; align-items: center; justify-content: center; margin-top: 23%;">
+                            <div class="row">
+                                <div class="col-12" style="text-align: center; font-size: 32px; font-weight: bold; color: red;">
+                                    {{mensaje_alerta_boleta_factura}}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                    <form id="form_ingresar_factura" style="display: none;">
+                        <div class="form-group" style="text-align: center; margin-bottom: 60px; font-size: 35px; font-weight: bold;">
+                            <div class="row">
+                                <div class="col-12">
+                                    <!--{{nombre_tipo_de_compra}}-->
+                                    INGRESE EL N° RUC
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="form-group" style="display: flex; justify-content: center; align-items: center;">
+                            <div id="numero_texto_ruc" class="input_seleccion">
+                                <div style="padding-left: 11%; font-size: 31px;">{{numero_ruc}}</div>
+                                <i class="fad fad fa-file-invoice icon_input_seleccion_init" style="bottom: 24px;"></i>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div>
+                                <br>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('1')">1</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('2')">2</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('3')">3</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('4')">4</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('5')">5</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('6')">6</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('7')">7</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('8')">8</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('9')">9</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="clase_button_numerico_vacio3"></div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('0')">0</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton_ruc('borrar')"><i class="fad fa-backspace"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="texto_mensaje_alerta_ruc != ''" class="form-group text-center" style="font-weight: bold; font-size: 22px; color: red;">
+                            <br><br>
+                            <p>{{texto_mensaje_alerta_ruc}}</p>
+                        </div>
+                    </form>
+
+                    <form id="form_mostrar_datos_factura" style="display: none;">
+                        <div class="form-group" style="text-align: center; margin-bottom: 60px; font-size: 35px; font-weight: bold;">
+                            <div class="row">
+                                <div *ngIf="val_factura_new == 1" class="col-12">
+                                    Datos de la Factura
+                                </div>
+                                <div *ngIf="val_factura_new == 0" class="col-12">
+                                    Llenar los datos de la Factura
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size: 25px; text-align: right;">RUC</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-8">
+                                <input id="idclienteSolicitaFactura" type="hidden">
+                                <input id="flagSolicitaFactura" type="hidden">
+                                <input id="rucSolicitaFactura" class="form-control form-control-lg" type="text" (click)="activar_teclado_numerico('rucSolicitaFactura', 'vista_mostrar_tipo_de_compra')" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size: 25px; text-align: right;">Razón Social</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-8">
+                                <input id="razonSolicitaFactura" class="form-control form-control-lg" type="text" (click)="activar_teclado_alfanumerico('razonSolicitaFactura', 'vista_mostrar_tipo_de_compra', 'alfanumerico')" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <label class="col-sm-3 col-form-label" style="font-size: 25px; text-align: right;">Dirección</label>
+                            <div class="col-sm-1" style="display: flex; justify-content: center; align-items: center; font-size: 25px; width: 5%; text-align: center;">:</div>
+                            <div class="col-sm-8">
+                                <input id="direccionSolicitaFactura" class="form-control form-control-lg" type="text" (click)="activar_teclado_alfanumerico('direccionSolicitaFactura', 'vista_mostrar_tipo_de_compra', 'alfanumerico')" readonly>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-sm-12">
+                                <br><br><br>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-sm-12" style="text-align: center; font-size: 27px; font-weight: bold;">
+                                ¿Los datos son correctos?
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="mb-3 row">
+                            <div class="col-sm-6" style="text-align: center;">
+                                <button id="btn_editar_ruc" class="btn btn-warning" style="width: 60%; height: 118%; font-size: 20px;" (click)="editar_ruc()">
+                                    NO, EDITAR DATOS
+                                </button>
+                            </div>
+                            <div class="col-sm-6" style="text-align: center;">
+                                <button id="btn_continuar_ruc" class="btn btn-success" style="width: 60%; height: 118%; font-size: 20px; display: none;" (click)="continuar_ruc()">
+                                    SI, CONTINUAR
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="vista_mostrar_resumen_compra" class="column" style="width: 85%; padding-top: 70px; display: none;">
+                    <form>
+                        <div class="form-group" style="text-align: center; margin-bottom: 40px; font-size: 27px; font-weight: bold;">
+                            <div class="row">
+                                <div class="col-12">
+                                    DETALLES DE LA COMPRA<br>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="col-sm-12">
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="col-10" style="margin-bottom: 15px;">
+                                        <div *ngFor="let pasajero_asiento of pasajero_asientos; index as i;" class="row g-0" style="border: 0px; font-size: 18px; padding: 10px; margin-bottom: 20px;">
+                                            <!------------------------------------->
+                                            <div class="col-12" style="text-align: left; padding-bottom: 5px; margin-bottom: 15px; border-bottom: 1px dashed #9b9b9b; color: #ff641c; font-weight: bold;">
+                                                DATOS DEL PASAJERO {{i+1}}
+                                            </div>
+                                            <!------------------------------------->
+                                            <div class="col-2" style="text-align: left; margin-bottom: 10px; font-weight: bold;">
+                                                TIPO DOC.
+                                            </div>
+                                            <div class="col-1" style="text-align: center; margin-bottom: 10px; font-weight: bold;">
+                                                :
+                                            </div>
+                                            <div id="fin_tip_doc_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="col-2" style="text-align: left; margin-bottom: 10px;">
+                                                DNI
+                                            </div>
+                                            <div class="col-2">&nbsp;</div>
+                                            <div class="col-2" style="text-align: right; margin-bottom: 10px; font-weight: bold;">
+                                                NRO DOC.
+                                            </div>
+                                            <div class="col-1" style="text-align: center; margin-bottom: 10px; font-weight: bold;">
+                                                :
+                                            </div>
+                                            <div id="fin_num_doc_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="col-2" style="text-align: left; margin-bottom: 10px;">
+                                                
+                                            </div>
+                                            <!------------------------------------->
+                                            <div class="col-2" style="text-align: left; margin-bottom: 10px; font-weight: bold;">
+                                                NOMBRES
+                                            </div>
+                                            <div class="col-1" style="text-align: center; margin-bottom: 10px; font-weight: bold;">
+                                                :
+                                            </div>
+                                            <div id="fin_nombre_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" class="col-7" style="text-align: left; margin-bottom: 10px;">
+                                                
+                                            </div>
+                                            <div class="col-2" style="position: relative;">
+                                                <input id="fin_asiento_{{pasajero_asiento.asiento_ida}}_{{pasajero_asiento.asiento_vuelta}}" type="text" value="" style="text-align: left; width: 100%; padding-left: 35%; border: 0px; color: #1d1d1d; display: flex; justify-content: center; align-items: center;" readonly>
+                                                <i class="fad fa-chair-office icon_input_seleccion_init" style="color: #1d1d1d; bottom: 10px; left: 4px; font-size: 24px; display: flex; justify-content: center; align-items: center;"></i>
+                                            </div>
+                                            <!------------------------------------->
+                                        </div>
+
+                                        <br>
+
+                                        <div *ngIf="nombre_tipo_de_compra.includes('FACTURA')" class="row g-0" style="border: 0px; font-size: 18px; padding: 10px; margin-bottom: 20px;">
+                                            <!------------------------------------->
+                                            <div class="col-12" style="text-align: left; padding-bottom: 5px; margin-bottom: 15px; border-bottom: 1px dashed #9b9b9b; color: #ff641c; font-weight: bold;">
+                                                DATOS DEL CLIENTE
+                                            </div>
+                                            <!------------------------------------->
+                                            <div class="col-2" style="text-align: left; margin-bottom: 10px; font-weight: bold;">
+                                                R.U.C
+                                            </div>
+                                            <div class="col-1" style="text-align: center; margin-bottom: 10px; font-weight: bold;">
+                                                :
+                                            </div>
+                                            <div id="fin_num_ruc" class="col-9" style="text-align: left; margin-bottom: 10px;">
+                                                
+                                            </div>
+                                            <!------------------------------------->
+                                            <div class="col-2" style="text-align: left; margin-bottom: 10px; font-weight: bold; width: 19.666667%;">
+                                                RAZON SOCIAL
+                                            </div>
+                                            <div class="col-1" style="text-align: center; margin-bottom: 10px; font-weight: bold; width: 2.333333%;">
+                                                :
+                                            </div>
+                                            <div id="fin_razon_social_ruc" class="col-9" style="text-align: left; margin-bottom: 10px; padding-left: 3%;">
+                                                
+                                            </div>
+                                            <!------------------------------------->
+                                            <div class="col-2" style="text-align: left; margin-bottom: 10px; font-weight: bold;">
+                                                DIRECCION
+                                            </div>
+                                            <div class="col-1" style="text-align: center; margin-bottom: 10px; font-weight: bold;">
+                                                :
+                                            </div>
+                                            <div id="fin_direccion_ruc" class="col-9" style="text-align: left; margin-bottom: 10px;">
+                                                
+                                            </div>
+                                            <!------------------------------------->
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br><br>
+
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="col-10" style="margin-bottom: 15px;">
+                                        <div id="card_1" class="card card-itinerario" style="cursor: pointer; box-shadow: 8px 8px 8px #ccc;">
+                                            <div class="row g-0">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-12 div_servicio">
+                                                            <div style="margin-top: 2%;">
+                                                                <div class="servicio" style="font-style: normal; color: black; margin-bottom: 5px;"><font>IDA</font></div>
+                                                                <div class="dat_servicio">{{servicioIda}}</div>
+                                                                <div class="linea_servicio" style="width: 76%; margin-right: 0%;"></div>
+                                                            </div>
+                                                            <div class="col-12 col-lg-12">
+                                                                <div class="row" style="margin-top: 20px;">
+                                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                                        <span class="dat_salida_embar" style="font-style: normal; color: #ff6a1d; font-size: 19px; text-transform: uppercase;">{{nombre_ciudad_origen}}</span>  
+                                                                        <span class="dat_hora_embar" style="color: black; margin-top: -3px;">{{horaEmbarqueIda}} h</span>
+                                                                    </div>
+                                                                    <div class="col-2" style="text-align: center;">
+                                                                        <i class="fal fa-long-arrow-right icon_flecha"></i>
+                                                                    </div>
+                                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                                        <span class="dat_llegada_desem" style="font-style: normal; color: #ff6a1d; font-size: 19px; text-transform: uppercase;">{{nombre_ciudad_destino}}</span>  
+                                                                        <span class="dat_hora_desem" style="color: black; margin-top: -3px;">{{horaDesembarqueIda}} h</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 margin_embarque_desembarque" style="margin-top: 0px !important; margin-bottom: 20px;">
+                                                            <div class="col-12" style="padding-right: 11px;">
+                                                                <div class="row">
+                                                                    <div class="col-5" style="display: flex; justify-content: center; align-items: center; padding-left: 8%; text-align: center;">
+                                                                        <span class="dat_salida_embar_detall" style="color: black; font-size: 14px;">{{direccionEmbarqueIda}}</span>
+                                                                    </div>
+                                                                    <div class="col-2" style="text-align: center;">&nbsp;</div>
+                                                                    <div class="col-5" style="display: flex; justify-content: center; align-items: center; padding-left: 8%; text-align: center;">
+                                                                        <span class="dat_llegada_desem_detall" style="color: black; font-size: 14px;">{{direccionDesembarqueIda}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br><br>
+
+                                <div *ngIf="ida_vuelta == 2" class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="col-10" style="margin-bottom: 15px;">
+                                        <div id="card_1" class="card card-itinerario" style="cursor: pointer; box-shadow: 8px 8px 8px #ccc;">
+                                            <div class="row g-0">
+                                                <div class="col-12">
+                                                    <div class="row">
+                                                        <div class="col-12 div_servicio">
+                                                            <div style="margin-top: 2%;">
+                                                                <div class="servicio" style="font-style: normal; color: black; margin-bottom: 5px;"><font>VUELTA</font></div>
+                                                                <div class="dat_servicio">{{servicioVuelta}}</div>
+                                                                <div class="linea_servicio" style="width: 76%; margin-right: 0%;"></div>
+                                                            </div>
+                                                            <div class="col-12 col-lg-12">
+                                                                <div class="row" style="margin-top: 20px;">
+                                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                                        <span class="dat_salida_embar" style="font-style: normal; color: #ff6a1d; font-size: 19px; text-transform: uppercase;">{{nombre_ciudad_destino}}</span>  
+                                                                        <span class="dat_hora_embar" style="color: black; margin-top: -3px;">{{horaEmbarqueVuelta}} h</span>
+                                                                    </div>
+                                                                    <div class="col-2" style="text-align: center;">
+                                                                        <i class="fal fa-long-arrow-right icon_flecha"></i>
+                                                                    </div>
+                                                                    <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                                        <span class="dat_llegada_desem" style="font-style: normal; color: #ff6a1d; font-size: 19px; text-transform: uppercase;">{{nombre_ciudad_origen}}</span>  
+                                                                        <span class="dat_hora_desem" style="color: black; margin-top: -3px;">{{horaDesembarqueVuelta}} h</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 margin_embarque_desembarque" style="margin-top: 0px !important; margin-bottom: 20px;">
+                                                            <div class="col-12" style="padding-right: 11px;">
+                                                                <div class="row">
+                                                                    <div class="col-5" style="display: flex; justify-content: center; align-items: center; padding-left: 8%; text-align: center;">
+                                                                        <span class="dat_salida_embar_detall" style="color: black; font-size: 14px;">{{direccionEmbarqueVuelta}}</span>
+                                                                    </div>
+                                                                    <div class="col-2" style="text-align: center;">&nbsp;</div>
+                                                                    <div class="col-5" style="display: flex; justify-content: center; align-items: center; padding-left: 8%; text-align: center;">
+                                                                        <span class="dat_llegada_desem_detall" style="color: black; font-size: 14px;">{{direccionDesembarqueVuelta}}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <br *ngIf="ida_vuelta == 2"><br *ngIf="ida_vuelta == 2">
+
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="col-10" style="margin-bottom: 20px;">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div *ngFor="let termCond of TerminosCondiciones" style="margin-bottom: 4px;">
+                                                    <div class="form-check" style="text-align: left; font-size: 20px;">
+                                                        <input class="form-check-input" type="checkbox" value="" id="chktermcond_{{termCond.termcond_id}}">
+                                                        <label class="form-check-label" for="chktermcond_{{termCond.termcond_id}}">
+                                                            <font [style.color]="'#ff6719'" *ngIf="termCond.obligatorio == 1" [ngClass]="termCond.texto.includes('haber leído los Términos de uso') ? 'terminos_condiciones' : ''">*</font> 
+                                                            <font [style.color]="'#ff6719'" *ngIf="termCond.texto.includes('haber leído los Términos de uso')" class="terminos_condiciones" (click)="mostrar_modal('modalTerminosCondiciones')">Confirmo y acepto haber leído los Términos de uso, Protección de datos y Requisitos para viajar. <i class="fad fa-file-alt" style="cursor: pointer;" title="ver Términos y Condiciones"></i></font>
+                                                            <font [style.color]="'#545454'" *ngIf="!termCond.texto.includes('haber leído los Términos de uso')">{{termCond.texto}}</font> 
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-12" style="text-align: center; margin-bottom: 20px; margin-top: 20px;">
+                                        <button type="button" class="btn" id="btn_continuar_pago" style="background-color: #ff6719; color: white; font-size: 23px;" (click)="ContinuarPago()"><i class="fad fa-money-check"></i> CONTINUAR CON EL PAGO</button>
+                                    </div>
+                                </div>
+
+                                <br><br><br><br><br><br><br>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div id="vista_pagar" class="column" style="width: 85%; padding-top: 70px; display: none;">
+                    <div id="muestra_mensaje_1" class="form-group" style="text-align: center; margin-bottom: 60px; font-size: 35px; font-weight: bold;">
+                        <div class="row">
+                            <div class="col-12">
+                                ¿Cómo desea pagar?
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="muestra_mensaje_2" class="row" style="margin-bottom: 50px;">
+                        <div class="col-6" style="text-align: right;">
+                            <div id="btn_pago_regular" class="btn btn-md btn_pago_tarjeta btn_pago_tarjeta_seleccionado" (click)="btn_pago_regular()">
+                                PAGO REGULAR
+                            </div>
+                        </div>
+                        <div id="div_pago_tarjeta_promociones" class="col-6" style="text-align: left; display: none;">
+                            <div id="btn_pago_tarjeta_promociones" class="btn btn-md btn_pago_tarjeta" (click)="btn_pago_tarjeta_promociones()">
+                                TARJETA (PROMOCIONES)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="muestra_pague_aquí_promociones" class="row justify-content-md-center" style="display: none; margin-bottom: 40px;">
+                        <div *ngFor="let datTarjeta of DatosTarjeta" class="col-3" style="margin-bottom: 10px;">
+                            <div id="{{datTarjeta.div}}" class="card card_tarjeta" (click)="seleccionarPromocionTarjeta(datTarjeta)">
+                                <div class="card-header text-center card_tarjeta_cabecera">
+                                    Tarjeta {{datTarjeta.nombreTarjeta}}<br>
+                                </div>
+                                <br><br *ngIf="datTarjeta.br_top == 1">
+                                <div class="card-body text-center" style="background-color: white; padding: 0 0;">
+                                    <img alt="image_pago_tarjetas" [style.width]="datTarjeta.width+'%'" src="{{datTarjeta.urlImagen}}">
+                                </div>
+                                <br><br *ngIf="datTarjeta.br_bottom == 1">
+                                <div class="card-footer text-center card_tarjeta_footer">
+                                    SELECCIONAR
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="muestra_precio_total" class="row justify-content-md-center">
+                        <div  *ngIf="promocionActiva == 0" class="col-8" style="margin-bottom: 60px; border: 1px solid #ccc;">
+                            <div class="row" style="margin-top: 14px; margin-bottom: 13px;">
+                                <div class="col-4 col-sm-4 text-center txt_total_8" style="margin-top: 6px;">
+                                    <font style="font-weight: bold; font-size: 14.5px;">N° de pasajes: {{cant_pasajeros_asientos_ida+cant_pasajeros_asientos_vuelta}}</font><br>
+                                </div>
+                                <div class="col-8 col-sm-8 text-center">
+                                    <div style="margin-top: 0px; text-align: right; margin-right: 9%;">
+                                        <font class="txt_total_4" ><em>Precio Total </em></font>&nbsp;
+                                        <font class="txt_total_6" >s/ {{precio_total_pasajeros_asientos}}.00</font>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div  *ngIf="promocionActiva == 1" class="col-8" style="margin-bottom: 60px; border: 1px solid #ccc;">
+                            <div class="row" style="margin-top: 14px; margin-bottom: 13px;">
+                                <div class="col-4 col-sm-4 txt_total_8">
+                                    <font style="font-weight: bold; font-size: 14.5px;">N° de pasajes: {{cant_pasajeros_asientos_ida+cant_pasajeros_asientos_vuelta}}</font><br>
+                                </div>
+                                <div class="col-8 col-sm-8 text-center">
+                                    <div style="text-align: right; margin-right: 9%;">
+                                        <!--<span class="txt_total_1" title="Descuento aplicable solo para la Web">-20%</span>-->
+                                        <span class="txt_total_2" ><span class="txt_total_3">s/ {{precio_total_pasajeros_asientos_original.toFixed(2)}}</span></span>&nbsp;<font class="txt_total_7">(Original)</font>
+                                    </div>
+                                    <div style="margin-top: 0px; text-align: right; margin-right: 9%;">
+                                        <font class="txt_total_4" ><em>Precio Total </em> <font class="txt_total_5" >(Promoción)</font></font>&nbsp;
+                                        <font class="txt_total_6" >s/ {{precio_total_pasajeros_asientos}}.00</font>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="muestra_pague_aquí" class="row justify-content-md-center" style="display: flex;">
+                        <div id="div_pago_tarjetas" class="col-8" style="margin-bottom: 60px;">
+                            <div class="card" (click)="pagarPaymentPagoEfectivo(4)" style="cursor: pointer;">
+                                <div class="card-header text-center" style="background-color: white; color: #858585; font-weight: bold; border-bottom: 0px; font-size: 18px;">
+                                    Realice su pago con tarjeta de crédito, débito o con <br>
+                                    su billetera electrónica favorita bajo la red segura de: <br>
+                                </div>
+                                <div class="card-body text-center" style="background-color: white; padding: 0 0;">
+                                    <img alt="image_pago_tarjetas" style="width: 70%;" src="./assets/img/billetera_digital_pagos.png">
+                                </div>
+                                <div id="btn_pague_payment" class="card-footer text-center" style="background-color: #ff6719; color: white; font-size: 16px; font-weight: bold; padding: 13px;">
+                                    PAGUE AQUÍ
+                                </div>
+                            </div>
+                        </div>
+
+                        <br><br><br>
+
+                        <div id="div_cancelar_venta" class="row justify-content-md-center" style="display: none;">
+                            <div class="col-12 col-sm-6" style="margin-bottom: 10px;">
+                                <div class="card" (click)="liberarVenta()">
+                                    <div class="card-header text-center" style="background-color: white; color: #858585; font-weight: bold; border-bottom: 0px; font-size: 19px;">
+                                        Liberar asientos y realizar una nueva venta.
+                                    </div>
+                                    <div id="btn_pague_payment" class="card-footer text-center" style="background-color: #f92f2f; color: white; font-size: 17px; font-weight: bold; padding: 13px; cursor: pointer;">
+                                        <i class="fad fa-file-times" style="font-size: 19px;"></i> CANCELAR VENTA
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="vista_pagar_imagenes" class="column" style="width: 70%; padding-top: 70px; display: none;">
+                        <br><br><br>
+                        <form>
+                            <div class="form-group" style="text-align: center; margin-bottom: 60px; font-size: 41px; font-weight: bold;">
+                                <div class="row">
+                                    <div class="col-12">
+                                        Pasos para realizar el Pago
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 10px; font-size: 21px; font-weight: bold;">
+                                <div class="row">
+                                    <div class="col-5" style="display: flex; justify-content: end; align-items: center;">
+                                        <img src="../../assets/img/POS-2.png" style="width: 60%;">
+                                    </div>
+                                    <div class="col-7" style="display: flex; justify-content: center; align-items: center; font-size: 32px;">
+                                        * Acercar la tarjeta
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 10px; font-size: 21px; font-weight: bold;">
+                                <div class="row">
+                                    <div class="col-5" style="display: flex; justify-content: end; align-items: center;">
+                                        <img src="../../assets/img/POS-3.png" style="width: 60%;">
+                                    </div>
+                                    <div class="col-7" style="display: flex; justify-content: center; align-items: center; font-size: 32px;">
+                                        * Colocar el PIN
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 10px; font-size: 21px; font-weight: bold;">
+                                <div class="row">
+                                    <div class="col-5" style="display: flex; justify-content: end; align-items: center;">
+                                        <img src="../../assets/img/POS-4.png" style="width: 60%;">
+                                    </div>
+                                    <div class="col-7" style="display: flex; justify-content: center; align-items: center; font-size: 32px;">
+                                        * Presionar el botón verde
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dato_superior_derecho" style="color: #ffffff; position: absolute; top: 2.2%; left: 4%; text-align: center;">
+        <img src="../../assets/img/LOGOTIPO BUS A COLOR RGB-01.png" style="height: 2.6em; width: 9em;"><br>
+        <font style="font-style: italic; font-size: 16px;">Moviendo al Perú</font>
+    </div>
+
+    <div id="btn_atras" class="btn btn-lg btn-danger" style="color: #ffffff; position: absolute; top: 87%; left: 9%; width: 30%;" (click)="atras()">
+        <div>ATRÁS</div>
+        <i class="fad fa-chevron-circle-left icon_input_seleccion_init" style="color: white;"></i>
+    </div>
+    <div id="btn_buscar_pasajero" class="btn btn-lg btn-success btn_buscar_pasajero_disable" style="position: absolute; top: 87%; right: 9%; width: 32%; padding-left: 0%;" (click)="buscar_pasajero()">
+        <div style="margin-left: -13px;">BUSCAR PASAJERO</div>
+        <i class="fad fa-search icon_input_seleccion_end" style="color: white;"></i>
+    </div>
+    <div id="btn_buscar_ruc" class="btn btn-lg btn-success btn_buscar_ruc_disable" style="position: absolute; top: 87%; right: 9%; width: 32%; padding-left: 0%; display: none;" (click)="buscar_ruc()">
+        <div style="margin-left: -21px;">BUSCAR RUC</div>
+        <i class="fad fa-search icon_input_seleccion_end" style="color: white;"></i>
+    </div>
+    <div id="btn_siguiente_boleta_factura" class="btn btn-lg btn-success" style="color: white; position: absolute; top: 87%; right: 9%; width: 30%; padding-left: 0%; display: none;" (click)="siguiente_boleta_factura()">
+        <div>SIGUIENTE</div>
+        <i class="fad fa-chevron-circle-right icon_input_seleccion_end" style="color: white;"></i>
+    </div>
+
+    <div id="dato_inferior_izquierda" style="color: #ffffff; position: absolute; bottom: 2%; left: 4%; display: flex; align-items: center; font-size: 19px;">
+        <i class="fab fa-facebook-f" style="margin-right: 1px;"></i>&nbsp;
+        <i class="fab fa-instagram" style="margin-right: 1px;"></i>&nbsp;
+        <img src="../../assets/img/iconos/tiktok.png" style="width: 2.2%; filter: invert(100%) sepia(0%) saturate(1000%) hue-rotate(329deg) brightness(200%) contrast(98%);">&nbsp;&nbsp;
+        <font>&#64;movilbus.pe</font>
+    </div>
+    <div id="dato_inferior_derecho" style="color: #ffffff; position: absolute; bottom: 2%; right: 4%; font-size: 19px;">
+        www.movilbus.pe
+    </div>
+
+    <div id="btn_boton_home" class="btn btn-lg" (click)="liberarVenta()">
+        <div>IR AL INICIO</div>
+        <i class="fad fa-home-lg-alt icon_input_seleccion_init" style="color: #ff6719; left: 16px; bottom: 19px;"></i>
+    </div>
+</div>
+
+<div class="modal fade" id="modalTerminosCondiciones" tabindex="1" role="dialog" aria-labelledby="modalTerminosCondicionesTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content" style="border-color: #ec6726 !important;">
+        <div id="text_terminos_condiciones" class="modal-body" style="padding: 0.45rem !important; height: 850px; overflow-y: auto;">
+            <div style="text-align: right; padding-right: 2px;">
+                <i class="fa fa-times" style="font-size: 20px; cursor: pointer;" (click)="ocultar_modal('modalTerminosCondiciones');"></i>
+            </div>
+            <div class="text-center" style="margin-bottom: 20px; font-weight: 600; font-size: 22px;">
+                Clausulas Generales de Contratación del Servicio de Viaje
+            </div>
+            <div class="col-sm-12" style="color: #383838 !important;">
+                <p style="text-align: left; font-size: 15px; margin-left: 6px;">
+                    La adquisición de un boleto de viaje en Movil Bus, implica el total conocimiento y aceptación de las condiciones que especificamos a continuación:  <br>
+                </p>
+                <p style="text-align: left; font-size: 15px; margin-left: 15px; margin-right: 15px;">
+                    1. Para poder generar la compra de un Boleto de viaje por cualquier canal de venta en LA EMPRESA, será indispensable brindar un número de teléfono y correo electrónico del pasajero, para el envío de la confirmación de la compra y/o comunicaciones necesarias del servicio contratado.   <br><br>
+                    2. El Pasajero es responsable de verificar al momento de la compra que todos los datos registrados en su Boleto de viaje que se le enviará mediante correo electrónico o imprimirá en Counter sean los correctos, la contratación del servicio implica plena conformidad. <br><br>
+                    3. Las compras en LA EMPRESA deben ser realizada en moneda nacional (Sol peruano). <br><br>
+                    4. LA EMPRESA no se hace responsable de las ventas online que no se logren concretar debido a fallas en comunicación de enlace (operador de internet). <br><br>
+                    5. Las compras por todos nuestros canales de venta emitirán un comprobante electrónico (boleta o factura) por cada pasajero. Las compras por internet tienen un límite de 5 Boletos de ida y 5 Boletos de retorno por transacción. <br>
+                    6. El Boleto de viaje es personal e intransferible, siendo el único documento válido para viajar en la fecha y hora impresa en el Boleto. <br><br>
+                    7. El pasajero debe presentarse 45 minutos antes de la hora de viaje; en caso de que no se presente a la hora de embarque de acuerdo con la fecha y hora señalada en su Boleto de viaje o no lleve consigo su Boleto de viaje físico o virtual y documento de identidad físico y original para embarcarse, además de los documentos migratorios de ser el caso (esta medida incluye a los menores de edad), el pasajero perderá el derecho a viajar y el valor del boleto de viaje pagado. <br><br>
+                    8. No se permitirá el embarque y/o desembarque en puntos diferentes al registrado en el Boleto de viaje. Nuestros servicios realizan escalas comerciales en la ruta, de acuerdo con la autorización del MTC. <br><br>
+                    9. En el caso de un menor que viaje solo, podrá hacerlo a partir de los 14 años presentando permiso notarial de viaje original y copia de DNI de cualquiera de sus padres. Los menores de edad que viajen solos o en compañía de un adulto que no sean sus padres, deben presentar un permiso notarial de viaje de cualquiera de sus padres (Art. 111° de Ley 27337). El cliente acepta que es requisito indispensable la presentación del permiso notarial original y copia al momento de la compra del Boleto de viaje y al momento del embarque del menor de edad. De no contar con la documentación debida para el embarque, no podrán viajar y perderán el valor de su Boleto de viaje. <br><br>
+                    10. Los niños mayores de cinco años pagan por Boleto de viaje, los menores de cinco años que no paguen Boleto de viaje no tienen derecho a un asiento. <br><br>
+                    11. El pasajero está prohibido de abordar el bus con armas de fuego o elementos punzo cortantes, así como materiales inflamables, explosivos, corrosivos, venenosos o similares. Es obligación del pasajero permitir y dar todas las facilidades al personal de LA EMPRESA para que efectúe la revisión de su equipaje de mano y de su persona. D.S. 017-2009 MTC. <br>
+                    Asimismo, los Pasajeros con Licencia de la DICSCAMEC, deberán brindar la facilidad para que el arma sea descargada, embalada y enviada en la cabina de conductor. <br><br>
+                    12. El Pasajero no podrá viajar bajo la influencia de alcohol y/o estupefacientes. En este caso, perderá el valor total del Boleto de viaje. <br><br>
+                    13. El pasajero tiene derecho a transportar sin costo hasta 20 kilos de equipaje, entendiéndose como tal a todos los bienes nuevos o usados, que el pasajero pueda razonablemente necesitar, siempre que se advierta que son para su uso o consumo, de acuerdo con el propósito y duración del viaje (Decreto Supremo 182-2013-EF). <br><br>
+                    14. El derecho de transportar equipaje aplica sólo para pasajeros que ocupen un asiento. <br><br>
+                    15. El exceso de equipaje será admitido cuando la capacidad del bus lo permita, previo pago de la tarifa vigente de LA EMPRESA por el exceso. El pasajero autoriza a LA EMPRESA que todo exceso de equipaje sea trasladado en un bus distinto. <br><br>
+                    Cuando el pasajero no cumpla con pagar el exceso de equipaje, este no podrá ser embarcado en la bodega del bus. En caso el pasajero no aborde el bus por este motivo, asume la responsabilidad de la pérdida del servicio contratado. <br><br>
+                    16. Es responsabilidad del pasajero la custodia de sus equipajes de mano en el salón del bus, así como del retiro de sus equipajes de la bodega del bus inmediatamente después de desembarcar, LA EMPRESA no se responsabiliza por equipajes que no han sido declarados para custodia , ni por el deterioro de equipajes mal embalados o maletas acrílicas o plásticas que no estén debidamente protegidas. <br><br>
+                    17. LA EMPRESA se reserva el derecho de trasladar a la bodega del vehículo todo paquete, equipaje, bulto, encomienda u otros, que se encuentren obstaculizando el tránsito en el pasadizo del salón y las puertas o salidas de emergencia del vehículo (Numeral 42.1.15 del Decreto Supremo 017-2009/MTC). <br><br>
+                    18. No está permitido transportar en bodega y/o cabina, animales, armas, explosivos, inflamables, químicos y sustancias que pongan en peligro la seguridad de los pasajeros. <br><br>
+                    19. Está prohibido que el pasajero traslade animales o mascotas en el salón del bus, salvo perros lazarillos debidamente acreditados en el CONADIS. <br><br>
+                    20. LA EMPRESA no se responsabilizará por equipajes u objetos olvidados dentro del bus o en nuestras instalaciones. <br><br>
+                    21. En caso de pérdida y/sustracción de equipajes declarados en la bodega atribuibles a LA EMPRESA, se le otorgará al usuario a manera de resarcimiento diez (10) veces el costo del flete pagado. En caso de pérdida y/o sustracción de equipajes no declarados en la bodega atribuibles a la empresa, se aplicará lo establecido en el numeral 76.2.12 art. 76° del D.S 017-2009-MTC. <br><br>
+                    22. En el caso de la remisión y/o traslado de frutas y/o vegetales sometidos a control por parte de SENASA, LA EMPRESA está obligada a restringir la remisión y/o traslado de dichos productos hospedantes de la Mosca de la Fruta, siendo una restricción de ley. <br><br>
+                    23. Si LA EMPRESA suspende la prestación de sus servicios se postergará el Boleto de viaje con fecha abierta, el usuario deberá informar a LA EMPRESA con una anticipación no menor a 24 horas, la fecha y hora de su próximo viaje. <br><br>
+                    24. En caso de presentarse alguna eventualidad en el lugar de origen o durante el viaje, que impida la prestación del servicio, LA EMPRESA realizará el transbordo en unidades estándar (propias o terceras). Si por causas ajenas LA EMPRESA se ve imposibilitada de hacer el transbordo, se reembolsará el monto equivalente al tramo de viaje no recorrido. <br><br>
+                    25. La hora de embarque y desembarque en puntos intermedios (escalas) es referencial debido a que no es una oficina de origen y estando el bus en tránsito, está sujeto a condiciones de la vía, condiciones climáticas, condiciones de tránsito y otros factores ajenos a LA EMPRESA. <br><br>
+                    26. Se aceptarán cambios y postergaciones (de forma presencial), hasta 4 horas antes de la hora del viaje impresa en el Boleto de viaje, previo pago en caso de incremento de la tarifa. En caso de que no pueda acercarse el titular, podrá enviar a una persona a realizar el cambio o postergación, con una solicitud simple adicionando la copia de DNI del titular y el Boleto de viaje. En caso de tratarse de una persona jurídica, la persona que realice el trámite (pasajero o tercero) deberá presentar una carta membretada que detalle solicitud del cambio a realizar, debidamente firmada y sellada por el representante legal de la empresa. La carta membretada deberá adjuntar una copia de DNI del representante legal y copia de DNI del pasajero. <br><br>
+                    27. Las tarifas estarán sujetos a variación de precio según temporada sin previo aviso. <br><br>
+                    28. Los Boletos de viaje con tarifas promocionales, están sujetos a restricciones y/o términos y condiciones, las que pueden ser visualizadas en la página web de acuerdo al tipo de promoción: “https://www.movilbus.pe/promociones/” Para endoso o postergación se perderá la promoción y se procederá al cobro de la diferencia entre el precio pagado y el precio regular del asiento, debiendo realizarse el trámite de forma presencial en Counter con 24 horas de anticipación a la hora de viaje original de acuerdo al ticket de embarque. <br><br>
+                    29. El Servicio EJECUTIVO VIP / EJECUTIVO VIP PLUS puede prestarse en un bus de uno o dos pisos según disponibilidad de flota, generándose este cambio después de la compra, respetando y manteniendo el tipo de asiento y salón de bus. <br><br>
+                    30. Si el servicio programado no se realiza por razones atribuibles a LA EMPRESA, el usuario podrá postergar y/o endosar su Boleto de viaje o en su defecto solicitar la devolución del 100% del monto pagado por el mismo, mediante el correo electrónico contacto&#64;movilbus.pe para que se otorgue el formulario de solicitud. <br><br>
+                    31. NO aplican reembolsos para Boletos comprados el mismo día del viaje o con tarifa promocional. En caso de requerir endoso o postergación de un pasaje comprados el mismo día del viaje se aceptará el cambio hasta 4 horas antes del viaje, se procederá al cobro de la diferencia entre el precio pagado y el precio regular del asiento, de haberlo comprado dentro de este tiempo, no habrá lugar a cambios. <br><br>
+                    32. La devolución del monto del Boleto de viaje con tarifa regular y a solicitud del titular, podrá ser efectuada con una anticipación no menor a 24 horas de la fecha y hora del servicio, con la respectiva deducción del 20% por gastos administrativos, sobre el costo total del Boleto de viaje. La solicitud de devolución se aceptará mediante el correo electrónico contacto&#64;movilbus.pe para que se otorgue el formulario de solicitud. <br><br>
+                    Toda solicitud de devolución realizada dentro de las 24 horas a la hora de embarque señalada en su Boleto de viaje será respondida o considerada como improcedente. <br><br>
+                    33. Las partes convienen que las desavenencias serán resueltas de conformidad con los Reglamentos del Centro de Conciliación y Arbitraje Nacional e Internacional de la Cámara de Comercio de Lima, a cuyas normas y administración las partes se someten en forma incondicional, declarando conocerlas y aceptarlas en su integridad. <br><br>
+
+                </p>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalAgregarInfante" tabindex="-1" role="dialog" aria-labelledby="modalAgregarInfanteTitle" aria-hidden="true" >
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" style="font-weight: bold;">Datos del pasajero <font style="color: #737373; font-size: 16px;">Infante</font></h4>
+            <i class="fa fa-times" style="font-size: 20px; cursor: pointer;" (click)="ocultar_modal('modalAgregarInfante');"></i>
+        </div>
+        <div class="modal-body" style="color: #383838 !important;">
+            <form>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <label style="font-size: 18px;">Vínculo del Menor:</label>
+                    </div>
+                    <div class="col">
+                        <select id="selectTipVinculo" class="custom-select form-select" (change)="changeSelect($event)">
+                            <option value="Padre">PADRE - HIJO</option>
+                            <option value="Apoderado">APODERADO</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <select id="selectTipDocInfante" class="custom-select form-select" (change)="changeSelect($event)">
+                            <option *ngFor="let tip_doc of tipos_documentos" value="{{tip_doc.idTipDoc}}" [selected]="tip_doc.idTipDoc == 1">{{tip_doc.nombre}}</option>
+                        </select>
+                    </div>
+                    <div class="col">
+                        <input type="hidden" id="idapoderadoInfante" value="">
+                        <input type="hidden" id="idpasajeroInfante" value="">
+                        <input type="hidden" id="flagwsInfante" value="">
+                        <input type="text" id="txtdocumentoInfante" (blur)="searchNameDocumentoInfante($event)" (keyup)="deleteBlankDataDocumentoInfante($event)" (keypress)="maxLengthDocumentoInfante($event)" class="form-control" placeholder="N° Documento">
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <input type="text" id="txtnombresInfante" class="form-control" placeholder="Nombres">
+                    </div>
+                    <div class="col">
+                        <input type="text" id="txtapellidosInfante" class="form-control" placeholder="Apellidos">
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <input type="date" id="fecha_nacimiento_infante" value="{{date_hoy}}" min="1900-01-01" max="{{date_hoy}}" (blur)="verificar_edad_infante()" class="form-control" maxlength="3" placeholder="Fecha de Nacimiento">
+                    </div>
+                    <div class="col" style="font-size: 18px;">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioFemeninoInfante" id="inlineRadio_infante_1" value="option1">
+                            <label class="form-check-label" for="inlineRadio_infante_1">Femenino</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="inlineRadioFemeninoInfante" id="inlineRadio_infante_2" value="option2">
+                            <label class="form-check-label" for="inlineRadio_infante_2">Masculino</label>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" style="background-color: #ff6719; color: white;" (click)="guardarDatosInfante()">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="ocultar_modal('modalAgregarInfante');">Cerrar</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_mensajealerta" tabindex="-2" role="dialog" aria-labelledby="modal_mensajealertaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body row" style="padding: 0rem !important;">
+            <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border: 1px solid #d3d3d3;">
+                <font style="color: #4E4D50; font-weight: bold; font-size: 22px;">{{tituloMensajeAlerta}}</font><br>
+                <font style="color: #a0a0a0; font-weight: bold; font-size: 17px;">{{textoMensajeAlerta}}</font>
+            </div>
+            <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 43px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <i class="fad fa-times" (click)="ocultar_modal('modal_mensajealerta')" style="cursor: pointer;"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div id="teclado_numerico" class="form-group" style="display: none; z-index: 1056;">
+    <div id="botones_numericos">
+        <br>
+        <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+            <div class="clase_button_numerico" (click)="click_boton_libre('1')">1</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico" (click)="click_boton_libre('2')">2</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico" (click)="click_boton_libre('3')">3</div>
+        </div>
+        <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+            <div class="clase_button_numerico" (click)="click_boton_libre('4')">4</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico" (click)="click_boton_libre('5')">5</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico" (click)="click_boton_libre('6')">6</div>
+        </div>
+        <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+            <div class="clase_button_numerico" (click)="click_boton_libre('7')">7</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico" (click)="click_boton_libre('8')">8</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico" (click)="click_boton_libre('9')">9</div>
+        </div>
+        <div class="row" style="display: flex; justify-content: center; align-items: center;">
+            <div class="clase_button_numerico" (click)="click_boton_libre('listo')" style="display: flex; justify-content: center; align-items: center; color: #fff; background-color: #198754; border-color: #198754;">
+                <i class="fad fa-check-circle" style="font-size: 38px;"></i>
+            </div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico" (click)="click_boton_libre('0')">0</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico" (click)="click_boton_libre('borrar')"><i class="fad fa-backspace"></i></div>
+        </div>
+    </div>
+</div>
+
+<div id="teclado_alfanumerico" class="form-group" style="display: none; z-index: 1056;">
+    <div id="botones_numericos" style="width: 170%; margin-left: -35%;">
+        <br>
+        <div *ngIf="tip_opc_teclado == 'correo'" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px; margin-left: 0px;">
+            <div class="clase_button_numerico4" (click)="click_boton_libre('@gmail.com')">@gmail.com</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico4" (click)="click_boton_libre('@hotmail.com')">@hotmail.com</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico4" (click)="click_boton_libre('@yahoo.com')">@yahoo.com</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico4" (click)="click_boton_libre('@yahoo.es')">@yahoo.es</div>&nbsp;&nbsp;&nbsp;
+        </div>
+        <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+            <div class="clase_button_numerico2" (click)="click_boton_libre('1')">1</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('2')">2</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('3')">3</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('4')">4</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('5')">5</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('6')">6</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('7')">7</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('8')">8</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('9')">9</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('0')">0</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('borrar')" style="width: 13%;"><i class="fad fa-backspace"></i></div>
+        </div>
+        <div id="fila_alfanumerico_1" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+            <div class="clase_button_numerico2" (click)="click_boton_libre('q')">q</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('w')">w</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('e')">e</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('r')">r</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('t')">t</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('y')">y</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('u')">u</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('i')">i</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('o')">o</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('p')">p</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('listo')" style="width: 13%; display: flex; justify-content: center; align-items: center; color: #fff; background-color: #198754; border-color: #198754;">
+                <div style="position: relative; top: -1%; font-size: 27px;">LISTO <i class="fad fa-check-circle" style="font-size: 24px;"></i></div>
+            </div>
+        </div>
+        <div id="fila_alfanumerico_2" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px; margin-left: 0%;">
+            <div class="clase_button_numerico2" (click)="click_boton_libre('a')">a</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('s')">s</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('d')">d</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('f')">f</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('g')">g</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('h')">h</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('j')">j</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('k')">k</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('l')">l</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('ñ')">ñ</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('-')">-</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('_')">_</div>&nbsp;&nbsp;&nbsp;
+        </div>
+        <div id="fila_alfanumerico_3" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px; margin-left: 0%;">
+            <div class="clase_button_numerico2" (click)="click_boton_libre('mayuscula')"><i class="fad fa-font-case"></i></div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('z')">z</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('x')">x</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('c')">c</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('v')">v</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('b')">b</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('n')">n</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('m')">m</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('.')">.</div>&nbsp;&nbsp;&nbsp;
+            <div class="clase_button_numerico2" (click)="click_boton_libre('@')">&#64;</div>&nbsp;&nbsp;&nbsp;
+            <div *ngIf="tip_opc_teclado == 'alfanumerico'" class="clase_button_numerico2" (click)="click_boton_libre('/')" style="margin-right: 0.9%;">/</div>
+            <div *ngIf="tip_opc_teclado == 'alfanumerico'" class="clase_button_numerico2" (click)="click_boton_libre('&')" style="margin-right: 0.9%;">&</div>
+            <div *ngIf="tip_opc_teclado == 'correo'" class="clase_button_numerico2" (click)="click_boton_libre('.com')" style="width: 11.8%; margin-right: 0.9%;">.com</div><font *ngIf="tip_opc_teclado == 'correo'">&nbsp;&nbsp;&nbsp;</font>
+        </div>
+        <div class="row" style="display: flex; justify-content: center; align-items: center;">
+            <div class="clase_button_numerico2" (click)="click_boton_libre('espacio')" style="width: 40.5%;">&nbsp;</div>
+        </div>
+    </div>
+</div>

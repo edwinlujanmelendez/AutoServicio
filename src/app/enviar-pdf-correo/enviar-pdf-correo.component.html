@@ -1,0 +1,392 @@
+<div style="height: auto;">
+    <div style="margin-top: 4%; margin-left: 5%;">
+        <div id="titulo" style="font-size: 35px; color: #ffffff; display: flex; align-items: center; position: relative;">
+            <i class="far fa-print"></i> &nbsp; {{sub_titulo}}
+        </div>
+        <br>
+        <div id="fecha_hora" style="font-size: 33px; color: #ffffff; display: flex; align-items: center; position: relative;">
+            {{nombre_fecha_hoy}}  -  {{hora_actual}}
+        </div>
+        <br>
+        <div id="caja_reimpresion_boletos" style="width: 95%; padding-bottom: 2%; border-radius: 30px; background-color: #ffffff; box-shadow: 2px 10px 18px -4px rgba(0, 0, 0, 0.50);" (click)="ocultar_teclados()">
+            <div id="columna_1" style="display: flex; justify-content: center; height: 1600px; overflow-y: auto; overflow-x: hidden;">
+                <div id="vista_ingresar_datos" class="column" style="width: 75%; padding-top: 70px; display: inline;">
+                    <br><br><br><br><br><br><br><br><br><br><br><br>
+                    <form>
+                        <div class="form-group" style="text-align: center; margin-bottom: 60px; font-size: 35px; font-weight: bold;">
+                            <div class="row">
+                                <div class="col-12">
+                                    Ingresa tu documento de identidad 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-bottom: 10px; font-size: 21px; font-weight: bold;">
+                            <div class="row">
+                                <div id="chk_dni" class="col-6 document_select" style="padding: 10px; text-align: center;" (click)="cambiar_radiobutton('dni')">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label datos_pasajero" for="dni">DNI</label>
+                                    </div>
+                                </div>
+                                <div id="chk_carnet_extranjeria" class="col-6" style="padding: 10px; text-align: center;" (click)="cambiar_radiobutton('carnet_extranjeria')">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label datos_pasajero" for="carnet_extranjeria">CARNET EXTRANJERIA</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="font-size: 21px; font-weight: bold;">
+                            <div class="row">
+                                <div id="chk_pasaporte" class="col-6" style="padding: 10px; text-align: center;" (click)="cambiar_radiobutton('pasaporte')">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label datos_pasajero" for="pasaporte">PASAPORTE</label>
+                                    </div>
+                                </div>
+                                <div id="chk_cedula_identidad" class="col-6" style="padding: 10px; text-align: center;" (click)="cambiar_radiobutton('cedula_identidad')">
+                                    <div class="form-check form-check-inline">
+                                        <label class="form-check-label datos_pasajero" for="cedula_identidad">CEDULA IDENTIDAD</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br><br>
+                        <div class="form-group" style="display: flex; justify-content: center; align-items: center;">
+                            <div id="nombre_ciudad_origen" class="input_seleccion">
+                                <div style="padding-left: 11%; font-size: 31px;">{{numero_documento}}</div>
+                                <i class="fad fa-id-card icon_input_seleccion_init" style="bottom: 24px;"></i>
+                            </div>
+                        </div>
+                        <br>
+                        <div *ngIf="tipo_entrada_teclado == 'NUMERICO'" class="form-group">
+                            <div id="botones_numericos">
+                                <br>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico3" (click)="click_boton('1')">1</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('2')">2</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('3')">3</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico3" (click)="click_boton('4')">4</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('5')">5</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('6')">6</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico3" (click)="click_boton('7')">7</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('8')">8</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('9')">9</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="clase_button_numerico_vacio3"></div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('0')">0</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico3" (click)="click_boton('borrar')"><i class="fad fa-backspace"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="tipo_entrada_teclado == 'ALFANUMERICO'" class="form-group">
+                            <div id="botones_numericos" style="width: 170%; margin-left: -35%;">
+                                <br>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('0')">0</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('1')">1</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('2')">2</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('3')">3</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('4')">4</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('5')">5</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('6')">6</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('7')">7</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('8')">8</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('9')">9</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('borrar')" style="width: 11%;"><i class="fad fa-backspace"></i></div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('Q')">Q</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('W')">W</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('E')">E</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('R')">R</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('T')">T</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('Y')">Y</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('U')">U</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('I')">I</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('O')">O</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('P')">P</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('A')">A</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('S')">S</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('D')">D</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('F')">F</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('G')">G</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('H')">H</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('J')">J</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('K')">K</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('L')">L</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('Ñ')">Ñ</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('Z')">Z</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('X')">X</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('C')">C</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('V')">V</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('B')">B</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('N')">N</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('M')">M</div>
+                                </div>
+                                <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                                    <div class="clase_button_numerico2" (click)="click_boton('|')">|</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('/')">/</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('+')">+</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('-')">-</div>&nbsp;&nbsp;&nbsp;
+                                    <div class="clase_button_numerico2" (click)="click_boton('.')">.</div>&nbsp;&nbsp;&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="texto_mensaje_alerta != ''" id="mensaje_no_hay_boletos" class="form-group text-center" style="font-weight: bold; font-size: 22px; color: red;">
+                            <br><br>
+                            <p>{{texto_mensaje_alerta}}</p>
+                        </div>
+                    </form>
+                </div>
+                <div id="vista_mostrar_boletos" class="column" style="width: 83%; padding-top: 8%; display: none;">
+                    <div style="width: 100%; margin-bottom: 5%; display: flex; justify-content: center; align-items: center; font-size: 33px; font-weight: bold;">
+                        SELECCIONA TUS BOLETOS PARA ENVIAR
+                    </div>
+                    <div *ngFor="let DatosLista of lstDatosLista;" (click)="seleccionar_boleto(DatosLista.venpas_id, DatosLista.boleto)" style="width: 100%; margin-bottom: 5%; display: flex;">
+                        <div id="card_{{DatosLista.venpas_id}}" class="card card-itinerario" style="width: auto; margin-bottom: 15px;">
+                            <div class="row g-0" style="display: flex; justify-content: center;">
+                                <div class="col-10 div_servicio">
+                                    <div style="margin-top: 2%; text-align: left;">
+                                        <div class="servicio">Servicio 
+                                            <font class="servicio_detall">{{DatosLista.servicio}}</font> 
+                                            <div class="icon_detalle"><font style="font-weight: bold; font-size: 18px;">Fecha de Viaje</font>&nbsp;&nbsp;<i class="fal fa-calendar-check"></i>&nbsp;{{DatosLista.fecha_partida}}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-12">
+                                        <div class="row" style="margin-top: 10px;">
+                                            <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                <span class="font_ruta">{{DatosLista.salida}}</span>
+                                            </div>
+                                            <div class="col-2" style="text-align: center;">
+                                                <i class="fal fa-long-arrow-right icon_flecha"></i>
+                                            </div>
+                                            <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                <span class="font_ruta2">{{DatosLista.destino}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin-top: -12px;">
+                                            <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                <span class="dat_salida_embar">Embarque</span>  
+                                                <span class="dat_hora_embar">{{DatosLista.hora_partida}} h</span>
+                                            </div>
+                                            <div class="col-2" style="text-align: center;">&nbsp;</div>
+                                            <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                                <span class="dat_llegada_desem">Desembarque</span>  
+                                                <span class="dat_hora_desem">{{DatosLista.hora_llegada}} h</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-10 margin_embarque_desembarque">
+                                    <div class="row">
+                                        <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                            <!--<span class="dat_salida_embar_detall">{{DatosLista.direccion_partida}}</span>-->
+                                        </div>
+                                        <div class="col-2" style="text-align: center;">&nbsp;</div>
+                                        <div class="col-5" style="display: flex; flex-direction: column; text-align: center;">
+                                            <!--<span class="dat_llegada_desem_detall">{{DatosLista.direccion_llegada}}</span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <table style="margin-top: 8px;">
+                                    <thead class="border_table_head">
+                                        <th class="text-center border_table_head">#</th>
+                                        <th class="text-center border_table_head">Nombre del Pasajero</th>
+                                        <th class="text-center border_table_head">Boleto</th>
+                                        <th class="text-center border_table_head">Nro Asiento</th>
+                                        <th class="text-center border_table_head">Precio Pasaje</th>
+                                    </thead>
+                                    <tbody class="border_table_body">
+                                        <tr class="border_table_body">
+                                            <td class="text-center border_table_body">1</td>
+                                            <td class="text-center border_table_body"><i class="fad fa-user" style="color: #575757;"></i>&nbsp; {{DatosLista.nombres_apellidos}}</td>
+                                            <td class="text-center border_table_body">{{DatosLista.boleto}}</td>
+                                            <td class="text-center border_table_body">
+                                                <i class="fad fa-chair-office" style="color: #575757;"></i>&nbsp; {{DatosLista.nroasiento}}
+                                            </td>
+                                            <td class="text-center border_table_body">S/. {{DatosLista.total}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div id="icon_check_{{DatosLista.venpas_id}}" style="width: auto; display: flex; justify-content: center; align-items: center; padding: 22px; font-size: 43px; color: #198754; display: none;">
+                            <i class="fad fa-check-circle"></i>
+                        </div>
+                        <div id="icon_no_check_{{DatosLista.venpas_id}}" style="width: auto; display: flex; justify-content: center; align-items: center; padding: 22px; font-size: 43px; color: #ccc;">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                    </div>
+
+                    <!--<div *ngIf="boletos_seleccionados.length > 0" style="display: flex; justify-content: center; align-items: center; font-size: 23px; font-weight: bold;">
+                        {{boletos_seleccionados.length}} &nbsp;
+                        <font *ngIf="boletos_seleccionados.length == 1">BOLETO SELECCIONADO</font>
+                        <font *ngIf="boletos_seleccionados.length > 1">BOLETOS SELECCIONADOS</font>
+                    </div>-->
+                    
+                    <br>
+
+                    <div style="display: flex; justify-content: center; align-items: center; font-size: 30px; font-weight: bold;">
+                        Ingrese su correco electrónico
+                    </div>
+
+                    <br><br>
+
+                    <div class="mb-3 row" style="display: flex; align-items: center; justify-content: center; position: relative; left: 5%;">
+                        <div class="col-sm-10">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text" style="font-size: 40px; color: #4f4f4f; background-color: #e4e4e4; border: 1px solid #e1e1e1;"><i class="fad fa-envelope"></i></span>
+                                <input id="correo_electronico" placeholder="CORREO ELECTRÓNICO" type="text" class="input_seleccion" style="border: 1px solid #e4e4e4; padding: 16px 10px; font-size: 27px;" (click)="activar_teclado_alfanumerico('correo_electronico', 'vista_mostrar_boletos')"  readonly>
+                            </div>
+                        </div>
+                    </div>
+
+                    <br><br>
+
+                    <div id="boton_enviar_boletos_correo" style="justify-content: center; align-items: center; display: none;">
+                        <div class="btn btn-lg btn-warning" style="width: 54%; font-weight: bold; padding: 0.7rem 3rem; font-size: 21px; position: relative;" (click)="enviar_boletos_al_correo()">
+                            <div *ngIf="boletos_seleccionados.length == 1" style="margin-left: 38px;">ENVIAR BOLETO AL CORREO</div>
+                            <div *ngIf="boletos_seleccionados.length > 1" style="margin-left: 38px;">ENVIAR BOLETOS AL CORREO</div>
+                            <i class="far fa-envelope" style="color: black; position: absolute; bottom: 24px; left: 37px; width: 23px; height: 18px; font-size: 30px;"></i>
+                        </div>
+                    </div>
+
+                    <br><br><br><br><br><br>
+                    <div *ngIf="txt_mensaje_alerta_correo != ''" style="display: flex; justify-content: center; align-items: center; font-size: 26px; font-weight: bold; color: red;">{{txt_mensaje_alerta_correo}}</div>
+                    <br><br><br><br><br><br><br><br><br><br>
+
+                    <br *ngIf="lstDatosLista.length > 2">
+                    <br *ngIf="lstDatosLista.length > 2">
+                    <br *ngIf="lstDatosLista.length > 2">
+                    <br *ngIf="lstDatosLista.length > 2">
+                    <br *ngIf="lstDatosLista.length > 2">
+                    <br *ngIf="lstDatosLista.length > 2">
+                    <br *ngIf="lstDatosLista.length > 2">
+                    <br *ngIf="lstDatosLista.length > 2">
+                    <br *ngIf="lstDatosLista.length > 2">
+                </div>
+                <div id="vista_mostrar_resumen" class="column" style="width: 75%; padding-top: 8%; display: none;">
+                    <div style="margin-top: 60%; text-align: center; font-weight: bold;">
+                        <!--<font style="color: #c5c5c5; font-size: 65px; font-weight: bold;">!Gracias viajero!</font><br>-->
+                        <!--<font style="color: #c5c5c5; font-size: 36px;">Sus boletos de viaje se <br> enviarán a tu correo</font><br>-->
+                        <font style="color: #c5c5c5; font-size: 47px;">Sus boletos de viaje se <br> enviaron al siguiente correo: </font><br>
+                        <font id="email_contacto_pasajero" style="color: #a5a5a5; font-size: 40px; font-weight: bold;"></font>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="grupo_botones_center" style="position: absolute; top: 85%; left: 20%; width: 60%; display: none;">
+        <div class="btn btn_group_center" style="border: 1px solid #bb2331; color: #fff; background-color: #dc3545;" (click)="regresar_al_inicio()">
+            <div>VOLVER AL INICIO</div>
+            <i class="fad fa-door-closed" style="color: white; position: absolute; bottom: 20px; left: 20px; width: 23px; height: 18px; font-size: 23px;"></i>
+        </div>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <div class="btn btn_group_center" style="border: 1px solid #00832d; color: #fff; background-color: #198754;" (click)="nueva_consulta()">
+            <div>NUEVA CONSULTA</div>
+            <i class="fad fa-search" style="color: white; position: absolute; bottom: 20px; left: 20px; width: 23px; height: 18px; font-size: 23px;"></i>
+        </div>
+    </div>
+
+    <div id="dato_inferior_izquierda" style="color: #ffffff; position: absolute; bottom: 2%; left: 4%; display: flex; align-items: center; font-size: 19px;">
+        <i class="fab fa-facebook-f" style="margin-right: 1px;"></i>&nbsp;
+        <i class="fab fa-instagram" style="margin-right: 1px;"></i>&nbsp;
+        <img src="../../assets/img/iconos/tiktok.png" style="width: 2.2%; filter: invert(100%) sepia(0%) saturate(1000%) hue-rotate(329deg) brightness(200%) contrast(98%);">&nbsp;&nbsp;
+        <font>&#64;movilbus.pe</font>
+    </div>
+    <div id="dato_inferior_derecho" style="color: #ffffff; position: absolute; bottom: 2%; right: 4%; font-size: 19px;">
+        www.movilbus.pe
+    </div>
+
+    <div id="dato_superior_derecho" style="color: #ffffff; position: absolute; top: 2.5%; right: 3%; text-align: center;">
+        <img src="../../assets/img/LOGOTIPO BUS A COLOR RGB-01.png" style="height: 2.6em; width: 9em;"><br>
+        <font style="font-style: italic; font-size: 16px;">Moviendo al Perú</font>
+    </div>
+
+    <div id="btn_atras" class="btn btn-lg btn-danger" style="color: #ffffff; position: absolute; top: 88%; left: 9%; width: 30%; display: none;" (click)="atras()">
+        <div>ATRÁS</div>
+        <i class="fad fa-chevron-circle-left icon_input_seleccion_init" style="color: white;"></i>
+    </div>
+
+    <div id="btn_ir_inicio" class="btn btn-lg btn-danger" style="color: #ffffff; position: absolute; top: 88%; left: 9%; width: 30%;" (click)="ir_inicio()">
+        <div>IR AL INICIO</div>
+        <i class="fad fa-chevron-circle-left icon_input_seleccion_init" style="color: white;"></i>
+    </div>
+    <div id="btn_buscar_boletos" class="btn btn-lg btn-success btn_buscar_boletos_disable" style="position: absolute; top: 88%; right: 9%; width: 32%; padding-left: 0%;" (click)="buscar_boletos()">
+        <div style="margin-left: -6%;">BUSCAR BOLETOS</div>
+        <i class="fad fa-search icon_input_seleccion_end" style="color: white;"></i>
+    </div>
+
+    <div id="teclado_alfanumerico" class="form-group" style="display: none; z-index: 1056;">
+        <div id="botones_numericos" style="width: 170%; margin-left: -35%;">
+            <br>
+            <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton_libre('0')">0</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('1')">1</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('2')">2</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('3')">3</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('4')">4</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('5')">5</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('6')">6</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('7')">7</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('8')">8</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('9')">9</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('borrar')" style="width: 11%;"><i class="fad fa-backspace"></i></div>
+            </div>
+            <div id="fila_alfanumerico_1" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton_libre('q')">q</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('w')">w</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('e')">e</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('r')">r</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('t')">t</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('y')">y</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('u')">u</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('i')">i</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('o')">o</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('p')">p</div>
+            </div>
+            <div id="fila_alfanumerico_2" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton_libre('a')">a</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('s')">s</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('d')">d</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('f')">f</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('g')">g</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('h')">h</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('j')">j</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('k')">k</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('l')">l</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('ñ')">ñ</div>
+            </div>
+            <div id="fila_alfanumerico_3" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton_libre('mayuscula')"><i class="fad fa-font-case"></i></div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('z')">z</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('x')">x</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('c')">c</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('v')">v</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('b')">b</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('n')">n</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('m')">m</div>
+            </div>
+            <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                <div class="clase_button_numerico2" (click)="click_boton_libre('$')">$</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('/')">/</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('-')">-</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('_')">_</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('.')">.</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('@')">&#64;</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton_libre('listo')" style="width: 12.5%; display: flex; justify-content: center; align-items: center; color: #fff; background-color: #198754; border-color: #198754;">
+                    <div style="position: relative; top: -1%; font-size: 27px;">Listo &nbsp; <i class="fad fa-check-circle"></i></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

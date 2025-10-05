@@ -1,13 +1,59 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Ecommerce</title>
+  <title>AutoServicio - Viaja seguro, viaja en bus con Movil Bus</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="icon" type="image/x-icon" href="./assets/img/favicon.ico" data-noprefix>
+  <!--<link rel="preconnect" href="https://fonts.googleapis.com" data-noprefix>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin data-noprefix>-->
+  <!--<link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet" type='text/css' data-noprefix>-->
+  <!-- <script src="https://kit.fontawesome.com/45f5145da4.js" crossorigin="anonymous"></script> -->
+
+  <meta name="description" content="Transformamos tus viajes en experiencias inolvidables. Conoce más de Movil Bus, líder en transporte en bus en Perú. ¡Aprovecha los increíbles precios y reserva tu próximo viaje con bus con Movil Bus! Más de 50 destinos para descubrir de la manera más cómoda y segura. ¿Cuál es la mejor agencia de viajes del Perú?" data-react-helmet="true">
+  <meta name="keywords" content="Movil Bus, Pasajes, Viajes, Bus, Transporte, Experiencias, Perú, Agencia, Lima, Arequipa, Trujillo, Barranca, Chiclayo, Chimbote, Ica, Tarapoto, Piura" data-react-helmet="true">
+  <meta property="og:site_name" content="Viaja seguro, viaja en bus con Movil Bus" data-react-helmet="true">
+  <meta property="og:url" content="https://www.movilbus.pe/" data-react-helmet="true">
+
+  <!--<script type="text/javascript" src="https://static-content-qas.vnforapps.com/v2/js/checkout.js?qa=true"></script>-->         <!-- DESARROLLO NIUBIZ -->
+  <script type="text/javascript" src="https://static-content.vnforapps.com/v2/js/checkout.js"></script>             <!-- PRODUCTIVO NIUBIZ -->
+
+  <!--<script src="https://kit.fontawesome.com/e27ab534ad.js" crossorigin="anonymous"></script>-->
+  <link href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" rel="stylesheet">
 </head>
-<body>
+
+<body style="background-color: #ff6719; overflow-x: hidden !important;">
   <app-root></app-root>
 </body>
+
+<!-- 1160px - 1918px -->
+
+<script type="text/javascript">
+  function openForm() {
+    VisanetCheckout.configure({
+      sessiontoken: String($("#data_sessiontoken").val()),
+      channel: String($("#data_channel").val()),
+      merchantid: String($("#data_merchantid").val()),
+      purchasenumber: Number($("#data_purchasenumber").val()),
+      amount: Number($("#data_amount").val()),
+      expirationminutes: String($("#data_expirationminutes").val()),
+      timeouturl: String($("#data_timeouturl").val()),
+      merchantlogo: String($("#data_merchantlogo").val()),
+      formbuttoncolor: String($("#data_formbuttoncolor").val()),
+      hidexbutton:'false',
+      action: String($("#action").val()),
+      complete: function(params) {
+        alert(JSON.stringify(params));
+      }
+    });
+    VisanetCheckout.open();
+  }
+
+  window.onload = function(){
+    document.addEventListener("contextmenu", function(e){
+      e.preventDefault();
+    }, false);
+  }
+</script>
 </html>

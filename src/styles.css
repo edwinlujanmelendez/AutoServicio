@@ -1,1 +1,235 @@
 /* You can add global styles to this file, and also import other style files */
+.loader {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9999;
+    background: url('../src/assets/img/cargando_loading.gif') 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+}
+/* https://cdn.dribbble.com/users/2374064/screenshots/4737393/bus-truning.gif */
+
+.loader2 {
+    position: fixed;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 9998;
+    background: url('../src/assets/img/cargando_loading2.gif') 50% 50% no-repeat rgb(249,249,249);
+    opacity: .8;
+}
+
+.ruta_ida_vuelta_selec{
+    background-color: #e5e5e5; 
+    /*padding: 26px;*/
+}
+.ruta_ida_vuelta_selec .rut_ida_vuelta_select_ida_vuelta{
+    color: #ff6719; font-size: 16px; /*font-weight: bold;*/
+}
+.ruta_ida_vuelta_selec .rut_ida_vuelta_select_ciudad_ida_vuelta{
+    color: #4E4D50; font-weight: bold; font-size: 17px;
+}
+.ruta_ida_vuelta_selec .rut_ida_vuelta_select_icon{
+    font-size: 20px; color: #ff6719;
+}
+.ruta_ida_vuelta_selec .rut_ida_vuelta_select_icon2{
+    font-size: 15px; color: #686868;
+}
+.ruta_ida_vuelta_selec .rut_ida_vuelta_select_fecha_ida_vuelta{
+    color: #4E4D50; font-size: 13px;
+}
+.ruta_ida_vuelta_selec .rut_ida_vuelta_select_hora_embar_ida_vuelta{
+    color: #4E4D50; font-weight: bold; font-size: 17.5px;
+}
+.ruta_ida_vuelta_selec .rut_ida_vuelta_select_salida_embar_ida_vuelta{
+    font-size: 9px; color: #4e4d50; font-weight: bold;
+}
+
+
+.ruta_ida_vuelta_no_selec{
+    background-color: #ffffff; 
+    /*padding: 26px;*/
+}
+.ruta_ida_vuelta_no_selec .rut_ida_vuelta_select_ida_vuelta{
+    color: #a5a5a7; font-size: 16px; /*font-weight: bold;*/
+}
+.ruta_ida_vuelta_no_selec .rut_ida_vuelta_select_ciudad_ida_vuelta{
+    color: #a5a5a7; font-weight: bold; font-size: 17px;
+}
+.ruta_ida_vuelta_no_selec .rut_ida_vuelta_select_icon{
+    font-size: 20px; color: #a5a5a7;
+}
+.ruta_ida_vuelta_no_selec .rut_ida_vuelta_select_icon2{
+    font-size: 15px; color: #686868;
+}
+.ruta_ida_vuelta_no_selec .rut_ida_vuelta_select_fecha_ida_vuelta{
+    color: #ada9a4; font-size: 13px;
+}
+.ruta_ida_vuelta_no_selec .rut_ida_vuelta_select_hora_embar_ida_vuelta{
+    color: #a5a5a7; font-weight: bold; font-size: 17.5px;
+}
+.ruta_ida_vuelta_no_selec .rut_ida_vuelta_select_salida_embar_ida_vuelta{
+    font-size: 9px; color: #a5a5a7; font-weight: bold;
+}
+
+
+.ruta_ida_vuelta_term{
+    background-color: #ffffff;
+    /*padding: 26px;*/
+}
+.ruta_ida_vuelta_term .rut_ida_vuelta_select_ida_vuelta{
+    color: #ff6719; font-size: 16px; /*font-weight: bold;*/
+}
+.ruta_ida_vuelta_term .rut_ida_vuelta_select_ciudad_ida_vuelta{
+    color: #4E4D50; font-weight: bold; font-size: 17px;
+}
+.ruta_ida_vuelta_term .rut_ida_vuelta_select_icon{
+    font-size: 20px; color: #ff6719;
+}
+.ruta_ida_vuelta_term .rut_ida_vuelta_select_icon2{
+    font-size: 15px; color: #686868;
+}
+.ruta_ida_vuelta_term .rut_ida_vuelta_select_fecha_ida_vuelta{
+    color: #4e4d50; font-size: 13px;
+}
+.ruta_ida_vuelta_term .rut_ida_vuelta_select_hora_embar_ida_vuelta{
+    color: #4E4D50; font-weight: bold; font-size: 17.5px;
+}
+.ruta_ida_vuelta_term .rut_ida_vuelta_select_salida_embar_ida_vuelta{
+    font-size: 9px; color: #4e4d50; font-weight: bold;
+}
+
+.border_bottom_ida_vuelta{
+    border-bottom: 1px solid gray;
+}
+
+
+.form-check-input:checked {
+    background-color: #ff6719 !important;
+    border-color: #ff6719 !important;
+}
+
+.boxed-declarion{
+    box-shadow: 2px 0px 14px -8px rgb(0 0 0 / 75%); 
+    width: 300px; 
+    height: 70px; 
+    display: table; 
+    margin: 15px auto 15px auto; 
+    border-radius: 10px; 
+    transition: all 0.2s;
+}
+
+.boxed-declarion-inner{
+    width: 100%; 
+    text-align: center; 
+    display: table-cell; 
+    vertical-align: middle; 
+    height: 100%;
+}
+
+.boxed-declarion a {
+    transition: all 0.2s;
+    width: 100%;
+    height: 100%;
+    display: table;
+    font-family: 'Conv_Ubuntu-L';
+    color: #4c4c4c;
+    font-size: 12pt;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+.boxed-declarion a:hover {
+    background: #ea2027;
+    color: #FFF;
+    border-radius: 10px;
+}
+
+.boxed-declarion a span {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+body{
+    font-family: Ubuntu !important;
+}
+
+.numberCircle{
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    padding: 6px;
+
+    background: none;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    text-align: center;
+
+    font: 32px Arial, sans-serif;
+}
+
+.numberCircle2{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 7px;
+
+    background: none;
+    border: 1px solid #878787;
+    color: #878787;
+    text-align: center;
+
+    font: 23px Arial, sans-serif;
+}
+.numberCircle2Texto{
+    display: flex; justify-content: center; align-items: center; margin-left: 20px;
+}
+.numberCircle2Texto > font{
+    font-style: italic;
+}
+.numberCircle2Seleccionado{
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 7px;
+
+    background-color: #ff6719;
+    border: 1px solid white;
+    color: white;
+    text-align: center;
+
+    font: 23px Arial, sans-serif;
+}
+.numberCircle2TextoSeleccionado{
+    display: flex; justify-content: center; align-items: center; margin-left: 20px; color: #666;
+}
+.numberCircle2TextoSeleccionado > font{
+    font-style: italic;
+    border-bottom: 2px solid #ff6719;
+}
+.highlighted {
+    background-color: #ff6719 !important;
+    color: white !important;
+    border: 1px dashed white !important;
+}
+
+#btn_boton_home{
+    height: 60px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 5%;
+    cursor: pointer;
+    color: #ff6719; background-color: white; position: absolute; top: 2.2%; right: 3%; width: 19%; font-size: 21px;
+}
+#btn_boton_home:active{
+    transform: scale(1.02);
+}
+
+::selection {
+    background-color: transparent !important;
+}

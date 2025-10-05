@@ -1,0 +1,525 @@
+<div style="height: auto;">
+    <div style="margin-top: 4%; margin-left: 5%;">
+        <div id="titulo" style="font-size: 35px; color: #ffffff; display: flex; align-items: center; position: absolute; top: 7.4%; width: 91%;">
+            <!--<div class="numberCircle">3</div> &nbsp; {{sub_titulo}}
+            &nbsp;&nbsp;-->
+            <!--<div *ngIf="ida_vuelta == 2" style="font-size: 24px;">
+                <span style="border: 1px solid white; border-radius: 18px; padding: 4px 15px 4px 15px; font-style: italic; color: #434343; background-color: white;">Ida</span> &nbsp;
+                <span style="border: 1px solid white; border-radius: 18px; padding: 4px 15px 4px 15px; font-style: italic; color: white;">Vuelta</span>
+            </div>-->
+            <div *ngIf="ida_vuelta == 1" style="width: 100%; display: contents;">
+                <div class="numberCircle" style="width: 23%; height: 15%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">1</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 23%; height: 15%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">2</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 23%; height: 15%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">3</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 23%; height: 15%; padding: 16px; font-size: 40px;">4</div> &nbsp;
+            </div>
+            <div *ngIf="ida_vuelta == 2" style="width: 100%; display: contents;">
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">1</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">2</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px; background-color: white; color: #ff6719;">3</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px;">4</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px;">5</div> &nbsp; <hr style="border: 2px solid white; width: 100%;"> &nbsp;
+                <div class="numberCircle" style="width: 48%; height: 0%; padding: 16px; font-size: 40px;">6</div> &nbsp;
+            </div>
+        </div>
+        <br><br><br><br><br><br><br><br><br>
+        <div id="fecha_hora" style="font-size: 35px; color: #ffffff; display: flex; align-items: center; position: relative;">
+            <!--<div style="float: left; text-transform: uppercase;">
+                {{nombre_ciudad_origen}} &nbsp; <i class="fal fa-long-arrow-right icon_flecha" style="font-size: 31px; color: white;"></i> &nbsp; 
+                {{nombre_ciudad_destino}} &nbsp; 
+            </div>
+            <div style="float: right; margin-right: 4.8%;">
+                <i class="fad fa-calendar-check"></i> {{fecha_ida}}
+            </div>-->
+            <div style="float: left; text-transform: uppercase;">
+                SELECCIONA TUS ASIENTOS &nbsp;(IDA)
+                <!--Fecha de Viaje: &nbsp; <i class="fad fa-calendar-check"></i> {{fecha_ida}} &nbsp;(IDA)-->
+            </div>
+        </div>
+        
+        <br><br>
+
+        <div id="caja_estructura_bus" style="width: 95%; border-radius: 30px; background-color: #ffffff; box-shadow: 2px 10px 18px -4px rgba(0, 0, 0, 0.50);">
+            <div class="row" style="padding-left: 12px; padding-right: 12px;">
+                <div class="col-8" id="columna_1" style="height: 1412px; overflow-y: auto; overflow-x: hidden; padding: 2%;">
+                    <div class="column" style="width: 80%; margin: auto;">
+                        <br>
+                        <div class="row">
+                            <div *ngFor="let pisos of array_pisos_final; index as ii;">
+                                <br *ngIf="pisos[1][0].piso == '1'">
+                                <div style="display: flex; height: 2.5rem; background-color: #ececec; border-radius: 0.75rem; margin-bottom: 11px;">
+                                    <font style="width: 100%; margin-bottom: 0px; display: flex; flex-direction: row; -webkit-box-pack: center; justify-content: center; -webkit-box-align: center; align-items: center;">
+                                        <i *ngIf="pisos[1][0].piso == '0'" class="fas fa-steering-wheel" style="font-size: 22px; color: #b6b6b6;"></i>&nbsp;&nbsp;
+                                        <font *ngIf="pisos[1][0].piso == '0'" style="color: #4E4D50; font-weight: bold; font-size: 21px;">Piso 1</font>&nbsp;
+                                        <font *ngIf="pisos[1][0].piso == '1'" style="color: #4E4D50; font-weight: bold; font-size: 21px;">Piso 2</font>&nbsp;
+                                        <em *ngIf="pisos[1][0].piso == '0'" style="color: #4E4D50; font-weight: bold; font-size: 16px;">{{titulo_detalle_piso_1}}</em>
+                                        <em *ngIf="pisos[1][0].piso == '1'" style="color: #4E4D50; font-weight: bold; font-size: 16px;">{{titulo_detalle_piso_2}}</em>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <!--<img src="./assets/img/iconos/escalera.png" alt="" class="img-fluid" style="width: 5%; transform: scaleX(-1); filter: invert(0%) sepia(0%) saturate(1000%) hue-rotate(329deg) brightness(200%) contrast(98%);"/>-->
+                                        <img src="./assets/img/iconos/escalera.png" alt="" class="img-fluid" style="width: 5%;"/>
+                                    </font>
+                                </div>
+                                <div class="border-bus">
+                                    <div class="fila_asientos" *ngFor="let asientos of pisos;">
+                                        <div *ngFor="let asiento of asientos;" style="width: 3.2rem;"> <!-- class="grupo_asientos"  -->
+                                            <div class="espacio_en_blanco message_submensaje" *ngIf="asiento.tipoObjeto == 99 && asiento.columna == 1">
+                                                <font *ngIf="pisos[1][0].piso == '0'" style="color: #4E4D50; font-weight: bold; font-size: 21px;">Piso 1</font>&nbsp;&nbsp;
+                                                <em *ngIf="pisos[1][0].piso == '0' && titulo_detalle_piso_2 != null" style="color: #4E4D50; font-weight: bold; font-size: 16px;">{{titulo_detalle_piso_2}}</em>
+                                            </div>
+
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{asiento.tarifaAsiento}}" class="casilla_asiento" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 0 && (asiento.tipoTarifa == 3 || asiento.tipoTarifa == 4 || asiento.tipoTarifa == 5 || asiento.tipoTarifa == 9)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_imbatible" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 0 && asiento.tipoTarifa == 1" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_imbatible text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- VIENE DE LA PROMOCION DEL ECOMMERCE-->
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_ecominterno" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 0 && (asiento.tipoTarifa == 7 || asiento.tipoTarifa == 8)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_ecominterno text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 2 && asiento.columna == 0">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-utensils" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 3 && asiento.columna == 0">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-restroom" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 4 && asiento.columna == 0">
+                                                <div class="casilla_asiento_vacio">
+                                                    <img src="./assets/img/iconos/escalera.png" alt="" class="img-fluid" style="width: 70%; filter: invert(47%) sepia(16%) saturate(7494%) hue-rotate(348deg) brightness(104%) contrast(101%);"/>
+                                                </div>
+                                            </div>
+                                            <div class="casilla_asiento asiento_lleno" *ngIf="asiento.estadoAsiento == 0 && asiento.tipoObjeto == 0 && asiento.columna == 0">
+                                                <div *ngIf="asiento.tipoObjeto == 0">
+                                                    <i class="fas fa-user" style="font-size: 41px;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 1 && asiento.columna == 0">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fad fa-tv" style="font-size: 27.5px; color: #595858;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="espacio_en_blanco" *ngIf="asiento.tipoObjeto == 5 && asiento.columna == 0"></div>
+
+
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{asiento.tarifaAsiento}}" class="casilla_asiento" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 1 && (asiento.tipoTarifa == 3 || asiento.tipoTarifa == 4 || asiento.tipoTarifa == 5 || asiento.tipoTarifa == 9)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_imbatible" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 1 && asiento.tipoTarifa == 1" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_imbatible text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- VIENE DE LA PROMOCION DEL ECOMMERCE-->
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_ecominterno" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 1 && (asiento.tipoTarifa == 7 || asiento.tipoTarifa == 8)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_ecominterno text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 2 && asiento.columna == 1">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-utensils" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 3 && asiento.columna == 1">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-restroom" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 4 && asiento.columna == 1">
+                                                <div class="casilla_asiento_vacio">
+                                                    <img src="./assets/img/iconos/escalera.png" alt="" class="img-fluid" style="width: 70%; filter: invert(47%) sepia(16%) saturate(7494%) hue-rotate(348deg) brightness(104%) contrast(101%);"/>
+                                                </div>
+                                            </div>
+                                            <div class="casilla_asiento asiento_lleno" *ngIf="asiento.estadoAsiento == 0 && asiento.tipoObjeto == 0 && asiento.columna == 1">
+                                                <div *ngIf="asiento.tipoObjeto == 0">
+                                                    <i class="fas fa-user" style="font-size: 41px;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 1 && asiento.columna == 1">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fad fa-tv" style="font-size: 27.5px; color: #595858;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="espacio_en_blanco" *ngIf="asiento.tipoObjeto == 5 && asiento.columna == 1"></div>
+
+
+
+
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{asiento.tarifaAsiento}}" class="casilla_asiento" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 2 && (asiento.tipoTarifa == 3 || asiento.tipoTarifa == 4 || asiento.tipoTarifa == 5 || asiento.tipoTarifa == 9)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_imbatible" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 2 && asiento.tipoTarifa == 1" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_imbatible text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- VIENE DE LA PROMOCION DEL ECOMMERCE-->
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_ecominterno" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 2 && (asiento.tipoTarifa == 7 || asiento.tipoTarifa == 8)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_ecominterno text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 2 && asiento.columna == 2">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-utensils" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 3 && asiento.columna == 2">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-restroom" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 4 && asiento.columna == 2">
+                                                <div class="casilla_asiento_vacio">
+                                                    <img src="./assets/img/iconos/escalera.png" alt="" class="img-fluid" style="width: 70%; filter: invert(47%) sepia(16%) saturate(7494%) hue-rotate(348deg) brightness(104%) contrast(101%);"/>
+                                                </div>
+                                            </div>
+                                            <div class="casilla_asiento asiento_lleno" *ngIf="asiento.estadoAsiento == 0 && asiento.tipoObjeto == 0 && asiento.columna == 2">
+                                                <div *ngIf="asiento.tipoObjeto == 0">
+                                                    <i class="fas fa-user" style="font-size: 41px;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 1 && asiento.columna == 2">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fad fa-tv" style="font-size: 27.5px; color: #595858;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="espacio_en_blanco" *ngIf="asiento.tipoObjeto == 5 && asiento.columna == 2"></div>
+
+
+
+
+
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{asiento.tarifaAsiento}}" class="casilla_asiento" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 3 && (asiento.tipoTarifa == 3 || asiento.tipoTarifa == 4 || asiento.tipoTarifa == 5 || asiento.tipoTarifa == 9)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_imbatible" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 3 && asiento.tipoTarifa == 1" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_imbatible text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- VIENE DE LA PROMOCION DEL ECOMMERCE-->
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_ecominterno" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 3 && (asiento.tipoTarifa == 7 || asiento.tipoTarifa == 8)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_ecominterno text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 2 && asiento.columna == 3">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-utensils" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 3 && asiento.columna == 3">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-restroom" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 4 && asiento.columna == 3">
+                                                <div class="casilla_asiento_vacio">
+                                                    <img src="./assets/img/iconos/escalera.png" alt="" class="img-fluid" style="width: 70%; filter: invert(47%) sepia(16%) saturate(7494%) hue-rotate(348deg) brightness(104%) contrast(101%);"/>
+                                                </div>
+                                            </div>
+                                            <div class="casilla_asiento asiento_lleno" *ngIf="asiento.estadoAsiento == 0 && asiento.tipoObjeto == 0 && asiento.columna == 3">
+                                                <div *ngIf="asiento.tipoObjeto == 0">
+                                                    <i class="fas fa-user" style="font-size: 41px;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 1 && asiento.columna == 3">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fad fa-tv" style="font-size: 27.5px; color: #595858;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="espacio_en_blanco" *ngIf="asiento.tipoObjeto == 5 && asiento.columna == 3"></div>
+
+
+
+
+
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{asiento.tarifaAsiento}}" class="casilla_asiento" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 4 && (asiento.tipoTarifa == 3 || asiento.tipoTarifa == 4 || asiento.tipoTarifa == 5 || asiento.tipoTarifa == 9)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_imbatible" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 4 && asiento.tipoTarifa == 1" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_imbatible text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- VIENE DE LA PROMOCION DEL ECOMMERCE-->
+                                            <div id="{{asiento.piso}}_{{asiento.asiento}}_{{quitar_punto(asiento.tarifaAsiento)}}" class="casilla_asiento_ecominterno" *ngIf="asiento.estadoAsiento == 1 && asiento.tipoObjeto == 0 && asiento.columna == 4 && (asiento.tipoTarifa == 7 || asiento.tipoTarifa == 8)" (click)="seleccionar_asiento(asiento.piso, asiento.asiento, asiento.tarifaAsiento)">
+                                                <div *ngIf="asiento.tipoObjeto == 0" style="width: 100%; height: 100%;">
+                                                    <div class="precio_asiento casilla_asiento_num_asiento_ecominterno text-center">{{asiento.asiento}}</div>
+                                                    <div class="precio_asiento text-center" style="font-size: 0.82rem; margin-top: 3%;">
+                                                        <font style="font-size: 10px;">S/ </font>
+                                                        <font style="font-size: 16px;">{{asiento.tarifaAsiento}}</font>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 2 && asiento.columna == 4">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-utensils" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 3 && asiento.columna == 4">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fa fa-restroom" style="font-size: 27.5px; color: #ff641c;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 4 && asiento.columna == 4">
+                                                <div class="casilla_asiento_vacio">
+                                                    <img src="./assets/img/iconos/escalera.png" alt="" class="img-fluid" style="width: 70%; filter: invert(47%) sepia(16%) saturate(7494%) hue-rotate(348deg) brightness(104%) contrast(101%);"/>
+                                                </div>
+                                            </div>
+                                            <div class="casilla_asiento asiento_lleno" *ngIf="asiento.estadoAsiento == 0 && asiento.tipoObjeto == 0 && asiento.columna == 4">
+                                                <div *ngIf="asiento.tipoObjeto == 0">
+                                                    <i class="fas fa-user" style="font-size: 41px;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="grupo_unitario" *ngIf="asiento.tipoObjeto == 1 && asiento.columna == 4">
+                                                <div class="casilla_asiento_vacio">
+                                                    <i class="fad fa-tv" style="font-size: 27.5px; color: #595858;"></i>
+                                                </div>
+                                            </div>
+                                            <div class="espacio_en_blanco" *ngIf="asiento.tipoObjeto == 5 && asiento.columna == 4"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4" style="background-color: #ececec; border-top-right-radius: 30px; border-bottom-right-radius: 30px; position: relative;">
+                    <br>
+                    <font style="font-style: italic; color: #4E4D50; font-size: 28px; font-weight: bold;">Itinerario</font>
+                    <br><br>
+                    <div class="card" style="border-radius: 10px; background-color: #484848; border: hidden;">
+                        <div style="padding-left: 15px; padding-right: 15px; border-top-left-radius: 10px; border-top-right-radius: 10px; padding-top: 4px; padding-bottom: 4px;">
+                            <div style="float: left; color: #ffffff; font-size: 19px;">IDA</div>
+                            <div style="float: right; color: white; font-size: 18.5px; text-transform: uppercase;">Servicio {{servicioIda}}</div>
+                        </div>
+                        <div style="background-color: #ececec; border: 1px solid #bebebe; border-top-left-radius: 10px; border-top-right-radius: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">
+                            <div class="row" style="margin-top: 15px; margin-bottom: 6%;">
+                                <div class="col-12" style="display: flex; flex-direction: column; text-align: left; margin-left: 15px;">
+                                    <span style="color: #4E4D50; font-size: 20px; font-weight: bold; text-transform: uppercase;"><i class="fad fa-bus"></i> &nbsp;  {{nombre_ciudad_origen}}</span>
+                                    <span style="position: relative; width: 79%; margin-left: 11%; font-size: 15px;">{{direccionEmbarqueIda}}</span>
+                                </div>
+                                <div class="col-12" style="text-align: left; margin-left: 17px;">
+                                    <!--<i class="fal fa-long-arrow-right icon_flecha" style="font-size: 36px; color: #ff6719;"></i>-->
+                                    <i class="fal fa-long-arrow-down icon_flecha" style="font-size: 36px; color: #ff6719;"></i>
+                                </div>
+                                <div class="col-12" style="display: flex; flex-direction: column; text-align: left; margin-left: 18px;">
+                                    <span style="color: #4E4D50; font-size: 20px; font-weight: bold; text-transform: uppercase;"><i class="fad fa-map-marker-alt"></i> &nbsp; {{nombre_ciudad_destino}}</span>
+                                    <span style="position: relative; width: 79%; margin-left: 11%; font-size: 15px;">{{direccionDesembarqueIda}}</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 11px; margin-left: 19px; padding-bottom: 15px; color: #4E4D50; font-size: 19px;">
+                                <!--<i class="fal fa-calendar-check"></i>&nbsp;<font>{{nombreFechaEmbarqueIda}} &nbsp; - &nbsp; {{hora_embarque_ida}}</font>-->
+                                <i class="fad fa-calendar-check"></i>&nbsp;{{fecha_ida}} <br/>
+                                <i class="fad fa-clock"></i>&nbsp;{{hora_embarque_ida}}
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                    <!--<div class="col-12">
+                        <div *ngIf="num_asientos_ida_p1 != ''" style="padding-bottom: 10px; margin-bottom: 11px;">
+                            <div style="color: #4E4D50; font-weight: bold; font-size: 14px; float: left;">Piso 1</div>
+                            <div style="margin-top: -7px; float: right;">
+                                <font style="color: #989795; font-size: 13px;">Asiento(s): </font>
+                                <font style="color: #4E4D50; font-weight: bold; font-size: 14px;">{{num_asientos_ida_p1}}</font>
+                            </div>
+                        </div>
+                        <div *ngIf="num_asientos_ida_p2 != ''" style="padding-bottom: 10px; margin-bottom: 11px;">
+                            <div style="color: #4E4D50; font-weight: bold; font-size: 14px; float: left;">Piso 2</div>
+                            <div style="margin-top: -7px; float: right;">
+                                <font style="color: #989795; font-size: 13px;">Asiento(s): </font>
+                                <font style="color: #4E4D50; font-weight: bold; font-size: 14px;">{{num_asientos_ida_p2}}</font>
+                            </div>
+                        </div>
+                        <div *ngIf="num_asientos_ida_p1 != '' || num_asientos_ida_p2 != ''" style="color: #4E4D50; font-weight: bold; font-size: 22px;">
+                            <font style="font-size: 14px;">s/</font>
+                            {{precio_ida_total}}<font style="font-size: 14px;">.00</font>
+                        </div>
+                        <hr *ngIf="num_asientos_ida_p1 != '' || num_asientos_ida_p2 != ''" style="border: 1px dashed #ccc;">
+                    </div>
+                    <br>-->
+                    <div class="col-11" style="position: absolute; bottom: 15px;">      <!-- bottom: 43px; -->
+                        <!--<br>
+                        <hr *ngIf="num_asientos_ida_p1 != '' || num_asientos_ida_p2 != ''" style="border: 1px dashed #ccc;">-->
+                        <div id="precio_total_desktop_normal">
+                            <div class="col-12 text-center" style="color: #696969; font-size: 24px; font-weight: 500; padding-left: 14px;"><em>Precio Total</em></div>
+                            <div class="col-12 text-center" style="padding-left: 14px; margin-top: -17px;">
+                                <font style="color: #494949; font-weight: bold; font-size: 25px;">S/ </font>
+                                <font style="color: #494949; font-weight: bold; font-size: 70px;">{{precio_ida_total}}</font>
+                                <font style="color: #494949; font-weight: bold; font-size: 25px;">.00</font>
+                            </div>
+                            <br>
+                            <div id="btn_desktop_confirm_asient" (click)="siguiente();" class="col-12 text-center" style="background-color: #068b34; color: white; font-size: 24px; padding: 15px; cursor: pointer; border-radius: 6px;">
+                                CONFIRMAR
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--<div id="txt_message" style="font-size: 20px; font-weight: bold; color: black; position: absolute; top: 81%; left: 22%; width: 42%; display: none;">
+        * Tiene {{asientos_seleccionados.length}} <font *ngIf="asientos_seleccionados.length == 1">asiento seleccionado.</font> <font *ngIf="asientos_seleccionados.length > 1">asientos seleccionados.</font>
+    </div>-->
+
+    <!--<div id="txt_message" style="font-size: 23px; font-weight: bold; color: black; position: absolute; top: 81%; left: 22%; width: 42%; display: none;">
+        Asientos: 
+        <font style="color: #494949;" *ngIf="num_asientos_ida_p1.length == 0 && num_asientos_ida_p2.length > 0">{{num_asientos_ida_p2}}</font> 
+        <font style="color: #494949;" *ngIf="num_asientos_ida_p1.length > 0 && num_asientos_ida_p2.length == 0">{{num_asientos_ida_p1}}</font> 
+        <font style="color: #494949;" *ngIf="num_asientos_ida_p1.length > 0 && num_asientos_ida_p2.length > 0">{{num_asientos_ida_p1}},{{num_asientos_ida_p2}}</font>
+    </div>-->
+
+    <div id="dato_superior_derecho" style="color: #ffffff; position: absolute; top: 2.2%; left: 4%; text-align: center;">
+        <img src="../../assets/img/LOGOTIPO BUS A COLOR RGB-01.png" style="height: 2.6em; width: 9em;"><br>
+        <font style="font-style: italic; font-size: 16px;">Moviendo al Perú</font>
+    </div>
+
+    <div id="btn_atras" class="btn btn-lg btn-danger" style="color: #ffffff; position: absolute; top: 88.5%; left: 9%; width: 30%;" (click)="atras()">
+        <div>ATRÁS</div>
+        <i class="fad fa-chevron-circle-left icon_input_seleccion_init" style="color: white;"></i>
+    </div>
+    <!--<div id="btn_siguiente" class="btn btn-lg btn-success" style="color: white; position: absolute; top: 88%; right: 9%; width: 22%; padding-left: 0%;" (click)="siguiente()">
+        <div>SIGUIENTE</div>
+        <i class="fad fa-chevron-circle-right icon_input_seleccion_end" style="color: white;"></i>
+    </div>-->
+
+    <div id="dato_inferior_izquierda" style="color: #ffffff; position: absolute; bottom: 2%; left: 4%; display: flex; align-items: center; font-size: 19px;">
+        <i class="fab fa-facebook-f" style="margin-right: 1px;"></i>&nbsp;
+        <i class="fab fa-instagram" style="margin-right: 1px;"></i>&nbsp;
+        <img src="../../assets/img/iconos/tiktok.png" style="width: 2.2%; filter: invert(100%) sepia(0%) saturate(1000%) hue-rotate(329deg) brightness(200%) contrast(98%);">&nbsp;&nbsp;
+        <font>&#64;movilbus.pe</font>
+    </div>
+    <div id="dato_inferior_derecho" style="color: #ffffff; position: absolute; bottom: 2%; right: 4%; font-size: 19px;">
+        www.movilbus.pe
+    </div>
+
+    <div id="btn_boton_home" class="btn btn-lg" (click)="ir_al_home()">
+        <div>IR AL INICIO</div>
+        <i class="fad fa-home-lg-alt icon_input_seleccion_init" style="color: #ff6719; left: 16px; bottom: 19px;"></i>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_limitmax" tabindex="-1" role="dialog" aria-labelledby="modal_limitmaxLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body row" style="padding: 0rem !important;">
+            <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                <font style="color: #4E4D50; font-weight: bold; font-size: 19px;">Límite máximo</font><br>
+                <font style="color: #a0a0a0; font-weight: bold; font-size: 13px;">Puedes seleccionar un máximo de {{cant_max_asientos}} asientos en un bus.</font>
+            </div>
+            <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 43px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <i class="fad fa-times" (click)="ocultar_modal('modal_limitmax')" style="cursor: pointer;"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_asientos_ocupados" tabindex="-1" role="dialog" aria-labelledby="modal_asientos_ocupadosLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body row" style="padding: 0rem !important;">
+            <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                <font style="color: #4E4D50; font-weight: bold; font-size: 19px;">Selección de Asientos</font><br>
+                <font style="color: #a0a0a0; font-weight: bold; font-size: 13px;">Los asientos seleccionados están siendo ocupados por otro pasajero.</font>
+            </div>
+            <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 43px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <i class="fad fa-times" (click)="ocultar_modal('modal_asientos_ocupados')" style="cursor: pointer;"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_mensajealerta" tabindex="-1" role="dialog" aria-labelledby="modal_mensajealertaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body row" style="padding: 0rem !important;">
+            <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                <font style="color: #4E4D50; font-weight: bold; font-size: 22px;">{{tituloMensajeAlerta}}</font><br>
+                <font style="color: #a0a0a0; font-weight: bold; font-size: 17px;">{{textoMensajeAlerta}}</font>
+            </div>
+            <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 43px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <i class="fad fa-times" (click)="ocultar_modal('modal_mensajealerta')" style="cursor: pointer;"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>

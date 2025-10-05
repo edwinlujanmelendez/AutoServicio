@@ -1,0 +1,67 @@
+.input_login_error{
+    border: 1px solid red !important;
+}
+.boton_inicio{
+    width: 90%; 
+    height: 300px; 
+    border: 1px solid #ccc; 
+    background-color: #f9fafb; 
+    text-align: center; 
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-left: -0.5%;
+}
+.boton_inicio:active{
+    transform: scale(1.02);
+    background-color: #ececec; 
+}
+
+.clase_button_numerico{
+    background-color: #ffffff;
+    color: #616060;
+    width: 75px;
+    height: 68px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.clase_button_numerico:active{
+    transform: scale(1.07);
+    background-color: #ff6719;
+    color: white;
+}
+.clase_button_numerico_vacio{
+    background-color: transparent;
+    color: transparent;
+    width: 75px;
+    height: 68px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.clase_mayuscula{
+    text-transform: uppercase;
+}
+.clase_button_numerico2{
+    background-color: #e4e4e4;
+    color: #616060;
+    width: 61px;
+    height: 60px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.clase_button_numerico2:active{
+    transform: scale(1.07);
+    --background-color: #d7d7d7;
+    background-color: #ff6719;
+    color: white;
+}

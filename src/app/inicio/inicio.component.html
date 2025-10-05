@@ -1,0 +1,201 @@
+<!--<div style="height: auto;">
+    <div style="margin-top: 10%;">
+        <div id="mensaje_bienvenida" style="display: flex; justify-content: center; font-size: 30px; color: #ffffff;">Bienvenidos a</div>
+
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <div class="column" style="float: left; width: 34%; height: 30%;">&nbsp;</div> 
+            <div class="column" style="float: left; width: 32%; height: 30%;"> 
+                <img src="../../assets/img/LOGO-GRANDE.png" style="vertical-align: middle;">
+            </div> 
+            <div class="column" style="text-align: right; width: 34%; height: 30%;"> 
+                <img src="../../assets/img/inicio/bus.png" style="vertical-align: middle;">
+            </div> 
+        </div>
+
+        <div id="image_principal" style="display: flex; justify-content: center; align-items: center; font-size: 28px; color: #ffffff;">
+            compra tus pasajes en 5 pasos &nbsp; &nbsp;
+            <img src="../../assets/img/FLECHA-DERE.png" style="height: 2.8em; width: 2.8em; cursor: pointer;" (click)="ir_seleccion()" title="Ir a los Itinerarios">
+        </div>
+    </div>
+</div>-->
+
+<div style="height: auto;">
+    <div style="margin-top: 5%;">
+        <div id="mensaje_bienvenida" style="display: flex; justify-content: center; font-size: 40px; color: #ffffff; font-weight: bold;">
+            Bienvenidos a&nbsp;<img src="../../assets/img/LOGO-GRANDE.png" style="vertical-align: middle; width: 24%;" (click)="toggleFullscreen()"></div>
+        <br><br><br><br>
+        <div> <!-- style="display: flex; justify-content: center; align-items: center;" -->
+            <div class="col-12" style="display: flex; justify-content: center; align-items: center; margin-bottom: 20px;">
+                <div class="row boton_inicio" (click)="ir_seleccion()">
+                    <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
+                        <img src="../../assets/img/inicio/travel_orange.svg" style="vertical-align: middle; width: 70%;">
+                    </div>
+                    <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
+                        <font style="font-size: 25px; color: black; font-weight: bold;">COMPRA TU PASAJE</font>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <!--<div class="col-12" style="display: flex; justify-content: center; align-items: center;">
+                <div class="row boton_inicio" (click)="ir_reimprimir_boletos()">
+                    <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
+                        <img src="../../assets/img/inicio/print_ticket_orange.svg" style="vertical-align: middle; width: 70%;">
+                    </div>
+                    <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
+                        <font style="font-size: 25px; color: black; font-weight: bold;">REIMPRIMIR BOLETOS</font>
+                    </div>
+                </div>
+            </div>
+            <br><br>-->
+            <div class="col-12" style="display: flex; justify-content: center; align-items: center;">
+                <div class="row boton_inicio" (click)="ir_enviar_pdf_correo()">
+                    <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
+                        <img src="../../assets/img/inicio/email_send_orange_2.svg" style="vertical-align: middle; width: 37%;">         <!-- width: 70%; -->
+                    </div>
+                    <div class="col-6" style="display: flex; justify-content: center; align-items: center;">
+                        <font style="font-size: 25px; color: black; font-weight: bold;">REENVIAR EL PASAJE A TU CORREO</font>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="teclado_alfanumerico" class="form-group" style="display: none; z-index: 1056;">
+        <div id="botones_numericos" style="width: 170%; margin-left: -35%;">
+            <br>
+            <div class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton('0')">0</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('1')">1</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('2')">2</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('3')">3</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('4')">4</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('5')">5</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('6')">6</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('7')">7</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('8')">8</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('9')">9</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('borrar')" style="width: 11%;"><i class="fad fa-backspace"></i></div>
+            </div>
+            <div id="fila_alfanumerico_1" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton('q')">q</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('w')">w</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('e')">e</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('r')">r</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('t')">t</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('y')">y</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('u')">u</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('i')">i</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('o')">o</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('p')">p</div>
+            </div>
+            <div id="fila_alfanumerico_2" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton('a')">a</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('s')">s</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('d')">d</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('f')">f</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('g')">g</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('h')">h</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('j')">j</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('k')">k</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('l')">l</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('ñ')">ñ</div>
+            </div>
+            <div id="fila_alfanumerico_3" class="row" style="display: flex; justify-content: center; align-items: center; margin-bottom: 5px;">
+                <div class="clase_button_numerico2" (click)="click_boton('mayuscula')"><i class="fad fa-font-case"></i></div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('z')">z</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('x')">x</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('c')">c</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('v')">v</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('b')">b</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('n')">n</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('m')">m</div>
+            </div>
+            <div class="row" style="display: flex; justify-content: center; align-items: center;">
+                <div class="clase_button_numerico2" (click)="click_boton('|')">|</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('/')">/</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('+')">+</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('-')">-</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('.')">.</div>&nbsp;&nbsp;&nbsp;
+                <div class="clase_button_numerico2" (click)="click_boton('$')">$</div>&nbsp;&nbsp;&nbsp;
+            </div>
+        </div>
+    </div>
+
+    <div id="dato_inferior_izquierda" style="color: #ffffff; position: absolute; bottom: 2%; left: 4%; display: flex; align-items: center; font-size: 19px;">
+        <i class="fab fa-facebook-f" style="margin-right: 1px;"></i>&nbsp;
+        <i class="fab fa-instagram" style="margin-right: 1px;"></i>&nbsp;
+        <img src="../../assets/img/iconos/tiktok.png" style="width: 2.2%; filter: invert(100%) sepia(0%) saturate(1000%) hue-rotate(329deg) brightness(200%) contrast(98%);">&nbsp;&nbsp;
+        <font>&#64;movilbus.pe</font>
+    </div>
+    <div id="dato_inferior_derecho" style="color: #ffffff; position: absolute; bottom: 2%; right: 4%; font-size: 19px;">
+        www.movilbus.pe
+    </div>
+</div>
+
+<div id="btn_configuracion" style="font-size: 40px; color: #ffffff; position: absolute; top: 3%; right: 4%; cursor: pointer;" (click)="abrir_configuracion()">
+    <i class="fad fa-cog"></i>
+</div>
+
+<div id="img_bus_movil" style="position: absolute; top: 65%; right: -0.04%;">   <!-- right: -0.45%; -->
+    <img src="../../assets/img/inicio/bus.png" style="vertical-align: middle;">
+</div>
+
+<div class="modal fade" id="modal_mensajealerta" tabindex="-1" role="dialog" aria-labelledby="modal_mensajealertaLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body row" style="padding: 0rem !important;">
+            <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                <font style="color: #4E4D50; font-weight: bold; font-size: 22px;">{{tituloMensajeAlerta}}</font><br>
+                <font style="color: #a0a0a0; font-weight: bold; font-size: 17px;">{{textoMensajeAlerta}}</font>
+            </div>
+            <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 43px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <i class="fad fa-times" (click)="ocultar_modal('modal_mensajealerta')" style="cursor: pointer;"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal_mensajepassword" tabindex="-1" role="dialog" aria-labelledby="modal_mensajepasswordwordLabel" aria-hidden="true" (click)="ocultar_teclados()">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-body row" style="padding: 0rem !important;">
+            <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                <font style="color: #4E4D50; font-weight: bold; font-size: 22px; margin-bottom: 5px;">Contraseña</font><br>
+                <input id="password_login_autoservicio" type="password" value="" class="form-control" placeholder="Contraseña" (click)="activar_teclado_alfanumerico_password('password_login_autoservicio', 1)">
+            </div>
+            <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 47px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                <i class="fad fa-check-circle" (click)="ir_configuracion()" style="cursor: pointer;"></i>
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalPreguntaSalirPantalla" tabindex="-1" role="dialog" aria-labelledby="modalPreguntaSalirPantallaTitle" aria-hidden="true" (click)="ocultar_teclados()">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title" style="font-weight: bold;">Mensaje de Alerta</h4>
+            <i class="fa fa-times" style="font-size: 20px; cursor: pointer;" (click)="ocultar_modal('modalPreguntaSalirPantalla');"></i>
+        </div>
+        <div class="modal-body" style="color: #383838 !important;">
+            <form>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <label style="font-size: 18px;">Coloque la Contraseña para salir del Sistema del AutoServicio</label>
+                    </div>
+                </div>
+                <div class="row" style="margin-bottom: 15px;">
+                    <div class="col">
+                        <input id="password_salir_pantalla" type="password" value="" class="form-control" placeholder="Contraseña" (click)="activar_teclado_alfanumerico_password('password_salir_pantalla', 2)">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn" (click)="closeFullscreen()" style="background-color: #ff6719; color: white;">Salir del Sistema</button>
+        </div>
+      </div>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<div style="height: auto;">
+    <div style="margin-top: 2%; margin-left: 5%;">
+        <div id="titulo" style="font-size: 32px; color: #ffffff; display: flex; justify-content: left; align-items: center;">
+            <i class="fad fa-terminal"></i> &nbsp; {{sub_titulo}}
+        </div>
+        <br>
+        <div style="width: 95%; padding-bottom: 2%; border-radius: 30px; background-color: #ffffff; box-shadow: 2px 10px 18px -4px rgba(0, 0, 0, 0.50);">
+            <div style="display: flex; justify-content: center; align-items: center; padding-top: 18px;">
+                <div id="columna_1" class="column" style="float: left; width: 35%; height: auto;">
+                    <form>
+                        <div class="form-group">
+                            <div id="btn_pos_echo" class="btn btn-lg btn-light btn_pos_echo" (click)="btn_pos_echo()">
+                                <div style="font-size: 21px;">POS: ECHO</div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <div id="btn_pos_cierre" class="btn btn-lg btn-light btn_pos_cierre" (click)="btn_pos_cierre()">
+                                <div style="font-size: 21px;">POS: CIERRE</div>
+                            </div>
+                        </div>
+                    </form>
+                </div> 
+                <div id="columna_2" class="column" style="width: 40%; height: 732px; padding-left: 7%; padding-top: 1%; position: relative; overflow: auto;">
+                    <div id="div_pos_echo" style="display: none;">
+                        <br><br><br><br><br><br>
+                        <div class="form-group">
+                            <input type="text" id="txt_api_pos_echo" class="form-control form-control-lg" style="text-align: center;" placeholder="http://localhost:8080/pcl/echo" readonly>
+                            <br>
+                            <textarea id="textarea_api_pos_echo" class="form-control form-control-lg" rows="11" placeholder="Respuesta Niubiz" style="resize: none; font-size: 18px;" readonly></textarea>
+                        </div>
+                    </div>
+                    <div id="div_pos_cierre" style="display: none;">
+                        <br><br><br><br><br><br>
+                        <div class="form-group">
+                            <input type="text" id="txt_api_pos_cierre" class="form-control form-control-lg" style="text-align: center;" placeholder="http://localhost:8080/pcl/batch" readonly>
+                            <br>
+                            <textarea id="textarea_api_pos_cierre" class="form-control form-control-lg" rows="11" placeholder="Respuesta Niubiz" style="resize: none; font-size: 18px;" readonly></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dato_inferior_izquierda" style="color: #ffffff; position: absolute; bottom: 3%; margin-left: 5.5%; display: flex; align-items: center;">
+        <i class="fab fa-facebook-f" style="margin-right: 1px;"></i>&nbsp;
+        <i class="fab fa-instagram" style="margin-right: 1px;"></i>&nbsp;
+        <img src="../../assets/img/iconos/tiktok.png" style="width: 2.2%; filter: invert(100%) sepia(0%) saturate(1000%) hue-rotate(329deg) brightness(200%) contrast(98%);">&nbsp;&nbsp;
+        <font>@movilbus.pe</font>
+    </div>
+    <div id="dato_inferior_derecho" style="color: #ffffff; position: absolute; bottom: 3%; margin-left: 88.5%;">
+        www.movilbus.pe
+    </div>
+
+    <div id="dato_superior_derecho" style="color: #ffffff; position: absolute; top: 4%; margin-left: 88.5%; text-align: center;">
+        <img src="../../assets/img/LOGOTIPO BUS A COLOR RGB-01.png" style="height: 2.3em; width: 8em;"><br>
+        <font style="font-style: italic; font-size: 13px;">Moviendo al Perú</font>
+    </div>
+
+    <div class="modal fade" id="modal_cajaAbierta" tabindex="-1" role="dialog" aria-labelledby="modal_cajaAbiertaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body row" style="padding: 0rem !important;">
+                <div class="col-9" style="background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px;">
+                    <font style="color: #4E4D50; font-weight: bold; font-size: 19px;">Caja Abierta</font><br>
+                    <font style="color: #a0a0a0; font-weight: bold; font-size: 13px;">Este usuario tiene la Caja Abierta, se tiene que cerrar la Caja desde Sispas y para poder cerrar por este medio.</font>
+                </div>
+                <div class="col-3 text-center" style="background-color: rgb(211, 211, 211); padding: 1rem; font-size: 43px; color: #ff6719; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                    <i class="fad fa-times" (click)="ocultar_modal('modal_cajaAbierta')" style="cursor: pointer;"></i>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="modal_preguntaCaja" tabindex="-1" role="dialog" aria-labelledby="modal_preguntaCajaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body row" style="padding: 0rem !important;">
+                <div class="col-12" style="text-align: center; background-color: white; padding: 1rem; border-top-left-radius: 10px; border-bottom-left-radius: 10px; border-top-right-radius: 10px; border-bottom-right-radius: 10px;">
+                    <font style="color: #4E4D50; font-weight: bold; font-size: 24px;">CERRAR CAJA</font><br>
+                    <font style="color: #a0a0a0; font-weight: bold; font-size: 17px;">¿Usted está seguro de querer cerrar la caja?</font>
+
+                    <br><br>
+                    <button class="btn btn-danger" style="font-size: 17px;" (click)="cerrar_caja()">CERRAR CAJA</button> &nbsp;&nbsp;&nbsp;
+                    <button class="btn btn-secondary" style="font-size: 17px;" (click)="ocultar_modal('modal_preguntaCaja')">CANCELAR</button>
+                    <br><br>
+                </div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>

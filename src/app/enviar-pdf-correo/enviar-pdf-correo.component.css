@@ -1,0 +1,333 @@
+.input_seleccion{
+    width: 80%; 
+    height: 70px; 
+    background-color: #e4e4e4; 
+    position: relative; 
+    border-radius: 6px; 
+    display: flex; 
+    justify-content: left; 
+    align-items: center; 
+    padding-left: 5%;
+    font-size: 20px; 
+    color: #616060;
+}
+#btn_atras{
+    width: 63%;
+    height: 60px;
+    position: relative;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 6%;
+    cursor: pointer;
+    box-shadow: 2px 6px 10px -4px rgba(0, 0, 0, 0.50);
+    border: 1px solid #c92434;
+    font-size: 28px;
+}
+#btn_atras:active{
+    transform: scale(1.02);
+    background: #a02430;
+}
+#btn_ir_inicio{
+    width: 63%;
+    height: 60px;
+    position: relative;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 6%;
+    cursor: pointer;
+    box-shadow: 2px 6px 10px -4px rgba(0, 0, 0, 0.50);
+    border: 1px solid #c92434;
+    font-size: 28px;
+}
+#btn_ir_inicio:active{
+    transform: scale(1.02);
+    background: #a02430;
+}
+.btn_buscar_boletos{
+    width: 63%;
+    height: 60px;
+    position: relative;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 5%;
+    cursor: pointer;
+    box-shadow: 2px 6px 10px -4px rgba(0, 0, 0, 0.50);
+    border: 1px solid #068b34;
+    font-size: 28px;
+}
+.btn_buscar_boletos:active{
+    transform: scale(1.02);
+    background: #068b34;
+}
+.btn_buscar_boletos_disable{
+    width: 63%;
+    height: 60px;
+    position: relative;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 5%;
+    cursor: pointer;
+    box-shadow: 2px 6px 10px -4px rgba(0, 0, 0, 0.50);
+    border: 1px solid #068b34;
+    opacity: .65;
+    font-size: 28px;
+}
+.btn_group_center{
+    width: 80%;
+    height: 52px;
+    position: relative;
+    border-radius: 6px;
+    padding-left: 9%;
+    cursor: pointer;
+    box-shadow: 2px 6px 10px -4px rgba(0, 0, 0, 0.50);
+    font-size: 22px;
+}
+.btn_group_center:active{
+    transform: scale(1.02);
+}
+
+.icon_input_seleccion_init{
+    position:absolute; 
+    bottom:16px;
+    left:28px; 
+    width:24px; 
+    height:27px; 
+    font-size:29px; 
+    color:#616060;
+}
+.icon_input_seleccion_end{
+    position:absolute; 
+    bottom:14px; 
+    right:40px; 
+    width:24px; 
+    height:27px; 
+    font-size:29px; 
+    color:#616060;
+}
+.clase_button_numerico{
+    background-color: #e4e4e4;
+    color: #616060;
+    width: 75px;
+    height: 68px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.clase_button_numerico:active{
+    transform: scale(1.07);
+    background-color: #ff6719;
+    color: white;
+}
+.clase_button_numerico_vacio{
+    background-color: transparent;
+    color: transparent;
+    width: 75px;
+    height: 68px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.clase_button_numerico2{
+    background-color: #e4e4e4;
+    color: #616060;
+    width: 61px;
+    height: 60px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.clase_button_numerico2:active{
+    transform: scale(1.07);
+    --background-color: #d7d7d7;
+    background-color: #ff6719;
+    color: white;
+}
+.document_select{
+    border: 2px dashed #ff6719;
+    --background-color: #ff6719;
+    --opacity: 0.8;
+    color: #ff6719;
+}
+.clase_button_numerico3{
+    background-color: #e4e4e4;
+    color: #616060;
+    width: 90px;
+    height: 83px;
+    font-size: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.clase_button_numerico3:active{
+    transform: scale(1.07);
+    background-color: #ff6719;
+    color: white;
+}
+.clase_button_numerico_vacio3{
+    background-color: transparent;
+    color: transparent;
+    width: 90px;
+    height: 83px;
+    font-size: 43px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/***************** AGREGADO *****************/
+.div_servicio{
+    padding-left: 4%;
+}
+.servicio{
+    font-size: 18px; 
+    color: #8e8e96;
+}
+.servicio_detall{
+    font-size: 18px; 
+    font-weight: bold; 
+    color: #4d4d4d;
+}
+.icon_detalle{
+    float: right; 
+    color: #4c4c4c;
+}
+.font_ruta{
+    font-size: 19px; 
+    color: #4c4c4c; 
+    font-weight: bold;
+}
+.font_ruta2{
+    font-size: 19px; 
+    color: #a2a2a2; 
+    font-weight: bold;
+}
+.icon_flecha{
+    font-size: 52px; 
+    margin-top: -8px;
+    color: #a2a2a2;
+}
+.dat_salida_embar{
+    font-size: 16px;
+    font-style: oblique;
+    font-weight: 500;
+}
+.dat_hora_embar{
+    font-size: 20px; 
+    color: #ff6a1d; 
+    font-weight: bold;
+    margin-top: -7px;
+}
+.dat_llegada_desem{
+    font-size: 16px;
+    font-style: oblique;
+    color: #a2a2a2;
+    font-weight: 500;
+}
+.dat_hora_desem{
+    font-size: 20px; 
+    color: #a2a2a2; 
+    font-weight: bold;
+    margin-top: -7px;
+}
+.margin_embarque_desembarque{
+    margin-top: -7px;
+    margin-bottom: 10px;
+    padding-left: 6%;
+}
+.dat_salida_embar_detall{
+    font-size: 12px;
+    font-weight: 500;
+}
+.dat_llegada_desem_detall{
+    font-size: 12px;
+    font-weight: 500;
+    color: #a2a2a2;
+}
+.margin_top_bottom_precio{
+    margin-top: 17px; 
+    margin-bottom: 13px;
+}
+.font_ida_retorno{
+    color: #4E4D50; 
+    font-weight: bold; 
+    font-size: 17px;
+}
+.font_total_pasajero{
+    font-size: 14px;
+}
+.font_asientos{
+    font-size: 14px;
+}
+.font_monto_total_ida{
+    color: #4E4D50; 
+    font-weight: bold; 
+    font-size: 24px;
+}
+.border_table_head{
+    background-color: #dddddd;
+    border: 1px #a3a3a3 solid;
+    font-size: 16px;
+    color: #595959;
+}
+.border_table_body{
+    background-color: #f7f7f7;
+    border: 1px #a3a3a3 solid;
+    font-size: 16px;
+    color: #6d6d6d;
+}
+.card_seleccionado{
+    border: 1px solid #198754;
+}
+.icon_seleccionado{
+    display: flex !important;
+}
+.icon_no_seleccionado{
+    display: none !important;
+}
+.input_correcto{
+    border: 1px solid green !important;
+}
+.input_incorrecto{
+    border: 1px solid red !important;
+}
+/***************** AGREGADO *****************/
+
+/* width */
+#columna_1::-webkit-scrollbar {
+    width: 20px;
+    padding-left: 10px;
+}
+
+/* Track */
+#columna_1::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 8px;
+}
+
+/* Handle */
+#columna_1::-webkit-scrollbar-thumb {
+    background: #ff641c; 
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+#columna_1::-webkit-scrollbar-thumb:hover {
+    background: #e45817;
+}

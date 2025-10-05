@@ -1,0 +1,215 @@
+.input_seleccion{
+    width: auto; 
+    height: 60px; 
+    background-color: #e4e4e4; 
+    position: relative; 
+    border-radius: 6px; 
+    display: flex; 
+    justify-content: left; 
+    align-items: center; 
+    padding-left: 5%; 
+    cursor: pointer;
+    font-size: 20px; 
+    color: #616060;
+}
+.icon_input_seleccion_init{
+    position:absolute; 
+    bottom:22px; 
+    left:42px; 
+    width:24px; 
+    height:24px; 
+    font-size: 30px; 
+    color: #616060;
+}
+.icon_input_seleccion_end{
+    position:absolute; 
+    bottom:22px; 
+    right:30px; 
+    width:24px; 
+    height:24px; 
+    font-size: 30px; 
+    color: #616060;
+}
+.btn_conf{
+    width: auto; 
+    height: 66px; 
+    position: relative; 
+    border-radius: 6px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding-left: 5%; 
+    cursor: pointer; 
+    box-shadow: 2px 6px 10px -4px rgba(0, 0, 0, 0.50); 
+}
+.btn_guardar_informacion{
+    background-color: #ff641c; 
+}
+#btn_guardar_informacion:active{
+    transform: scale(1.02);
+    background: #e45817;
+}
+#btn_pos_init:active{
+    transform: scale(1.02);
+    background: #e3e3e3;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+#btn_pos_echo:active{
+    transform: scale(1.02);
+    background: #e3e3e3;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+#btn_pos_cierre:active{
+    transform: scale(1.02);
+    background: #e3e3e3;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+#btn_probar_impresora:active{
+    transform: scale(1.02);
+    background: #068b34;
+}
+.btn_probar_impresora{
+    border: 1px solid #068b34;
+}
+#btn_informacion_caja:active{
+    transform: scale(1.02);
+}
+.input_seleccionado{
+    border: 2.5px solid #ff641c;
+}
+.input_seleccion2{
+    width: auto; 
+    height: 55px; 
+    background-color: #e4e4e4; 
+    position: relative; 
+    border: 1px solid #bfbfbf;
+    display: flex; 
+    justify-content: left; 
+    align-items: center; 
+    padding-left: 10%; 
+    cursor: pointer;
+    font-size: 20px; 
+    color: #616060;
+    margin-right: 10px;
+}
+.input_seleccion2:active{
+    background-color: #b5b5b5; 
+}
+.border_radius_top{
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.border_radius_bottom{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.btn_guardar_informacion_disable{
+    background-color: #ffcbb3 !important;
+    cursor: not-allowed !important;
+}
+
+
+.clase_mayuscula{
+    text-transform: uppercase;
+}
+.clase_button_numerico{
+    background-color: #e4e4e4;
+    color: #616060;
+    width: 75px;
+    height: 68px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.clase_button_numerico:active{
+    transform: scale(1.07);
+    background-color: #ff6719;
+    color: white;
+}
+.clase_button_numerico_vacio{
+    background-color: transparent;
+    color: transparent;
+    width: 75px;
+    height: 68px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.clase_button_numerico2{
+    background-color: #e4e4e4;
+    color: #616060;
+    width: 61px;
+    height: 60px;
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.clase_button_numerico2:active{
+    transform: scale(1.07);
+    --background-color: #d7d7d7;
+    background-color: #ff6719;
+    color: white;
+}
+
+
+
+
+/* width */
+#columna_2::-webkit-scrollbar {
+    width: 20px;
+    padding-left: 10px;
+}
+
+/* Track */
+#columna_2::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 8px;
+}
+
+/* Handle */
+#columna_2::-webkit-scrollbar-thumb {
+    background: #ff641c; 
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+#columna_2::-webkit-scrollbar-thumb:hover {
+    background: #e45817;
+}
+
+/*******************************************************************/
+
+/* width */
+.columna_overflow::-webkit-scrollbar {
+    width: 20px;
+    padding-left: 10px;
+}
+
+/* Track */
+.columna_overflow::-webkit-scrollbar-track {
+    background-color: #e4e4e4;
+    border-radius: 8px;
+}
+
+/* Handle */
+.columna_overflow::-webkit-scrollbar-thumb {
+    background: #ff641c; 
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+.columna_overflow::-webkit-scrollbar-thumb:hover {
+    background: #e45817;
+}
+
+/*******************************************************************/
