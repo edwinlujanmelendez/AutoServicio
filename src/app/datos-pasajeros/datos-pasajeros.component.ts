@@ -2332,64 +2332,70 @@ export class DatosPasajerosComponent implements OnInit {
   /************************************************************************************************/    //@elujan ++
 
   pagarPaymentPagoEfectivo(TipForPago: number){
-    // Muestra loader de manera segura
-    $(".loader").fadeIn("slow");
+    if(isPlatformBrowser(this.platformId)){
+      $(".loader").fadeIn("slow");
+      
+      setTimeout(() => {
+        $('#btn_atras').css('display', 'none');
+        //$("#vista_pagar").css("display", "none");
+        
+        $('#muestra_pague_aquí').css('display', 'none');
+        $('#muestra_pague_aquí_promociones').css('display', 'none');
+      }, 500);
 
-    // Oculta los elementos de la vista
-    this.ocultarElementosPago();
-
-    // Limpia posibles errores previos
-    localStorage.setItem("StorageErrorPos", JSON.stringify({}));
-
-    // Validar monto antes de continuar
-    const total = Number(this.precio_total_pasajeros_asientos);
-    if (isNaN(total) || total <= 0) {
-      console.error("Monto inválido:", total);
-      this.mostrarErrorPago();
-      return;
-    }
-
-    console.log("Monto total:", total.toFixed());
-
-    // Espera la respuesta real del servidor (sin usar setTimeout)
-    this.taskService.postGenerarPago(total.toFixed()).subscribe({
-      next: (responseGenerarPago) => {
-        console.log("Respuesta del pinpad:", responseGenerarPago);
-
-        if (responseGenerarPago && responseGenerarPago['batchNumber']) {
-          // ✅ Caso correcto
-          $(".loader").fadeOut("slow");
-          $("#vista_pagar_imagenes").css("display", "inline");
-
-          const jsonArray = {
-            voucherClient: responseGenerarPago['voucherClient'] || null
-          };
-
-          const blob = new Blob([JSON.stringify(jsonArray)], {
-            type: 'application/octet-stream'
-          });
-
-          // Espera un breve momento para garantizar que el archivo se genere bien
-          setTimeout(() => {
-            saveAs(blob, "4C608A6XX.json");
-            this.crearArrayPagarSispas(
-              TipForPago,
-              String(responseGenerarPago['voucherNumber'] || '')
-            );
-          }, 800);
-        } else {
-          // ❌ Caso incorrecto o sin datos
-          console.warn("Respuesta sin batchNumber o vacía:", responseGenerarPago);
-          $(".loader").fadeOut("slow");
-          this.mostrarErrorPago();
-        }
-      },
-      error: (err) => {
-        console.error("Error en la llamada a postGenerarPago:", err);
+      setTimeout(() => {
         $(".loader").fadeOut("slow");
-        this.mostrarErrorPago();
-      }
-    });
+        $("#vista_pagar_imagenes").css("display", "inline");
+
+        localStorage.setItem("StorageErrorPos", JSON.stringify({}));
+        
+        //console.log(this.precio_total_pasajeros_asientos.toFixed());
+
+        this.taskService.postGenerarPago(this.precio_total_pasajeros_asientos.toFixed()).subscribe(responseGenerarPago=> {
+          //this.responseGenerarPago = responseGenerarPago;
+
+          //* RECIBE RESPUESTA DEL PINPAD
+          console.log(responseGenerarPago);
+          if(responseGenerarPago['batchNumber']){
+            // TODO: CORRECTO
+            
+            var jsonArray = {
+              voucherClient: responseGenerarPago['voucherClient']
+            }
+      
+            const blob = new Blob([JSON.stringify(jsonArray)], { type: 'application/octet-stream' });
+            saveAs(blob, "4C608A6XX.json");
+
+            setTimeout(() => {
+              //saveAs(blob, "4C608A6XX.json");
+              this.crearArrayPagarSispas(TipForPago, String(responseGenerarPago['batchNumber']));
+            }, 1750);
+          }else{
+            // ! INCORRECTO
+
+            if(this.pago_regular_promocion_tarjeta == 2){
+              $('#muestra_pague_aquí_promociones').css('display', 'flex');
+            }
+            
+            $('#muestra_pague_aquí').css('display', 'flex');
+            $("#vista_pagar_imagenes").css("display", "none");
+            $("#div_cancelar_venta").css("display", "flex");
+          }
+        }, error =>{
+          //! SI ES ERROR
+
+          if(this.pago_regular_promocion_tarjeta == 2){
+            $('#muestra_pague_aquí_promociones').css('display', 'flex');
+          }
+
+          $('#muestra_pague_aquí').css('display', 'flex');
+          $("#vista_pagar_imagenes").css("display", "none");
+          $("#div_cancelar_venta").css("display", "flex");
+        }, () =>{
+          
+        });
+      }, 2500);
+    }
   }
 
   private ocultarElementosPago(): void {
@@ -3246,6 +3252,7 @@ export class DatosPasajerosComponent implements OnInit {
     }
 
     this.texto_boleta_factura = texto;
+    this.div_seleccionado = "vista_mostrar_tipo_de_compra";
 
     $("#div_mensaje_alerta_boleta_factura").css("display", "flex");
     $('#emailDatosContacto').removeClass("input_incorrecto");
