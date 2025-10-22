@@ -111,7 +111,7 @@ export class AsientosRetornoComponent implements OnInit {
 
       this.elem = document.documentElement;
 
-      this.appComponent.clearInterval();
+      //this.appComponent.clearInterval();
       //this.appComponent.temporizador(5, 10);
 
       this.taskService.getMyIp().subscribe(responseIpLocal =>{

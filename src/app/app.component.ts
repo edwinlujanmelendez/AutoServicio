@@ -68,11 +68,11 @@ export class AppComponent implements OnInit{
     }
   }
 
-  clearInterval(){
+  /*clearInterval(){
     clearInterval(this.intervalo_tiempo);
-  }
+  }*/
 
-  temporizador(minutos: number, segundos: number){
+  /*temporizador(minutos: number, segundos: number){
     var val_interval = 1;
     this.intervalo_tiempo = setInterval(() => {
       if(val_interval == 1){
@@ -93,6 +93,6 @@ export class AppComponent implements OnInit{
         }
       }
     }, 1000);
-  }
+  }*/
   
 }

@@ -47,7 +47,7 @@ export class InicioComponent implements OnInit {
 
     this.elem = document.documentElement;
 
-    this.appComponent.clearInterval();
+    //this.appComponent.clearInterval();
   }
 
   ngAfterViewInit(){

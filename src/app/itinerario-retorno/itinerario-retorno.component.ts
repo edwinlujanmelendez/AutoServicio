@@ -84,7 +84,7 @@ export class ItinerarioRetornoComponent implements OnInit {
       //this.getDatosItinerario();
       this.elem = document.documentElement;
 
-      this.appComponent.clearInterval();
+      //this.appComponent.clearInterval();
       //this.appComponent.temporizador(5, 10);
     }
   }

@@ -386,6 +386,10 @@ export class ConfiguracionComponent implements OnInit {
     $("#div_vista_configuracion_avanzada").css("display", "none");
   }
 
+  btn_salir_del_sistema(){
+    setTimeout(() => window.close(), 200);
+  }
+
   btn_informacion_caja(){
     this.quitar_classes();
 

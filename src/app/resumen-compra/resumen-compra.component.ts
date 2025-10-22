@@ -59,7 +59,7 @@ export class ResumenCompraComponent implements OnInit {
 
   ngOnInit(): void {
     this.elem = document.documentElement;
-    this.appComponent.clearInterval();
+    //this.appComponent.clearInterval();
     //this.appComponent.temporizador(1, 10);
   }
 

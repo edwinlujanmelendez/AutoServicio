@@ -42,6 +42,18 @@
     cursor: pointer; 
     box-shadow: 2px 6px 10px -4px rgba(0, 0, 0, 0.50); 
 }
+.btn_salir{
+    width: auto; 
+    height: 66px; 
+    position: relative; 
+    border-radius: 6px; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    padding-left: 5%; 
+    cursor: pointer; 
+    box-shadow: 2px 6px 10px -4px rgba(0, 0, 0, 0.50); 
+}
 .btn_guardar_informacion{
     background-color: #ff641c; 
 }

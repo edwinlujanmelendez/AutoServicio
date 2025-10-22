@@ -34,7 +34,7 @@ export class TaskService {
       installments: "00"
     };
     return this.http.post<any>(`${this.url_api_pinpad}pcl/sale`, body);
-  }  
+  }
 
   getInit(){
     return this.http.get<any[]>(this.url_api_pinpad+"pcl/init");

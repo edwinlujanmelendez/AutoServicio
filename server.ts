@@ -44,8 +44,8 @@ function run(): void {
   //const port = process.env.PORT || 4003;              //? PUERTO ECOMMERCE QA     - 10.30 - 4003
   //const port = process.env.PORT || 4005;              //? PUERTO INTRANET PRD     - 10.45 - 4005
   //const port = process.env.PORT || 4005;              //? PUERTO INTRANET QA      - 10.30 - 4005
-  //const port = process.env.PORT || 4003;              //? PUERTO AUTOSERVICIO PRD - 10.45 - 4003
-  const port = process.env.PORT || 4000;                //? PUERTO AUTOSERVICIO QA  - 10.30 - 4000
+  const port = process.env.PORT || 4003;              //? PUERTO AUTOSERVICIO PRD - 10.45 - 4003
+  //const port = process.env.PORT || 4000;                //? PUERTO AUTOSERVICIO QA  - 10.30 - 4000
 
   // Start up the Node server
   const server = app();

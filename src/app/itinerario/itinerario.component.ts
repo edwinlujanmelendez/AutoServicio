@@ -82,7 +82,7 @@ export class ItinerarioComponent implements OnInit {
       $('#btn_siguiente').css('display', 'none');
       this.elem = document.documentElement;
 
-      this.appComponent.clearInterval();
+      //this.appComponent.clearInterval();
       //this.appComponent.temporizador(5, 10);
     }
   }
