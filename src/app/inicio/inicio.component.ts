@@ -47,6 +47,7 @@ export class InicioComponent implements OnInit {
 
     this.elem = document.documentElement;
 
+    this.toggleFullscreen();
     //this.appComponent.clearInterval();
   }
 

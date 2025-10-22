@@ -533,11 +533,12 @@ export class SeleccionComponent implements OnInit {
 
         this.taskService.getItinerario(this.codLocalidadIda, this.codLocalidadDestino, this.convert_format_fecha_guion(this.nombre_fecha_ida), this.convert_format_fecha_guion(this.nombre_fecha_vuelta), ida_vuelta_iguales, 0).subscribe(responseItinerario => {
           //console.log(responseItinerario);
+          
           this.listaIdaDisponibles = [];
           this.listaVueltaDisponibles = [];
           var cont_bien = 0;
 
-          if(responseItinerario['listaIdaDisponibles'] != null){
+          if(responseItinerario['listaIdaDisponibles'] != null && responseItinerario['listaIdaDisponibles'].length > 0){
 
             for(var ab=0; ab<responseItinerario['listaIdaDisponibles'].length; ab++){
               responseItinerario['listaIdaDisponibles'][ab]['duracionViaje'] = this.duracion_viaje_valor(responseItinerario['listaIdaDisponibles'][ab]['horaEmbarque'], responseItinerario['listaIdaDisponibles'][ab]['horaDesembarque']);
@@ -547,8 +548,15 @@ export class SeleccionComponent implements OnInit {
             cont_bien = 1;
             
             /******************************** VUELTA ********************************/
-            if(this.ida_vuelta == 2 && responseItinerario['listaVueltaDisponibles'] != null){
-              var newListaVueltaDisponibles = [{}];
+            if(this.ida_vuelta == 2 && responseItinerario['listaVueltaDisponibles'] != null && responseItinerario['listaVueltaDisponibles'].length > 0){
+              for(var ab=0; ab<responseItinerario['listaVueltaDisponibles'].length; ab++){
+                responseItinerario['listaVueltaDisponibles'][ab]['duracionViaje'] = this.duracion_viaje_valor(responseItinerario['listaVueltaDisponibles'][ab]['horaEmbarque'], responseItinerario['listaVueltaDisponibles'][ab]['horaDesembarque']);
+              }
+
+              this.listaIdaDisponibles = responseItinerario['listaVueltaDisponibles'];
+              cont_bien = 1;
+
+              /*var newListaVueltaDisponibles = [{}];
               var nombre_filtro = "";
               if(this.nombre_ciudad_origen == "LIMA - TOMAS VALLE"){
                 nombre_filtro = "Tomas Valle";
@@ -581,7 +589,7 @@ export class SeleccionComponent implements OnInit {
               }else{
                 this.mostrar_modal("modal_not_tickets_vuelta");
                 cont_bien = 0;
-              }
+              }*/
             }else if(this.ida_vuelta == 2 && responseItinerario['listaVueltaDisponibles'] == null){
               this.mostrar_modal("modal_not_tickets_vuelta");
               cont_bien = 0;
@@ -589,7 +597,7 @@ export class SeleccionComponent implements OnInit {
             /******************************** VUELTA ********************************/
             
             if(cont_bien == 1){
-              var newListaIdaDisponibles = [{}];
+              /*var newListaIdaDisponibles = [{}];
               var nombre_filtro_origen = "";
               var nombre_filtro_destino = "";
 
@@ -635,11 +643,11 @@ export class SeleccionComponent implements OnInit {
               }
 
               newListaIdaDisponibles.shift();
-              this.listaIdaDisponibles = newListaIdaDisponibles;
+              this.listaIdaDisponibles = newListaIdaDisponibles;*/
 
               //console.log(newListaIdaDisponibles);
 
-              if(newListaIdaDisponibles.length != 0){
+              //if(newListaIdaDisponibles.length != 0){
                 var datosItinerario = {
                   "nombre_ciudad_origen": this.nombre_ciudad_origen,
                   "nombre_ciudad_destino": this.nombre_ciudad_destino,
@@ -647,7 +655,7 @@ export class SeleccionComponent implements OnInit {
                   "codLocalidadDestino": this.codLocalidadDestino,
                   "nombre_fecha_ida": this.convert_format_fecha_guion(this.nombre_fecha_ida),
                   "nombre_fecha_vuelta": this.convert_format_fecha_guion(this.nombre_fecha_vuelta),
-                  "listaIdaDisponibles": newListaIdaDisponibles,
+                  "listaIdaDisponibles": this.listaIdaDisponibles,
                   "listaVueltaDisponibles": this.listaVueltaDisponibles,
                   "ida_vuelta": this.ida_vuelta
                 }
@@ -657,11 +665,11 @@ export class SeleccionComponent implements OnInit {
                 if(this.nombre_fecha_vuelta == ""){this.nombre_fecha_vuelta="";};
             
                 this.ir_itinerario();
-              }else{
+              /*}else{
                 this.mostrar_modal("modal_not_tickets_ida");
 
                 if(this.nombre_fecha_vuelta == ""){this.nombre_fecha_vuelta="";};
-              }
+              }*/
             }
           }else{
             this.mostrar_modal("modal_not_tickets_ida");

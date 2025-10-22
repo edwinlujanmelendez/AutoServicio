@@ -291,6 +291,9 @@ export class DatosPasajerosComponent implements OnInit {
   val_factura_new: number = 0;
   tip_opc_teclado: string = "";
 
+  cantidadFinalPromocionIda: number = 0;
+  cantidadFinalPromocionVuelta: number = 0;
+
   constructor(private router:Router, private route: ActivatedRoute, private sharedService:SharedService, private http : HttpClient, private taskService: TaskService, @Inject(PLATFORM_ID) private platformId: Object, private sanitizer: DomSanitizer, @Inject(DOCUMENT) private document: any, public appComponent: AppComponent) {
     this.date = new Date();
     var dia = "";
@@ -566,7 +569,7 @@ export class DatosPasajerosComponent implements OnInit {
           this.precio_total_pasajeros_asientos_original = this.precio_total_pasajeros_asientos;
 
           // LIBERAR ASIENTOS
-          var cont_back = 0;
+          /*var cont_back = 0;
 
           this.DatosBackSubscription = this.sharedService.getDatosBack().subscribe((datos_response: any)=>{
             cont_back++;
@@ -658,7 +661,7 @@ export class DatosPasajerosComponent implements OnInit {
                 }
               }
             }
-          });
+          });*/
 
           $("#vista_llenar_datos").css("display", "inline");
           
@@ -2175,6 +2178,12 @@ export class DatosPasajerosComponent implements OnInit {
   }
 
   aplicarPromocionTarjeta(tarjetaActiva: any){
+    //console.log(tarjetaActiva);
+    //console.log(this.pasajero_asientos);
+
+    this.cantidadFinalPromocionIda = 0;
+    this.cantidadFinalPromocionVuelta = 0;
+
     this.promocionActiva = 1;
     this.tarcreId = tarjetaActiva['tarcreId'];
 
@@ -2191,11 +2200,16 @@ export class DatosPasajerosComponent implements OnInit {
         cantidadFinalPromocion = this.pasajero_asientos.length;
       }
 
+      //console.log(cantidadFinalPromocion);
+      //console.log(porcentajeRestantePromocionVentaIda);
+
       for(var a=0; a<cantidadFinalPromocion; a++){
         this.promocionVentasIdIda = Number(tarjetaActiva['promocionId']);
         this.pasajero_asientos[a]['porcentaje_descuento_ida'] = Number(tarjetaActiva['descuento']);
         this.precio_pasajeros_asientos_ida -= Number(this.pasajero_asientos[a]['precio_ida']) - Math.trunc(Number(this.pasajero_asientos[a]['precio_ida'])*porcentajeRestantePromocionVentaIda/100);
       }
+
+      this.cantidadFinalPromocionIda = cantidadFinalPromocion;
     }else if(tarjetaActiva['idaVuelta'] == 2){      //TODO: SOLO VUELTA
       this.NombreTarjeta = tarjetaActiva['nombreTarjeta'];
       var porcentajeRestantePromocionVentaVuelta = 100 - Number(tarjetaActiva['descuento']);
@@ -2214,6 +2228,8 @@ export class DatosPasajerosComponent implements OnInit {
         this.pasajero_asientos[a]['porcentaje_descuento_vuelta'] = Number(tarjetaActiva['descuento']);
         this.precio_pasajeros_asientos_vuelta -= Number(this.pasajero_asientos[a]['precio_vuelta']) - Math.trunc(Number(this.pasajero_asientos[a]['precio_vuelta'])*porcentajeRestantePromocionVentaVuelta/100);
       }
+
+      this.cantidadFinalPromocionVuelta = cantidadFinalPromocion;
     }else if(tarjetaActiva['idaVuelta'] == 3){      //TODO: IDA Y VUELTA
       this.NombreTarjeta = tarjetaActiva['nombreTarjeta'];
       var partPromocionId = tarjetaActiva['promocionId'].split(",");
@@ -2237,6 +2253,8 @@ export class DatosPasajerosComponent implements OnInit {
         this.pasajero_asientos[a]['porcentaje_descuento_ida'] = Number(partDescuento[0]);
         this.precio_pasajeros_asientos_ida -= Number(this.pasajero_asientos[a]['precio_ida']) - Math.trunc(Number(this.pasajero_asientos[a]['precio_ida'])*porcentajeRestantePromocionVentaIda/100);
       }
+
+      this.cantidadFinalPromocionIda = cantidadFinalPromocionIda;
       /*---------------------------------------------------- IDA ----------------------------------------------------*/
 
       /*---------------------------------------------------- VUELTA ----------------------------------------------------*/
@@ -2254,6 +2272,8 @@ export class DatosPasajerosComponent implements OnInit {
         this.pasajero_asientos[a]['porcentaje_descuento_vuelta'] = Number(partDescuento[1]);
         this.precio_pasajeros_asientos_vuelta -= Number(this.pasajero_asientos[a]['precio_vuelta']) - Math.trunc(Number(this.pasajero_asientos[a]['precio_vuelta'])*porcentajeRestantePromocionVentaVuelta/100);
       }
+
+      this.cantidadFinalPromocionVuelta = cantidadFinalPromocionVuelta;
       /*---------------------------------------------------- VUELTA ----------------------------------------------------*/
     }
 
@@ -2262,6 +2282,9 @@ export class DatosPasajerosComponent implements OnInit {
   }
 
   quitarPromocionTarjeta(){
+    this.cantidadFinalPromocionIda = 0;
+    this.cantidadFinalPromocionVuelta = 0;
+
     this.promocionActiva = 0;
     this.promocionVentasIdIda = 0;
     this.promocionVentasIdVuelta = 0;
@@ -2937,6 +2960,11 @@ export class DatosPasajerosComponent implements OnInit {
 
       localStorage.setItem("StorageResumenCompra1", JSON.stringify(this.getDatosPasajeros));
       localStorage.setItem("StorageResumenCompra2", JSON.stringify(this.ArrayFinal));
+
+      let ArrayMensajeDescuento: string[] = [];
+      if(this.cantidadFinalPromocionIda > 0){ ArrayMensajeDescuento.push("Se aplicó el descuento de la promoción a "+this.cantidadFinalPromocionIda+" asientos de Ida."); }
+      if(this.cantidadFinalPromocionVuelta > 0){ ArrayMensajeDescuento.push("- Se aplicó el descuento de la promoción a "+this.cantidadFinalPromocionVuelta+" asientos de Vuelta."); }
+      localStorage.setItem("StorageResumenCompra3", JSON.stringify(ArrayMensajeDescuento));
 
       this.taskService.postGenerarVentaSispas(this.ArrayFinal).subscribe(responseGenerarVentaSispas=> {
         localStorage.setItem("StoragePDFImprimir", JSON.stringify(responseGenerarVentaSispas));

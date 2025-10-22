@@ -259,7 +259,7 @@ export class TaskService {
           ipLocal
         };
 
-        return this.http.post<any[]>(this.url_api_ecommerce + "Asiento/bloquear", body, { headers });
+        return this.http.put<any[]>(this.url_api_ecommerce + "Asiento/actualizar", body, { headers });
       })
     );
   }
@@ -293,7 +293,7 @@ export class TaskService {
           ipLocal
         };
 
-        return this.http.post<any[]>(this.url_api_ecommerce + "Asiento/bloquear", body, { headers });
+        return this.http.delete<any[]>(this.url_api_ecommerce + "Asiento/liberar", { headers, body });
       })
     );
   }

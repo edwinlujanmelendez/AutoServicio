@@ -84,6 +84,8 @@ export class AsientosRetornoComponent implements OnInit {
 
   ipLocal: string = "";
 
+  DatosBackSubscription!: Subscription;
+
   constructor(private router:Router, private route: ActivatedRoute, private sharedService:SharedService, private http : HttpClient, private taskService: TaskService, @Inject(PLATFORM_ID) private platformId: Object, @Inject(DOCUMENT) private document: any, public appComponent: AppComponent) { 
     this.date = new Date();
     var dia = "";
@@ -144,6 +146,61 @@ export class AsientosRetornoComponent implements OnInit {
           this.ida_vuelta = StorageDatosDetalleItinerarioVuelta['ida_vuelta'];
           this.fecha_ida = this.convert_format_fecha_guion_a_barra(StorageDatosDetalleItinerarioVuelta['fechaEmbarqueVuelta']);
           this.hora_embarque_vuelta = StorageDatosDetalleItinerarioVuelta['horaEmbarqueVuelta'];
+
+          this.DatosBackSubscription = this.sharedService.getDatosBack().subscribe((datos_response: any)=>{
+            let getDatosAsientos = JSON.parse(localStorage.getItem('StorageDatosAsientos') || '{}');
+      
+            if(JSON.stringify(getDatosAsientos)!="{}"){
+              // LIBERAR ASIENTOS
+              var cont_back = 0;
+
+              cont_back++;
+              if(cont_back == 1){
+                if(getDatosAsientos['numAsientosVuelta'].includes(",")){
+                  var part_asi = getDatosAsientos['numAsientosVuelta'].split(",");
+    
+                  for(var a=0; a<part_asi.length; a++){
+                    var part_asi2 = String(part_asi[a]).split("-");
+                    let list_asientos: any = [];
+                    let list_pisos: any = [];
+
+                    list_asientos.push(Number(part_asi2[0]));
+                    list_pisos.push(Number(part_asi2[1])); 
+                  
+                    var part_fecha = getDatosAsientos['fechaEmbarqueVuelta'].split("-");
+                    var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
+            
+                    this.taskService.deleteLiberarAsiento(Number(getDatosAsientos['idRutaVuelta']), Number(getDatosAsientos['idItinerarioVuelta']), fecha_partida, list_asientos, getDatosAsientos['horaEmbarqueVuelta'], list_pisos, 5, Number(getDatosAsientos['precioAsientosVuelta'][a]), this.ipLocal).subscribe(response => {
+                      if(response['result'] == true){
+                        //console.log("Se desbloqueó el asiento.");
+                      }else{
+                        //console.log("No se desbloqueó el asiento.");
+                      }
+                    });
+                  }
+                }else if(getDatosAsientos['numAsientosVuelta']!="" && !getDatosAsientos['numAsientosVuelta'].includes(",")){
+                  var part_asi = getDatosAsientos['numAsientosVuelta'].split("-");
+                  var part_fecha = getDatosAsientos['fechaEmbarqueVuelta'].split("-");
+                  var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
+
+                  let list_asientos: any = [];
+                  let list_pisos: any = [];
+
+                  list_asientos.push(Number(part_asi[0]));
+                  list_pisos.push(Number(part_asi[1])); 
+            
+                  this.taskService.deleteLiberarAsiento(Number(getDatosAsientos['idRutaVuelta']), Number(getDatosAsientos['idItinerarioVuelta']), fecha_partida, list_asientos, getDatosAsientos['horaEmbarqueVuelta'], list_pisos, 5, Number(getDatosAsientos['precioAsientosVuelta']), this.ipLocal).subscribe(response => {
+                    if(response['result'] == true){
+                      //console.log("Se desbloqueó el asiento.");
+                    }else{
+                      //console.log("No se desbloqueó el asiento.");
+                    }
+                  });
+                }
+              }
+            }
+          });
+          
 
           this.getDatosEstructuraBus(StorageDatosDetalleItinerarioVuelta);
 

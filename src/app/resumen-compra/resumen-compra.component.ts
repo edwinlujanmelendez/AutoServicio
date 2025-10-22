@@ -54,6 +54,8 @@ export class ResumenCompraComponent implements OnInit {
 
   elem: any;
   openScreen: number = 0;
+
+  textoDescuentoPromociones: string[] = [];
   
   constructor(private router:Router, @Inject(DOCUMENT) private document: any, public appComponent: AppComponent) { }
 
@@ -66,6 +68,7 @@ export class ResumenCompraComponent implements OnInit {
   ngAfterViewInit(){
     let getResumenCompra1 = JSON.parse(localStorage.getItem('StorageResumenCompra1') || '{}');
     let getResumenCompra2 = JSON.parse(localStorage.getItem('StorageResumenCompra2') || '{}');
+    let getResumenCompra3 = JSON.parse(localStorage.getItem('StorageResumenCompra3') || '[]');
     
     if(JSON.stringify(getResumenCompra1)!="{}"){
       //console.log(getResumenCompra1);
@@ -107,6 +110,8 @@ export class ResumenCompraComponent implements OnInit {
       this.precio_total = getResumenCompra2['montoTotal'];
 
       //this.imprimir_boleto();
+
+      this.textoDescuentoPromociones = getResumenCompra3;
 
       setTimeout(() => {
         this.router.navigate(['']);

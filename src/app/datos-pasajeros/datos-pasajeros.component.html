@@ -724,6 +724,20 @@
                         </div>
                     </div>
 
+                    <div *ngIf="cantidadFinalPromocionIda > 0 || cantidadFinalPromocionVuelta > 0" class="row justify-content-md-center">
+                        <div class="col-8" style="margin-bottom: 15px; border: 1px solid #ccc;">
+                            <div class="row" style="margin-bottom: 5px;">
+                                <div class="col-12 col-sm-12" style="margin-top: 6px; font-weight: bold; font-size: 13px; color: #575757;">
+                                    <span *ngIf="cantidadFinalPromocionIda > 0">- Se aplicó el descuento de la promoción a {{cantidadFinalPromocionIda}} asientos de Ida.</span><br>
+                                    <span *ngIf="cantidadFinalPromocionVuelta > 0">- Se aplicó el descuento de la promoción a {{cantidadFinalPromocionVuelta}} asientos de Vuelta.</span>
+                                </div>
+                                <div class="col-12 col-sm-12" style="margin-top: 6px; font-weight: bold; font-size: 13px; color: #575757;">
+                                    - Stock máximo por bus: 03 asientos. (Términos y Condiciones: https://www.movilbus.pe/)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div id="muestra_precio_total" class="row justify-content-md-center">
                         <div  *ngIf="promocionActiva == 0" class="col-8" style="margin-bottom: 60px; border: 1px solid #ccc;">
                             <div class="row" style="margin-top: 14px; margin-bottom: 13px;">

@@ -82,6 +82,8 @@ export class AsientosComponent implements OnInit {
 
   ipLocal: string = "";
 
+  DatosBackSubscription!: Subscription;
+
   constructor(private router:Router, private route: ActivatedRoute, private sharedService:SharedService, private http : HttpClient, private taskService: TaskService, @Inject(PLATFORM_ID) private platformId: Object, @Inject(DOCUMENT) private document: any, public appComponent: AppComponent) { 
     this.date = new Date();
     var dia = "";
@@ -152,6 +154,62 @@ export class AsientosComponent implements OnInit {
 
           this.direccionEmbarqueIda = getDatosDetalleItinerarioIda['direccionEmbarqueIda'];
           this.direccionDesembarqueIda = getDatosDetalleItinerarioIda['direccionDesembarqueIda'];
+
+          
+
+          this.DatosBackSubscription = this.sharedService.getDatosBack().subscribe((datos_response: any)=>{
+            let getDatosAsientos = JSON.parse(localStorage.getItem('StorageDatosAsientos') || '{}');
+            //console.log(getDatosAsientos);
+
+            if(JSON.stringify(getDatosAsientos)!="{}"){
+              // LIBERAR ASIENTOS
+              var cont_back = 0;
+                cont_back++;
+                if(cont_back == 1){
+                  if(getDatosAsientos['numAsientosIda'].includes(",")){
+                    var part_asi = getDatosAsientos['numAsientosIda'].split(",");
+      
+                    for(var a=0; a<part_asi.length; a++){
+                      var part_asi2 = String(part_asi[a]).split("-");
+                      let list_asientos: any = [];
+                      let list_pisos: any = [];
+
+                      list_asientos.push(Number(part_asi2[0]));
+                      list_pisos.push(Number(part_asi2[1])); 
+                    
+                      var part_fecha = getDatosAsientos['fechaEmbarqueIda'].split("-");
+                      var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
+              
+                      this.taskService.deleteLiberarAsiento(Number(getDatosAsientos['idRutaIda']), Number(getDatosAsientos['idItinerarioIda']), fecha_partida, list_asientos, getDatosAsientos['horaEmbarqueIda'], list_pisos, 5, Number(getDatosAsientos['precioAsientosIda'][a]), this.ipLocal).subscribe(response => {
+                        if(response['result'] == true){
+                          //console.log("Se desbloqueó el asiento.");
+                        }else{
+                          //console.log("No se desbloqueó el asiento.");
+                        }
+                      });
+                    }
+                  }else if(getDatosAsientos['numAsientosIda']!="" && !getDatosAsientos['numAsientosIda'].includes(",")){
+                    var part_asi = getDatosAsientos['numAsientosIda'].split("-");
+                    var part_fecha = getDatosAsientos['fechaEmbarqueIda'].split("-");
+                    var fecha_partida = part_fecha[2]+"/"+part_fecha[1]+"/"+part_fecha[0];
+
+                    let list_asientos: any = [];
+                    let list_pisos: any = [];
+
+                    list_asientos.push(Number(part_asi[0]));
+                    list_pisos.push(Number(part_asi[1])); 
+              
+                    this.taskService.deleteLiberarAsiento(Number(getDatosAsientos['idRutaIda']), Number(getDatosAsientos['idItinerarioIda']), fecha_partida, list_asientos, getDatosAsientos['horaEmbarqueIda'], list_pisos, 5, Number(getDatosAsientos['precioAsientosIda']), this.ipLocal).subscribe(response => {
+                      if(response['result'] == true){
+                        //console.log("Se desbloqueó el asiento.");
+                      }else{
+                        //console.log("No se desbloqueó el asiento.");
+                      }
+                    });
+                  }
+                }
+              }
+          });
 
           this.getDatosEstructuraBus(getDatosDetalleItinerarioIda);
 
@@ -801,6 +859,7 @@ export class AsientosComponent implements OnInit {
               if(response['result'] == true){
                 //dat[0].promocionIda = 0;
                 //dat[0].promocionVuelta = 0;
+                localStorage.setItem("StorageDatosAsientos", JSON.stringify(dat));
                 localStorage.setItem("StorageDatosPasajeros", JSON.stringify(dat));
                 this.ir_datos_pasajeros();
               }else{
@@ -828,6 +887,7 @@ export class AsientosComponent implements OnInit {
             if(response['result'] == true){
               //dat[0].promocionIda = 0;
               //dat[0].promocionVuelta = 0;
+              localStorage.setItem("StorageDatosAsientos", JSON.stringify(dat));
               localStorage.setItem("StorageDatosPasajeros", JSON.stringify(dat));
               this.ir_datos_pasajeros();
             }else{
