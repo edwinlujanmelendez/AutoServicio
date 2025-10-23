@@ -103,6 +103,12 @@ export class ItinerarioComponent implements OnInit {
           this.StorageDatosItinerario = getDatosItinerario;
 
           this.datos = getDatosItinerario['listaIdaDisponibles'];
+
+          this.datos = this.datos.map(dat => ({...dat,
+            ageEmbarque: this.filtro_nombres_embarque_desembarque(dat.ageEmbarque),
+            ageDesembarque: this.filtro_nombres_embarque_desembarque(dat.ageDesembarque)
+          }));
+
           //console.log(getDatosItinerario['listaIdaDisponibles']);
           this.listaIdaDisponibles = getDatosItinerario['listaIdaDisponibles'];
           this.listaVueltaDisponibles = getDatosItinerario['listaVueltaDisponibles'];
@@ -124,6 +130,17 @@ export class ItinerarioComponent implements OnInit {
         $(".loader").fadeOut("slow");
       });
     }
+  }
+
+  filtro_nombres_embarque_desembarque(nombre_embarque_desembarque: string){
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace(" Terra", "");
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace("-Sur-Term", "");
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace("-Term", "");
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace("Terminal", "");
+
+    nombre_embarque_desembarque = nombre_embarque_desembarque.toUpperCase();
+
+    return nombre_embarque_desembarque;
   }
 
   select_servicio(idCard: any, datos: any){

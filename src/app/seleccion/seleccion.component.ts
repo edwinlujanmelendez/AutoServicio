@@ -553,7 +553,7 @@ export class SeleccionComponent implements OnInit {
                 responseItinerario['listaVueltaDisponibles'][ab]['duracionViaje'] = this.duracion_viaje_valor(responseItinerario['listaVueltaDisponibles'][ab]['horaEmbarque'], responseItinerario['listaVueltaDisponibles'][ab]['horaDesembarque']);
               }
 
-              this.listaIdaDisponibles = responseItinerario['listaVueltaDisponibles'];
+              this.listaVueltaDisponibles = responseItinerario['listaVueltaDisponibles'];
               cont_bien = 1;
 
               /*var newListaVueltaDisponibles = [{}];
