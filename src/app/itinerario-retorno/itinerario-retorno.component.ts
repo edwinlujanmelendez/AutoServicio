@@ -129,6 +129,11 @@ export class ItinerarioRetornoComponent implements OnInit {
           this.listaVueltaDisponibles = getDatosAsientos['listaVueltaDisponibles'];
           this.ida_vuelta = getDatosAsientos['ida_vuelta'];
 
+          this.datos = this.datos.map(dat => ({...dat,
+            ageEmbarque: this.filtro_nombres_embarque_desembarque(dat.ageEmbarque),
+            ageDesembarque: this.filtro_nombres_embarque_desembarque(dat.ageDesembarque)
+          }));
+
           this.nombre_ciudad_origen = getDatosAsientos['nombre_ciudad_origen'];
           this.nombre_ciudad_destino = getDatosAsientos['nombre_ciudad_destino'];
           this.fecha_ida = this.convert_format_fecha_guion_a_barra(getDatosAsientos['fechaEmbarqueVuelta']);
@@ -143,6 +148,18 @@ export class ItinerarioRetornoComponent implements OnInit {
         setInterval(() => { this.hora_actual = this.getHoraActual(); }, 500);
       });
     }
+  }
+
+  filtro_nombres_embarque_desembarque(nombre_embarque_desembarque: string){
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace(" Terra", "");
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace("-Sur-Term", "");
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace("-Term", "");
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace("Terminal", "");
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace("-Ofi", "");
+
+    nombre_embarque_desembarque = nombre_embarque_desembarque.toUpperCase();
+
+    return nombre_embarque_desembarque;
   }
 
   select_servicio(idCard: any, datos: any){
@@ -260,7 +277,9 @@ export class ItinerarioRetornoComponent implements OnInit {
         "precioAsientosVuelta": [],
         "precioTotalIda": this.StorageDatosAsientos['precioTotalIda'],
         "precioTotalVuelta": 0,
-        "precioTotal": this.StorageDatosAsientos['precioTotal']
+        "precioTotal": this.StorageDatosAsientos['precioTotal'],
+        "descripcionEscalasIda": this.StorageDatosAsientos['descripcionEscalasIda'],
+        "descripcionEscalasVuelta": this.itinerario_seleccionado['c_desc_escalas']
       };
 
       localStorage.setItem("StorageDatosDetalleItinerarioVuelta", JSON.stringify(dat));

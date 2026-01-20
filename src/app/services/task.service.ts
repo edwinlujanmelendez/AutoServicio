@@ -12,18 +12,18 @@ import { switchMap } from 'rxjs/operators';
 })
 export class TaskService {
 
-  url_api_ecommerce: string = "https://www.movilbus.pe/backendEcommerce/";                                         /* URL PRODUCTIVO - BACKEND ECOMMERCE */
-  //url_api_ecommerce: string = "https://www.movilbus.pe/devbackEcoBus/";                                          /* URL DESARROLLO - BACKEND ECOMMERCE */
-  //url_api_ecommerce: string = "http://localhost:8080/";                                                          /* URL LOCALHOST  - BACKEND ECOMMERCE */
+  //url_api_ecommerce: string = "https://www.movilbus.pe/backendEcommerce/";                                          /* URL PRODUCTIVO - BACKEND ECOMMERCE */
+  url_api_ecommerce: string = "https://www.movilbus.pe/devbackEcoBus/";                                           /* URL DESARROLLO - BACKEND ECOMMERCE */
+  //url_api_ecommerce: string = "http://localhost:8080/";                                                           /* URL LOCALHOST  - BACKEND ECOMMERCE */
 
-  url_api_pinpad: string = "http://localhost:8080/";                                                          /* URL PRODUCTIVO - DESARROLLO */
+  url_api_pinpad: string = "http://localhost:8080/";                                                                /* URL PRODUCTIVO - DESARROLLO */
   
-  url_api_autoservicio: string = "https://www.movilbus.pe/backendAutoservicio/";                              /* URL PRODUCTIVO - BACKEND AUTOSERVICIO */
-  //url_api_autoservicio: string = "https://www.movilbus.pe/backendAutoservicioQA/";                          /* URL DESARROLLO - BACKEND AUTOSERVICIO */
-  //url_api_autoservicio: string = "http://localhost:8080/";                                                  /* DESARROLLO - BACKEND AUTOSERVICIO */
+  //url_api_autoservicio: string = "https://www.movilbus.pe/backendAutoservicio/";                                    /* URL PRODUCTIVO - BACKEND AUTOSERVICIO */
+  //url_api_autoservicio: string = "https://www.movilbus.pe/backendAutoservicioQA/";                                /* URL DESARROLLO - BACKEND AUTOSERVICIO */
+  url_api_autoservicio: string = "http://localhost:8080/";                                                        /* DESARROLLO - BACKEND AUTOSERVICIO */
 
   //authEcommerce: string = btoa(`movilbus2025:2025M0v1l+`);      /* PRODUCTIVO */
-  //authEcommerce: string = btoa(`movilbus:Mov1l2025$`);      /* DESARROLLO */
+  //authEcommerce: string = btoa(`movilbus:Mov1l2025$`);          /* DESARROLLO */
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 

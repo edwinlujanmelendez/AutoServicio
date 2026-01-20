@@ -47,7 +47,7 @@ export class InicioComponent implements OnInit {
 
     this.elem = document.documentElement;
 
-    this.toggleFullscreen();
+    //this.toggleFullscreen();
     //this.appComponent.clearInterval();
   }
 
@@ -56,6 +56,10 @@ export class InicioComponent implements OnInit {
       $(".loader").fadeOut("slow");
       $(".loader2").fadeOut("slow");
     }, 2000);
+  }
+
+  recargarPagina(){
+    window.location.reload();
   }
 
   verificarSesionConfiguracion(){

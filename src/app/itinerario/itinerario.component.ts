@@ -137,6 +137,7 @@ export class ItinerarioComponent implements OnInit {
     nombre_embarque_desembarque = nombre_embarque_desembarque.replace("-Sur-Term", "");
     nombre_embarque_desembarque = nombre_embarque_desembarque.replace("-Term", "");
     nombre_embarque_desembarque = nombre_embarque_desembarque.replace("Terminal", "");
+    nombre_embarque_desembarque = nombre_embarque_desembarque.replace("-Ofi", "");
 
     nombre_embarque_desembarque = nombre_embarque_desembarque.toUpperCase();
 
@@ -240,7 +241,8 @@ export class ItinerarioComponent implements OnInit {
         "idRutaIda": this.itinerario_seleccionado['idruta'],
         "listaIdaDisponibles": this.StorageDatosItinerario['listaIdaDisponibles'],
         "listaVueltaDisponibles": this.StorageDatosItinerario['listaVueltaDisponibles'],
-        "ida_vuelta": this.StorageDatosItinerario['ida_vuelta']
+        "ida_vuelta": this.StorageDatosItinerario['ida_vuelta'],
+        "descripcionEscalasIda": this.itinerario_seleccionado['c_desc_escalas']
       };
 
       localStorage.setItem("StorageDatosDetalleItinerarioIda", JSON.stringify(dat));

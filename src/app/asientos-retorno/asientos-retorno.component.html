@@ -378,9 +378,21 @@
                                     <span style="color: #4E4D50; font-size: 20px; font-weight: bold; text-transform: uppercase;"><i class="fad fa-bus"></i> &nbsp; {{nombre_ciudad_destino}}</span>
                                     <span style="position: relative; width: 79%; margin-left: 11%; font-size: 15px;">{{direccionEmbarqueVuelta}}</span>
                                 </div>
-                                <div class="col-12" style="text-align: left; margin-left: 17px;">
-                                    <!--<i class="fal fa-long-arrow-right icon_flecha" style="font-size: 36px; color: #ff6719;"></i>-->
+                                <!--<div class="col-12" style="text-align: left; margin-left: 17px;">
                                     <i class="fal fa-long-arrow-down icon_flecha" style="font-size: 36px; color: #ff6719;"></i>
+                                </div>-->
+                                <!--<div *ngIf="descripcion_escalas_vuelta.length > 0">
+                                    <ul>
+                                        <li *ngFor="let escala of descripcion_escalas_vuelta">
+                                        {{ escala }}
+                                        </li>
+                                    </ul>
+                                </div>-->
+                                <div style="margin-top: 4%; margin-bottom: 4%; border-left: 1px solid #5c5c5f; margin-left: 11%; padding-left: 0.8%;">
+                                    <div style="position: relative;" [ngStyle]="{'margin-bottom': last ? '0' : '15px'}" *ngFor="let escala of descripcion_escalas_vuelta; let last = last;">
+                                        <i class="fas fa-circle" style="position: absolute; left: -11px; top: 11px; color: #5c5c5f;"></i>
+                                        <div style="color: #4e4d50; font-size: 15px; border-radius: 8px; padding: 6px 10px; padding-left: 8%; font-weight: bold;">{{ escala }}</div>
+                                    </div>
                                 </div>
                                 <div class="col-12" style="display: flex; flex-direction: column; text-align: left; margin-left: 18px;">
                                     <span style="color: #4E4D50; font-size: 20px; font-weight: bold; text-transform: uppercase;"><i class="fad fa-map-marker-alt"></i> &nbsp; {{nombre_ciudad_origen}}</span>

@@ -11,6 +11,9 @@ export class AuthService {
   // TODO: API - ECOMMERCE TOKEN
   url_api_ecommerce_token: string = "https://www.movilbus.pe/backendEcommerce/Auth/Login";                              /* URL PRODUCTIVO - ECOMMERCE */
   //url_api_ecommerce_token: string = "https://www.movilbus.pe/devbackEcoBus/Auth/Login";                               /* URL DESARROLLO - ECOMMERCE */
+  password_ecommerce_token: string = "123Movil2025$";                                                                   /* CONTRASEÑA PRODUCTIVO - ECOMMERCE */
+  //password_ecommerce_token: string = "12345";                                                                           /* CONTRASEÑA DESARROLLO - ECOMMERCE */
+
 
   private tokenKey = 'jwtToken';
   private tokenExpKey = 'jwtTokenExp';
@@ -20,7 +23,7 @@ export class AuthService {
   getTokenFromAPI() {
     const datos = {
       username: "lead",
-      password: "123Movil2025$"
+      password: this.password_ecommerce_token
     };
 
     return this.http.post<any>(this.url_api_ecommerce_token, datos).pipe(

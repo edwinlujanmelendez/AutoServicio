@@ -507,7 +507,7 @@
                                             <!------------------------------------->
                                         </div>
 
-                                        <br>
+                                        <br *ngIf="nombre_tipo_de_compra.includes('FACTURA')">
 
                                         <div *ngIf="nombre_tipo_de_compra.includes('FACTURA')" class="row g-0" style="border: 0px; font-size: 18px; padding: 10px; margin-bottom: 20px;">
                                             <!------------------------------------->
@@ -592,6 +592,10 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        <div *ngIf="descripcionEscalasIda != ''" class="linea_servicio" style="width: 97.4%; margin-left: 11px;"></div>
+                                                        <div *ngIf="descripcionEscalasIda != ''" class="col-12" style="text-align: center; padding-top: 2px; padding-bottom: 2px; color: #373737; font-size: 14px;">
+                                                            <span style="font-weight: bold; color: black;">Escalas:</span> {{descripcionEscalasIda}}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -641,6 +645,10 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+                                                        </div>
+                                                        <div *ngIf="descripcionEscalasVuelta != ''" class="linea_servicio" style="width: 97.4%; margin-left: 11px;"></div>
+                                                        <div *ngIf="descripcionEscalasVuelta != ''" class="col-12" style="text-align: center; padding-top: 2px; padding-bottom: 2px; color: #373737; font-size: 14px;">
+                                                            <span style="font-weight: bold; color: black;">Escalas:</span> {{descripcionEscalasVuelta}}
                                                         </div>
                                                     </div>
                                                 </div>

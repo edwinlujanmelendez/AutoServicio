@@ -294,6 +294,11 @@ export class DatosPasajerosComponent implements OnInit {
   cantidadFinalPromocionIda: number = 0;
   cantidadFinalPromocionVuelta: number = 0;
 
+  descripcionEscalasIda: string = "";
+  descripcionEscalasVuelta: string = "";
+
+  simularPagos: number = 0; // 0=NO, 1=SI
+
   constructor(private router:Router, private route: ActivatedRoute, private sharedService:SharedService, private http : HttpClient, private taskService: TaskService, @Inject(PLATFORM_ID) private platformId: Object, private sanitizer: DomSanitizer, @Inject(DOCUMENT) private document: any, public appComponent: AppComponent) {
     this.date = new Date();
     var dia = "";
@@ -356,7 +361,7 @@ export class DatosPasajerosComponent implements OnInit {
         
         if(JSON.stringify(getDatosPasajeros)!="{}"){
           this.getDatosPasajeros = getDatosPasajeros;
-          //console.log(getDatosPasajeros);
+          console.log(getDatosPasajeros);
           
           this.taskService.getTipoDocumento().subscribe(response => {
             //console.log(response);
@@ -400,7 +405,9 @@ export class DatosPasajerosComponent implements OnInit {
           this.horaEmbarqueVuelta = getDatosPasajeros['horaEmbarqueVuelta'];
           this.horaDesembarqueVuelta = getDatosPasajeros['horaDesembarqueVuelta'];
 
-          
+          this.descripcionEscalasIda = this.generarDescripcionEscalasIda(getDatosPasajeros['descripcionEscalasIda']);
+          this.descripcionEscalasVuelta = this.generarDescripcionEscalasVuelta(getDatosPasajeros['descripcionEscalasVuelta']);
+
           //this.precio_ida_total = getDatosPasajeros['precioTotalIda'];
           //this.precio_vuelta_total = getDatosPasajeros['precioTotalVuelta'];
           //this.precio_total = getDatosPasajeros['precioTotalIda'] + getDatosPasajeros['precioTotalVuelta'];
@@ -715,6 +722,26 @@ export class DatosPasajerosComponent implements OnInit {
         }
       }, 1000);*/
     }
+  }
+
+  generarDescripcionEscalasIda(descripcionEscalas: string){
+    var nombre_origen = "";
+    if(this.nombre_ciudad_origen.includes("Lima")){ nombre_origen = "LIMA"; }else{ nombre_origen = this.nombre_ciudad_origen; }
+
+    var nombre_destino = "";
+    if(this.nombre_ciudad_destino.includes("Lima")){ nombre_destino = "LIMA"; }else{ nombre_destino = this.nombre_ciudad_destino; }
+
+    return this.obtenerTramosIntermedios(descripcionEscalas, nombre_origen, nombre_destino);
+  }
+
+  generarDescripcionEscalasVuelta(descripcionEscalas: string){
+    var nombre_origen = "";
+    if(this.nombre_ciudad_origen.includes("Lima")){ nombre_origen = "LIMA"; }else{ nombre_origen = this.nombre_ciudad_origen; }
+
+    var nombre_destino = "";
+    if(this.nombre_ciudad_destino.includes("Lima")){ nombre_destino = "LIMA"; }else{ nombre_destino = this.nombre_ciudad_destino; }
+
+    return this.obtenerTramosIntermedios(descripcionEscalas, nombre_destino, nombre_origen);
   }
 
   textCapitalize(str: string){
@@ -2356,80 +2383,98 @@ export class DatosPasajerosComponent implements OnInit {
 
   pagarPaymentPagoEfectivo(TipForPago: number){
     if(isPlatformBrowser(this.platformId)){
-      $(".loader").fadeIn("slow");
+      if(this.simularPagos == 0){
+        $(".loader").fadeIn("slow");
       
-      setTimeout(() => {
-        $('#btn_atras').css('display', 'none');
-        //$("#vista_pagar").css("display", "none");
+        setTimeout(() => {
+          $('#btn_atras').css('display', 'none');
+          //$("#vista_pagar").css("display", "none");
+          
+          $('#muestra_pague_aquí').css('display', 'none');
+          $('#muestra_pague_aquí_promociones').css('display', 'none');
+        }, 500);
+
+        setTimeout(() => {
+          $(".loader").fadeOut("slow");
+          $("#vista_pagar_imagenes").css("display", "inline");
+
+          localStorage.setItem("StorageErrorPos", JSON.stringify({}));
+          
+          //console.log(this.precio_total_pasajeros_asientos.toFixed());
+
+          this.taskService.postGenerarPago(this.precio_total_pasajeros_asientos.toFixed()).subscribe(responseGenerarPago=> {
+            //this.responseGenerarPago = responseGenerarPago;
+
+            //* RECIBE RESPUESTA DEL PINPAD
+            console.log(responseGenerarPago);
+            if(responseGenerarPago['batchNumber']){
+              // TODO: CORRECTO
+              
+              var jsonArray = {
+                voucherClient: responseGenerarPago['voucherClient']
+              }
         
-        $('#muestra_pague_aquí').css('display', 'none');
-        $('#muestra_pague_aquí_promociones').css('display', 'none');
-      }, 500);
+              const blob = new Blob([JSON.stringify(jsonArray)], { type: 'application/octet-stream' });
+              saveAs(blob, "4C608A6XX.json");
 
-      setTimeout(() => {
-        $(".loader").fadeOut("slow");
-        $("#vista_pagar_imagenes").css("display", "inline");
+              setTimeout(() => {
+                //saveAs(blob, "4C608A6XX.json");
+                this.crearArrayPagarSispas(TipForPago, String(responseGenerarPago['batchNumber']));
+              }, 1750);
+            }else{
+              // ! INCORRECTO
 
-        localStorage.setItem("StorageErrorPos", JSON.stringify({}));
-        
-        //console.log(this.precio_total_pasajeros_asientos.toFixed());
+              if(this.pago_regular_promocion_tarjeta == 2){
+                $('#muestra_pague_aquí_promociones').css('display', 'flex');
+              }
+              
+              $('#muestra_pague_aquí').css('display', 'flex');
+              $("#vista_pagar_imagenes").css("display", "none");
+              $("#div_cancelar_venta").css("display", "flex");
 
-        this.taskService.postGenerarPago(this.precio_total_pasajeros_asientos.toFixed()).subscribe(responseGenerarPago=> {
-          //this.responseGenerarPago = responseGenerarPago;
-
-          //* RECIBE RESPUESTA DEL PINPAD
-          console.log(responseGenerarPago);
-          if(responseGenerarPago['batchNumber']){
-            // TODO: CORRECTO
-            
-            var jsonArray = {
-              voucherClient: responseGenerarPago['voucherClient']
+              $(".loader").fadeOut("slow");
             }
-      
-            const blob = new Blob([JSON.stringify(jsonArray)], { type: 'application/octet-stream' });
-            saveAs(blob, "4C608A6XX.json");
-
-            setTimeout(() => {
-              //saveAs(blob, "4C608A6XX.json");
-              this.crearArrayPagarSispas(TipForPago, String(responseGenerarPago['batchNumber']));
-            }, 1750);
-          }else{
-            // ! INCORRECTO
+          }, error =>{
+            //! SI ES ERROR
 
             if(this.pago_regular_promocion_tarjeta == 2){
               $('#muestra_pague_aquí_promociones').css('display', 'flex');
             }
-            
+
             $('#muestra_pague_aquí').css('display', 'flex');
             $("#vista_pagar_imagenes").css("display", "none");
             $("#div_cancelar_venta").css("display", "flex");
 
             $(".loader").fadeOut("slow");
-          }
-        }, error =>{
-          //! SI ES ERROR
+          }, () =>{
+            if(this.pago_regular_promocion_tarjeta == 2){
+              $('#muestra_pague_aquí_promociones').css('display', 'flex');
+            }
 
-          if(this.pago_regular_promocion_tarjeta == 2){
-            $('#muestra_pague_aquí_promociones').css('display', 'flex');
-          }
+            $('#muestra_pague_aquí').css('display', 'flex');
+            $("#vista_pagar_imagenes").css("display", "none");
+            $("#div_cancelar_venta").css("display", "flex");
+            
+            $(".loader").fadeOut("slow");
+          });
+        }, 2500);
+      }else{
+        this.simularPago(TipForPago);
+      }
+    }
+  }
 
-          $('#muestra_pague_aquí').css('display', 'flex');
-          $("#vista_pagar_imagenes").css("display", "none");
-          $("#div_cancelar_venta").css("display", "flex");
+  simularPago(TipForPago: number){
+    if(isPlatformBrowser(this.platformId)){
+      $(".loader").fadeIn("slow");
 
-          $(".loader").fadeOut("slow");
-        }, () =>{
-          if(this.pago_regular_promocion_tarjeta == 2){
-            $('#muestra_pague_aquí_promociones').css('display', 'flex');
-          }
+      $('#btn_atras').css('display', 'none');
+      $("#vista_pagar").css("display", "none");
 
-          $('#muestra_pague_aquí').css('display', 'flex');
-          $("#vista_pagar_imagenes").css("display", "none");
-          $("#div_cancelar_venta").css("display", "flex");
-          
-          $(".loader").fadeOut("slow");
-        });
-      }, 2500);
+      $(".loader").fadeOut("slow");
+      $("#vista_pagar_imagenes").css("display", "inline");
+      
+      this.crearArrayPagarSispas(TipForPago, "000000123456");
     }
   }
 
@@ -2528,24 +2573,6 @@ export class DatosPasajerosComponent implements OnInit {
     $(".loader").fadeOut("slow");
   }*/
 
-  simularPago(TipForPago: number){
-    if(isPlatformBrowser(this.platformId)){
-      $(".loader").fadeIn("slow");
-
-      //setTimeout(() => {
-        $('#btn_atras').css('display', 'none');
-        $("#vista_pagar").css("display", "none");
-      //}, 500);
-
-      //setTimeout(() => {
-        $(".loader").fadeOut("slow");
-        $("#vista_pagar_imagenes").css("display", "inline");
-        
-        this.crearArrayPagarSispas(TipForPago, "000000123456");
-      //}, 2500);
-    }
-  }
-
   crearArrayPagarSispas(TipForPago: number, voucherNumber: string){
     $(".loader2").fadeIn("slow");
     
@@ -2558,8 +2585,8 @@ export class DatosPasajerosComponent implements OnInit {
       this.subArrayFinal = [];
       this.ArrayFinal = [];
 
-      var usosAlAPlicarIda = this.usosAlAPlicarIda;
-      var usosAlAPlicarVuelta = this.usosAlAPlicarVuelta;
+      //var usosAlAPlicarIda = this.usosAlAPlicarIda;
+      //var usosAlAPlicarVuelta = this.usosAlAPlicarVuelta;
 
       for(var a=0; a<this.pasajero_asientos.length; a++){
         var id_variable_pasajero = this.pasajero_asientos[a].asiento_ida+"_"+this.pasajero_asientos[a].asiento_vuelta;
@@ -3589,7 +3616,7 @@ export class DatosPasajerosComponent implements OnInit {
   }
 
   ocultar_teclados(){
-    console.log(this.div_seleccionado);
+    //console.log(this.div_seleccionado);
 
     if(this.div_seleccionado == "vista_mostrar_datos_pasajeros"){
       if(this.id_anterior != ""){
@@ -3665,7 +3692,7 @@ export class DatosPasajerosComponent implements OnInit {
 
       this.cont_pasajero_nuevo = 1;
 
-      console.log(this.div_seleccionado);
+      //console.log(this.div_seleccionado);
 
       if(this.div_seleccionado == "vista_mostrar_tipo_de_compra" && this.texto_boleta_factura != ""){
         $("#teclado_numerico").css("display", "none");
@@ -3795,6 +3822,43 @@ export class DatosPasajerosComponent implements OnInit {
     }
 
     this.openScreen = 0;
+  }
+
+  obtenerTramosIntermedios(escalas: string | null, origen: string, destino: string): string {
+    try {
+      // Si escalas es null, vacío o solo espacios
+      if (!escalas || escalas.trim() === '') {
+        return '';
+      }
+
+      // Convertimos las escalas en lista, separadas por "-"
+      const lista = escalas
+        .split(/\s*-\s*/)
+        .map(e => e.trim().toUpperCase())
+        .filter(e => e.length > 0);
+
+      const indexOrigen = lista.indexOf(origen.toUpperCase());
+      const indexDestino = lista.indexOf(destino.toUpperCase());
+
+      // Si el destino no se encuentra, tomamos todo
+      const fin = indexDestino === -1 ? lista.length : indexDestino;
+
+      // Si el origen no está, asumimos que empieza desde el primer tramo
+      const inicio = indexOrigen === -1 ? -1 : indexOrigen;
+
+      // Obtenemos los tramos intermedios
+      const tramos = lista.slice(inicio + 1, fin);
+
+      if (tramos.length === 0) {
+        return '';
+      }
+
+      return tramos.join('-');
+
+    } catch (e) {
+      console.error(e);
+      return '';
+    }
   }
 
   /*continuar_terminos_condiciones(){

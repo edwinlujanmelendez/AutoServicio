@@ -84,6 +84,8 @@ export class AsientosComponent implements OnInit {
 
   DatosBackSubscription!: Subscription;
 
+  descripcion_escalas_ida: string[] = [];
+
   constructor(private router:Router, private route: ActivatedRoute, private sharedService:SharedService, private http : HttpClient, private taskService: TaskService, @Inject(PLATFORM_ID) private platformId: Object, @Inject(DOCUMENT) private document: any, public appComponent: AppComponent) { 
     this.date = new Date();
     var dia = "";
@@ -155,8 +157,6 @@ export class AsientosComponent implements OnInit {
           this.direccionEmbarqueIda = getDatosDetalleItinerarioIda['direccionEmbarqueIda'];
           this.direccionDesembarqueIda = getDatosDetalleItinerarioIda['direccionDesembarqueIda'];
 
-          
-
           this.DatosBackSubscription = this.sharedService.getDatosBack().subscribe((datos_response: any)=>{
             let getDatosAsientos = JSON.parse(localStorage.getItem('StorageDatosAsientos') || '{}');
             //console.log(getDatosAsientos);
@@ -216,9 +216,30 @@ export class AsientosComponent implements OnInit {
           this.taskService.getParametrosAsientos().subscribe(responseParamAsientos => {
             this.tiempoBloqueoAsiento = responseParamAsientos[0].tiempoBloqueoAsiento;
           });
+
+          this.generarDescripcionEscalas(getDatosDetalleItinerarioIda['descripcionEscalasIda']);
         }
       }, 250);
     }
+  }
+
+  generarDescripcionEscalas(descripcionEscalas: string){
+    this.descripcion_escalas_ida = [];
+
+    var nombre_origen = "";
+    if(this.nombre_ciudad_origen.includes("Lima")){ nombre_origen = "LIMA"; }else{ nombre_origen = this.nombre_ciudad_origen; }
+
+    var nombre_destino = "";
+    if(this.nombre_ciudad_destino.includes("Lima")){ nombre_destino = "LIMA"; }else{ nombre_destino = this.nombre_ciudad_destino; }
+
+    var datos_escalas = this.obtenerTramosIntermedios(descripcionEscalas, nombre_origen, nombre_destino);
+
+    if(!datos_escalas || datos_escalas.trim() === ''){
+      this.descripcion_escalas_ida = [];
+      return;
+    }
+
+    this.descripcion_escalas_ida = datos_escalas.split(/\s*-\s*/).map(e => e.trim()).filter(e => e.length > 0);
   }
 
   textCapitalize(str: string){
@@ -833,7 +854,9 @@ export class AsientosComponent implements OnInit {
           "precioAsientosVuelta": [],
           "precioTotalIda": this.precio_ida_total,
           "precioTotalVuelta": 0,
-          "precioTotal": this.precio_ida_total
+          "precioTotal": this.precio_ida_total,
+          "descripcionEscalasIda": this.StorageDatosDetalleItinerarioIda['descripcionEscalasIda'],
+          "descripcionEscalasVuelta": ""
         };
         
         //console.log(dat);
@@ -947,7 +970,9 @@ export class AsientosComponent implements OnInit {
           "precioAsientosVuelta": [],
           "precioTotalIda": this.precio_ida_total,
           "precioTotalVuelta": 0,
-          "precioTotal": this.precio_ida_total
+          "precioTotal": this.precio_ida_total,
+          "descripcionEscalasIda": this.StorageDatosDetalleItinerarioIda['descripcionEscalasIda'],
+          "descripcionEscalasVuelta": ""
         };
   
         //localStorage.setItem("StorageDatosAsientos", JSON.stringify(dat));
@@ -1183,5 +1208,42 @@ export class AsientosComponent implements OnInit {
     }
 
     this.openScreen = 0;
+  }
+
+  obtenerTramosIntermedios(escalas: string | null, origen: string, destino: string): string {
+    try {
+      // Si escalas es null, vacío o solo espacios
+      if (!escalas || escalas.trim() === '') {
+        return '';
+      }
+
+      // Convertimos las escalas en lista, separadas por "-"
+      const lista = escalas
+        .split(/\s*-\s*/)
+        .map(e => e.trim().toUpperCase())
+        .filter(e => e.length > 0);
+
+      const indexOrigen = lista.indexOf(origen.toUpperCase());
+      const indexDestino = lista.indexOf(destino.toUpperCase());
+
+      // Si el destino no se encuentra, tomamos todo
+      const fin = indexDestino === -1 ? lista.length : indexDestino;
+
+      // Si el origen no está, asumimos que empieza desde el primer tramo
+      const inicio = indexOrigen === -1 ? -1 : indexOrigen;
+
+      // Obtenemos los tramos intermedios
+      const tramos = lista.slice(inicio + 1, fin);
+
+      if (tramos.length === 0) {
+        return '';
+      }
+
+      return tramos.join('-');
+
+    } catch (e) {
+      console.error(e);
+      return '';
+    }
   }
 }
